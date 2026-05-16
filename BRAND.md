@@ -140,9 +140,11 @@ Optional subline: **`— .health`** set in Space Mono, smaller (≈0.8× wordmar
 - Subline: Space Mono 400, letter-spacing `0.2em`, uppercase, rendered as `— .HEALTH`.
 - Stack the subline directly under the wordmark, left-aligned, 2px gap (scale proportionally).
 
-### 4.2 Companion mark
+### 4.2 Logo mark
 
-A **datum mark** built from three nested pointy-top hexagons with a centred dot. The colour logic, proportion ratios, and meaning are preserved from the original concentric-circle form; the geometry is now hexagonal throughout, consistent with §7.5.
+The **primary visual symbol** of Working Complexity. Three nested pointy-top hexagons with a centred dot — a datum mark that encodes the practice's core logic: system, method, craft, and person. This is the official logo mark; use it wherever a standalone symbol is needed.
+
+File: `logo.svg` in the project root.
 
 **Construction:**
 
@@ -416,7 +418,7 @@ Hexagons are WC's primary geometric unit. They reference data networks, molecula
 
 **Rules:**
 - Never fill a large hex with solid colour. Hex fills are reserved for tiny data-point bullets only.
-- Never nest hexagons inside each other (that role belongs to the concentric-circle companion mark).
+- Never nest hexagons inside each other except in the official logo mark (§4.2); that construction is reserved for the mark alone.
 - Never rotate a hexagon off the pointy-top axis. All hexes are vertically aligned.
 - Do not use hexagons on body content slides or report pages where they are not a functional element.
 
@@ -450,7 +452,7 @@ These are the "tells" that make an artefact unmistakably WC. Use at least two on
 1. **Document code in the top-left** of covers and section dividers: `WC-### / SUBJECT / REV.A`.
 2. **The scale line** `SCALE 1:1 · ALL DIMENSIONS IN EXPERIENCE` bottom-right of the cover.
 3. **A paired-statement headline** somewhere in the first three pages. *"Emergent by design. Rigorous by necessity."*
-4. **A single concentric-circle diagram** (the companion mark or a variant) at least once per document.
+4. **The logo mark** (§4.2 — three nested hexagons) at least once per document, or a structural diagram that references its geometry.
 5. **Corner marks** on at least the cover and each section divider.
 6. **An eyebrow above every major headline** — Space Mono UPPERCASE label in Brass Gold, prefixed by a 32px gold rule.
 7. **Numbered sequences** for grouped content (`01 / 03`, `SVC-01`, etc.).
