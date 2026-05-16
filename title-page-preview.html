@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WC Brand — Title Page Preview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #000;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .slide-wrapper {
+    position: relative;
+    width: 1920px;
+    height: 1080px;
+    transform-origin: center center;
+  }
+
+  .slide {
+    position: absolute;
+    inset: 0;
+    background: #060D1B;
+    overflow: hidden;
+    font-family: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  }
+
+  /* ── Hex grid background ── */
+  .hex-grid {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  /* ── Large background hex accent (right side) ── */
+  .bg-hex-large {
+    position: absolute;
+    right: 96px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 480px;
+    height: 480px;
+    opacity: 1;
+  }
+
+  /* ── Corner marks ── */
+  .corner {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+  }
+  .corner::before,
+  .corner::after {
+    content: '';
+    position: absolute;
+    background: #3E5870;
+    opacity: 0.5;
+  }
+  .corner.tl { top: 48px; left: 48px; }
+  .corner.tl::before { top: 0; left: 0; width: 24px; height: 1px; }
+  .corner.tl::after  { top: 0; left: 0; width: 1px;  height: 24px; }
+
+  .corner.tr { top: 48px; right: 48px; }
+  .corner.tr::before { top: 0; right: 0; width: 24px; height: 1px; }
+  .corner.tr::after  { top: 0; right: 0; width: 1px;  height: 24px; }
+
+  .corner.bl { bottom: 48px; left: 48px; }
+  .corner.bl::before { bottom: 0; left: 0; width: 24px; height: 1px; }
+  .corner.bl::after  { bottom: 0; left: 0; width: 1px;  height: 24px; }
+
+  .corner.br { bottom: 48px; right: 48px; }
+  .corner.br::before { bottom: 0; right: 0; width: 24px; height: 1px; }
+  .corner.br::after  { bottom: 0; right: 0; width: 1px;  height: 24px; }
+
+  /* ── Document code ── */
+  .doc-code {
+    position: absolute;
+    top: 72px;
+    left: 72px;
+    font-family: 'Space Mono', ui-monospace, monospace;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    color: #3E5870;
+    text-transform: uppercase;
+  }
+
+  /* ── Main content ── */
+  .content {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 72px;
+    right: 640px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-top: 40px;
+  }
+
+  /* Eyebrow */
+  .eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 36px;
+  }
+  .eyebrow-rule {
+    width: 32px;
+    height: 2px;
+    background: #C4A46B;
+    flex-shrink: 0;
+  }
+  .eyebrow-text {
+    font-family: 'Space Mono', ui-monospace, monospace;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.25em;
+    color: #C4A46B;
+    text-transform: uppercase;
+  }
+
+  /* Title */
+  .title {
+    font-size: 68px;
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    color: #E0E8F4;
+    margin-bottom: 40px;
+    max-width: 860px;
+  }
+  .title em {
+    font-style: normal;
+    font-weight: 300;
+    color: #C4A46B;
+  }
+
+  /* Subtitle */
+  .subtitle {
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 1.65;
+    color: #7A9ABF;
+    max-width: 620px;
+    letter-spacing: 0;
+  }
+
+  /* ── Bottom bar ── */
+  .bottom-left {
+    position: absolute;
+    bottom: 72px;
+    left: 72px;
+    font-family: 'Space Mono', ui-monospace, monospace;
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    color: #7A9ABF;
+    text-transform: uppercase;
+  }
+
+  .scale-line {
+    position: absolute;
+    bottom: 72px;
+    right: 220px;
+    font-family: 'Space Mono', ui-monospace, monospace;
+    font-size: 9px;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    color: #3E5870;
+    text-transform: uppercase;
+  }
+
+  /* ── Companion mark ── */
+  .companion-mark {
+    position: absolute;
+    bottom: 52px;
+    right: 72px;
+    width: 128px;
+    height: 128px;
+  }
+</style>
+</head>
+<body>
+<div class="slide-wrapper" id="wrapper">
+  <div class="slide">
+
+    <!-- Hex grid background -->
+    <svg class="hex-grid" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <defs>
+        <pattern id="wc-hex" width="69.28" height="120" patternUnits="userSpaceOnUse">
+          <polygon points="34.64,0 69.28,20 69.28,60 34.64,80 0,60 0,20"
+            stroke="rgba(74,144,226,0.055)" stroke-width="0.6" fill="none"/>
+          <polygon points="34.64,80 69.28,100 69.28,140 34.64,160 0,140 0,100"
+            stroke="rgba(74,144,226,0.055)" stroke-width="0.6" fill="none"/>
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#wc-hex)"/>
+    </svg>
+
+    <!-- Large background hex accent (right zone) -->
+    <svg class="bg-hex-large" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <!-- Outer decorative hex -->
+      <polygon points="50,2 91.57,26 91.57,74 50,98 8.43,74 8.43,26"
+        stroke="#5B9BD5" stroke-width="0.5" fill="none" opacity="0.12"/>
+      <!-- Second ring hex -->
+      <polygon points="50,14 83.78,32 83.78,68 50,86 16.22,68 16.22,32"
+        stroke="#5B9BD5" stroke-width="0.4" fill="none" opacity="0.07"/>
+    </svg>
+
+    <!-- Corner marks -->
+    <div class="corner tl"></div>
+    <div class="corner tr"></div>
+    <div class="corner bl"></div>
+    <div class="corner br"></div>
+
+    <!-- Document code -->
+    <div class="doc-code">WC-BRAND &nbsp;/&nbsp; TITLE PAGE &nbsp;/&nbsp; REV.B</div>
+
+    <!-- Main content -->
+    <div class="content">
+      <div class="eyebrow">
+        <div class="eyebrow-rule"></div>
+        <div class="eyebrow-text">Working Complexity &nbsp;·&nbsp; 2026</div>
+      </div>
+
+      <h1 class="title">
+        The healthcare system<br>
+        doesn't need to be simpler.<br>
+        It needs to be <em>better understood.</em>
+      </h1>
+
+      <p class="subtitle">
+        A healthcare design agency that works with complexity<br>
+        rather than reducing it.
+      </p>
+    </div>
+
+    <!-- Bottom left wordmark URL -->
+    <div class="bottom-left">workingcomplexity.health</div>
+
+    <!-- Scale line -->
+    <div class="scale-line">Scale 1:1 &nbsp;·&nbsp; All Dimensions in Experience</div>
+
+    <!-- Companion mark — three nested hexagons -->
+    <svg class="companion-mark" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-label="Working Complexity mark">
+      <!-- Outer hex: Blueprint Blue -->
+      <polygon points="50,2 91.57,26 91.57,74 50,98 8.43,74 8.43,26"
+        stroke="#5B9BD5" stroke-width="0.8" fill="none"/>
+      <!-- Middle hex: Brass Gold -->
+      <polygon points="50,26 70.78,38 70.78,62 50,74 29.22,62 29.22,38"
+        stroke="#C4A46B" stroke-width="0.8" fill="none"/>
+      <!-- Inner hex: Blueprint Blue -->
+      <polygon points="50,38 60.39,44 60.39,56 50,62 39.61,56 39.61,44"
+        stroke="#5B9BD5" stroke-width="0.8" fill="none"/>
+      <!-- Centre dot: Brass Gold -->
+      <circle cx="50" cy="50" r="2.5" fill="#C4A46B"/>
+      <!-- Crosshair -->
+      <line x1="2" y1="50" x2="98" y2="50"
+        stroke="#5B9BD5" stroke-width="0.3" stroke-dasharray="2 3" opacity="0.5"/>
+      <line x1="50" y1="2" x2="50" y2="98"
+        stroke="#5B9BD5" stroke-width="0.3" stroke-dasharray="2 3" opacity="0.5"/>
+    </svg>
+
+  </div><!-- .slide -->
+</div><!-- .slide-wrapper -->
+
+<script>
+  function scale() {
+    const el = document.getElementById('wrapper');
+    const s = Math.min(window.innerWidth / 1920, window.innerHeight / 1080) * 0.96;
+    el.style.transform = 'scale(' + s + ')';
+  }
+  scale();
+  window.addEventListener('resize', scale);
+</script>
+</body>
+</html>

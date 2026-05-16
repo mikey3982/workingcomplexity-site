@@ -1,0 +1,1228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Working Complexity — Healthcare Design Agency</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <meta name="description" content="Working Complexity is a healthcare design agency that works with complexity rather than reducing it — serving NHS, charities, pharma, and commissioners." />
+  <meta property="og:title" content="Working Complexity — Healthcare Design Agency" />
+  <meta property="og:description" content="The healthcare system doesn't need to be simpler. It needs to be better understood." />
+  <meta property="og:url" content="https://workingcomplexity.health" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary" />
+  <link rel="canonical" href="https://workingcomplexity.health" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='100' height='100' fill='%23060D1B'/%3E%3Cpolygon points='50,2 91.57,26 91.57,74 50,98 8.43,74 8.43,26' stroke='%235B9BD5' stroke-width='0.8' fill='none'/%3E%3Cpolygon points='50,26 70.78,38 70.78,62 50,74 29.22,62 29.22,38' stroke='%23C4A46B' stroke-width='0.8' fill='none'/%3E%3Cpolygon points='50,38 60.39,44 60.39,56 50,62 39.61,56 39.61,44' stroke='%235B9BD5' stroke-width='0.8' fill='none'/%3E%3Ccircle cx='50' cy='50' r='2.5' fill='%23C4A46B'/%3E%3C/svg%3E" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:         #060D1B;
+      --bg-mid:     #0B1629;
+      --bg-card:    #0F1E36;
+      --border:     rgba(74, 144, 226, 0.14);
+      --border-strong: rgba(74, 144, 226, 0.28);
+      --gold:       #C4A46B;
+      --gold-dim:   rgba(196, 164, 107, 0.35);
+      --blue-light: #5B9BD5;
+      --blue-dim:   rgba(91, 155, 213, 0.12);
+      --text:       #E0E8F4;
+      --text-muted: #7A9ABF;
+      --text-dim:   #3E5870;
+      --grid-major: rgba(74, 144, 226, 0.06);
+      --grid-minor: rgba(74, 144, 226, 0.025);
+      --mono:       'Space Mono', monospace;
+      --serif:      'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      --sans:       'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ── Hex Grid (pointy-top, 40px centre-to-vertex, per BRAND.md §7.1) ── */
+    .grid-bg { position: relative; }
+    .grid-bg::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='69.28' height='120'%3E%3Cpolygon points='34.64,0 69.28,20 69.28,60 34.64,80 0,60 0,20' stroke='%234A90E2' stroke-width='0.5' fill='none' opacity='0.05'/%3E%3Cpolygon points='34.64,80 69.28,100 69.28,140 34.64,160 0,140 0,100' stroke='%234A90E2' stroke-width='0.5' fill='none' opacity='0.05'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      background-size: 69.28px 120px;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .grid-bg > * { position: relative; z-index: 1; }
+
+    /* ── Nav ────────────────────────────────────────────── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.25rem 3rem;
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(16px);
+      background: rgba(6, 13, 27, 0.82);
+    }
+
+    .nav-logo {
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      color: var(--text);
+      text-decoration: none;
+      display: flex; flex-direction: column; gap: 2px;
+    }
+    .nav-logo-main { color: var(--text); font-weight: 700; }
+    .nav-logo-sub  { color: var(--gold); font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; }
+
+    .nav-links {
+      display: flex; gap: 2.5rem; list-style: none;
+    }
+    .nav-links a {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--gold); }
+
+    .nav-cta {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--bg);
+      background: var(--gold);
+      padding: 0.55rem 1.2rem;
+      border: none; cursor: pointer;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+    .nav-cta:hover { opacity: 0.85; }
+
+    /* ── Blueprint decorative annotations ──────────────── */
+    .annotation {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+    }
+
+    .dim-line {
+      display: flex; align-items: center; gap: 0.6rem;
+      color: var(--text-dim);
+    }
+    .dim-line::before, .dim-line::after {
+      content: '';
+      display: block;
+      height: 1px;
+      background: var(--text-dim);
+    }
+    .dim-line::before { width: 24px; }
+    .dim-line::after { flex: 1; max-width: 40px; }
+
+    /* ── Section utility ────────────────────────────────── */
+    section { position: relative; }
+
+    .section-label {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+      display: flex; align-items: center; gap: 0.8rem;
+    }
+    .section-label::before {
+      content: '';
+      display: inline-block;
+      width: 32px; height: 1px;
+      background: var(--gold);
+      opacity: 0.6;
+    }
+
+    .container { max-width: 1240px; margin: 0 auto; padding: 0 3rem; }
+
+    /* ── Corner marks (blueprint style) ──────────────────── */
+    .corner-marks {
+      position: absolute;
+      inset: 20px;
+      pointer-events: none;
+    }
+    .corner-mark {
+      position: absolute;
+      width: 20px; height: 20px;
+      border-color: var(--text-dim);
+      border-style: solid;
+      opacity: 0.4;
+    }
+    .corner-mark.tl { top: 0; left: 0;  border-width: 1px 0 0 1px; }
+    .corner-mark.tr { top: 0; right: 0; border-width: 1px 1px 0 0; }
+    .corner-mark.bl { bottom: 0; left: 0;  border-width: 0 0 1px 1px; }
+    .corner-mark.br { bottom: 0; right: 0; border-width: 0 1px 1px 0; }
+
+    /* ── HERO ───────────────────────────────────────────── */
+    #hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 8rem 3rem 5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-inner {
+      max-width: 1240px; margin: 0 auto; width: 100%;
+      position: relative; z-index: 2;
+    }
+
+    .hero-eyebrow {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 2.5rem;
+      display: flex; align-items: center; gap: 1rem;
+    }
+    .hero-eyebrow span {
+      display: inline-block; width: 48px; height: 1px; background: var(--gold); opacity: 0.6;
+    }
+
+    .hero-headline {
+      font-family: var(--sans);
+      font-size: clamp(3rem, 6vw, 6rem);
+      font-weight: 800;
+      line-height: 1.0;
+      letter-spacing: -0.03em;
+      color: var(--text);
+      max-width: 820px;
+      margin-bottom: 2rem;
+    }
+    .hero-headline em {
+      font-style: normal;
+      font-weight: 300;
+      color: var(--gold);
+      letter-spacing: -0.01em;
+    }
+
+    .hero-sub {
+      font-family: var(--sans);
+      font-size: 1.05rem;
+      font-weight: 400;
+      color: var(--text-muted);
+      max-width: 560px;
+      line-height: 1.8;
+      margin-bottom: 3.5rem;
+    }
+
+    .hero-actions {
+      display: flex; align-items: center; gap: 2.5rem;
+    }
+
+    .btn-primary {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--bg);
+      background: var(--gold);
+      padding: 0.9rem 2rem;
+      border: none; cursor: pointer; text-decoration: none;
+      transition: opacity 0.2s;
+    }
+    .btn-primary:hover { opacity: 0.85; }
+
+    .btn-ghost {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      text-decoration: none;
+      display: flex; align-items: center; gap: 0.6rem;
+      transition: color 0.2s;
+    }
+    .btn-ghost::after { content: '→'; }
+    .btn-ghost:hover { color: var(--text); }
+
+    /* Blueprint circle diagram in hero */
+    .hero-diagram {
+      position: absolute;
+      right: -80px; top: 50%;
+      transform: translateY(-50%);
+      width: 560px; height: 560px;
+      opacity: 0.15;
+      pointer-events: none;
+    }
+
+    /* ── THESIS ─────────────────────────────────────────── */
+    #thesis {
+      padding: 7rem 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .thesis-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+
+    .thesis-statement {
+      font-family: var(--sans);
+      font-size: clamp(1.7rem, 2.8vw, 2.6rem);
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: -0.025em;
+      color: var(--text);
+    }
+    .thesis-statement strong {
+      font-weight: 800;
+      color: var(--gold);
+    }
+
+    .thesis-body p {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin-bottom: 1.2rem;
+      line-height: 1.85;
+    }
+    .thesis-body p:last-child { margin-bottom: 0; }
+
+    /* ── THREE PILLARS ──────────────────────────────────── */
+    #pillars {
+      padding: 7rem 0;
+    }
+
+    .pillars-header {
+      text-align: center;
+      margin-bottom: 5rem;
+    }
+
+    .pillars-title {
+      font-family: var(--sans);
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: var(--text);
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .pillars-sub {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      max-width: 480px; margin: 0 auto;
+    }
+
+    .pillars-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5px;
+      background: var(--border);
+    }
+
+    .pillar {
+      background: var(--bg-card);
+      padding: 3rem 2.5rem;
+      position: relative;
+      transition: background 0.3s;
+    }
+    .pillar:hover { background: #112040; }
+
+    .pillar-number {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.3em;
+      color: var(--text-dim);
+      margin-bottom: 2rem;
+    }
+
+    .pillar-icon {
+      width: 52px; height: 52px;
+      margin-bottom: 2rem;
+    }
+
+    .pillar-title {
+      font-family: var(--sans);
+      font-size: 1.7rem;
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      color: var(--text);
+      margin-bottom: 0.3rem;
+    }
+
+    .pillar-subtitle {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+    }
+
+    .pillar-text {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.85;
+    }
+
+    .pillar-accent {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--gold), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .pillar:hover .pillar-accent { opacity: 1; }
+
+    /* ── APPROACH ───────────────────────────────────────── */
+    #approach {
+      padding: 7rem 0;
+      background: var(--bg-mid);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .approach-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: start;
+    }
+
+    .approach-left h2 {
+      font-family: var(--sans);
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: var(--text);
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+    }
+    .approach-left h2 em { font-style: normal; font-weight: 300; color: var(--gold); }
+
+    .approach-left p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.85;
+      margin-bottom: 1rem;
+    }
+
+    .process-steps {
+      display: flex; flex-direction: column; gap: 0;
+    }
+
+    .process-step {
+      display: grid;
+      grid-template-columns: 48px 1fr;
+      gap: 1.5rem;
+      padding: 1.8rem 0;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+    }
+    .process-step:first-child { border-top: 1px solid var(--border); }
+
+    .step-num {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      color: var(--gold);
+      padding-top: 4px;
+    }
+
+    .step-content h4 {
+      font-family: var(--sans);
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.3rem;
+      letter-spacing: -0.01em;
+    }
+
+    .step-content p {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    /* ── SERVICES HEX GRID ──────────────────────────────────── */
+    #services { padding: 7rem 0; }
+
+    .services-header { max-width: 560px; margin-bottom: 4rem; }
+
+    .services-header h2 {
+      font-family: var(--sans);
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: var(--text);
+      margin-top: 0.8rem;
+      line-height: 1.1;
+    }
+
+    /* Pointy-top honeycomb per BRAND.md §7.5 */
+    .hex-grid { width: 1058px; margin: 0 auto; }
+
+    .hex-row { display: flex; gap: 3px; }
+
+    .hex-row-offset { margin-top: -87px; margin-left: 152px; }
+
+    .service-hex {
+      width: 300px;
+      height: 346px;
+      clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+      background: var(--bg-card);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 100px 52px;
+      transition: background 0.3s;
+      cursor: default;
+    }
+    .service-hex:hover { background: #112040; }
+
+    .hex-num {
+      font-family: var(--mono);
+      font-size: 0.55rem;
+      letter-spacing: 0.25em;
+      color: var(--gold);
+      opacity: 0.6;
+      margin-bottom: 0.5rem;
+    }
+
+    .hex-title {
+      font-family: var(--sans);
+      font-size: 0.88rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: var(--text);
+      line-height: 1.2;
+      margin-bottom: 0.5rem;
+    }
+
+    .hex-desc {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .hex-accent {
+      width: 6px; height: 6px;
+      background: var(--gold);
+      clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+      margin: 0.6rem auto 0;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .service-hex:hover .hex-accent { opacity: 1; }
+
+    /* ── MANIFESTO ──────────────────────────────────────── */
+    #manifesto {
+      padding: 7rem 0;
+      background: var(--bg-mid);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .manifesto-inner {
+      max-width: 860px; margin: 0 auto;
+      text-align: center;
+      position: relative; z-index: 2;
+    }
+
+    .manifesto-quote {
+      font-family: var(--sans);
+      font-size: clamp(1.4rem, 3vw, 2.4rem);
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      line-height: 1.35;
+      color: var(--text);
+      margin-bottom: 2rem;
+    }
+    .manifesto-quote em { color: var(--gold); font-style: normal; font-weight: 800; }
+
+    .manifesto-attr {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+    }
+
+    /* Large faint blueprint circle behind manifesto */
+    .manifesto-bg-circle {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 600px; height: 600px;
+      border-radius: 50%;
+      border: 1px solid rgba(196, 164, 107, 0.07);
+      pointer-events: none;
+    }
+    .manifesto-bg-circle::before {
+      content: '';
+      position: absolute;
+      inset: 40px;
+      border-radius: 50%;
+      border: 1px solid rgba(196, 164, 107, 0.05);
+    }
+    .manifesto-bg-circle::after {
+      content: '';
+      position: absolute;
+      inset: 100px;
+      border-radius: 50%;
+      border: 1px solid rgba(196, 164, 107, 0.04);
+    }
+
+    /* ── CONTACT ────────────────────────────────────────── */
+    #contact {
+      padding: 7rem 0;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: start;
+    }
+
+    .contact-left h2 {
+      font-family: var(--sans);
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: var(--text);
+      margin-top: 0.8rem;
+      margin-bottom: 1.2rem;
+      line-height: 1.1;
+    }
+
+    .contact-left p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.85;
+      margin-bottom: 2rem;
+    }
+
+    .contact-detail {
+      display: flex; flex-direction: column; gap: 1.2rem;
+    }
+
+    .contact-item {
+      display: flex; align-items: center; gap: 1rem;
+    }
+
+    .contact-item-label {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      width: 64px; flex-shrink: 0;
+    }
+
+    .contact-item-value {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+    }
+    .contact-item-value a {
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .contact-item-value a:hover { color: var(--gold); }
+
+    .contact-form {
+      display: flex; flex-direction: column; gap: 1.2rem;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.2rem;
+    }
+
+    .form-field {
+      display: flex; flex-direction: column; gap: 0.5rem;
+    }
+
+    .form-field label {
+      font-family: var(--mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+    }
+
+    .form-field input, .form-field textarea, .form-field select {
+      background: var(--bg-card);
+      border: 1px solid var(--border-strong);
+      color: var(--text);
+      font-family: var(--sans);
+      font-size: 0.85rem;
+      font-weight: 300;
+      padding: 0.85rem 1rem;
+      outline: none;
+      transition: border-color 0.2s;
+      width: 100%;
+    }
+    .form-field input:focus,
+    .form-field textarea:focus,
+    .form-field select:focus {
+      border-color: var(--gold);
+    }
+    .form-field textarea { min-height: 120px; resize: vertical; }
+    .form-field select option { background: var(--bg-card); }
+
+    .form-submit {
+      display: flex; justify-content: flex-end;
+    }
+
+    /* ── FOOTER ─────────────────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2.5rem 3rem;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+
+    .footer-logo {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: var(--text-dim);
+    }
+    .footer-logo strong { color: var(--text-muted); }
+
+    .footer-copy {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      color: var(--text-dim);
+    }
+
+    .footer-links {
+      display: flex; gap: 2rem; list-style: none;
+    }
+    .footer-links a {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--text-muted); }
+
+    /* ── Blueprint SVG decorations ──────────────────────── */
+    .bp-crosshair {
+      position: absolute;
+      pointer-events: none;
+      opacity: 0.18;
+    }
+
+    /* ── Scroll reveal ──────────────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* ── Horizontal rule / dividers ─────────────────────── */
+    .bp-rule {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 0;
+    }
+
+    /* ── Utility ────────────────────────────────────────── */
+    .text-gold { color: var(--gold); }
+    .mt-xs { margin-top: 0.5rem; }
+
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════ NAV ═══════════════════════════════ -->
+<nav>
+  <a href="#" class="nav-logo">
+    <span class="nav-logo-main">workingcomplexity</span>
+    <span class="nav-logo-sub">— .health</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#pillars">Philosophy</a></li>
+    <li><a href="#approach">Approach</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Start a Conversation</a>
+</nav>
+
+<!-- ═══════════════════════════════ HERO ══════════════════════════════ -->
+<section id="hero" class="grid-bg">
+  <div class="corner-marks">
+    <div class="corner-mark tl"></div>
+    <div class="corner-mark tr"></div>
+    <div class="corner-mark bl"></div>
+    <div class="corner-mark br"></div>
+  </div>
+
+  <!-- Blueprint diagram SVG -->
+  <svg class="hero-diagram" viewBox="0 0 560 560" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="280" cy="280" r="240" stroke="#4A90E2" stroke-width="0.5"/>
+    <circle cx="280" cy="280" r="180" stroke="#4A90E2" stroke-width="0.5"/>
+    <circle cx="280" cy="280" r="120" stroke="#C4A46B" stroke-width="0.5"/>
+    <circle cx="280" cy="280" r="60"  stroke="#4A90E2" stroke-width="0.5"/>
+    <line x1="40"  y1="280" x2="520" y2="280" stroke="#4A90E2" stroke-width="0.5"/>
+    <line x1="280" y1="40"  x2="280" y2="520" stroke="#4A90E2" stroke-width="0.5"/>
+    <line x1="110" y1="110" x2="450" y2="450" stroke="#4A90E2" stroke-width="0.3"/>
+    <line x1="450" y1="110" x2="110" y2="450" stroke="#4A90E2" stroke-width="0.3"/>
+    <!-- arc marks -->
+    <path d="M 280 100 A 180 180 0 0 1 436 196" stroke="#C4A46B" stroke-width="0.8" fill="none"/>
+    <circle cx="280" cy="280" r="3" fill="#C4A46B"/>
+    <!-- dimension ticks -->
+    <line x1="100" y1="276" x2="100" y2="284" stroke="#4A90E2" stroke-width="0.5"/>
+    <line x1="460" y1="276" x2="460" y2="284" stroke="#4A90E2" stroke-width="0.5"/>
+    <line x1="276" y1="100" x2="284" y2="100" stroke="#4A90E2" stroke-width="0.5"/>
+    <line x1="276" y1="460" x2="284" y2="460" stroke="#4A90E2" stroke-width="0.5"/>
+  </svg>
+
+  <div class="hero-inner">
+    <div class="hero-eyebrow">
+      <span></span>
+      Healthcare Design Agency &nbsp;·&nbsp; workingcomplexity.health
+    </div>
+
+    <h1 class="hero-headline">
+      Healthcare is not<br/>
+      a widget.<br/>
+      <em>It is lived.</em>
+    </h1>
+
+    <p class="hero-sub">
+      Working Complexity designs patient-centred healthcare experiences that
+      honour the depth of what people and their families go through — and make them work.
+      Not simplified. Understood.
+    </p>
+
+    <div class="hero-actions">
+      <a href="#services" class="btn-primary">Explore Our Work</a>
+      <a href="#approach" class="btn-ghost">Our Approach</a>
+    </div>
+  </div>
+
+  <!-- blueprint annotation bottom -->
+  <div style="position:absolute; bottom:2.5rem; left:3rem; right:3rem; display:flex; justify-content:space-between; align-items:flex-end; z-index:2;">
+    <span class="annotation" style="opacity:0.4;">WC-001 &nbsp;/&nbsp; SITE OVERVIEW &nbsp;/&nbsp; REV.A</span>
+    <div style="display:flex; flex-direction:column; align-items:flex-end; gap:1rem;">
+      <span class="annotation" style="opacity:0.4;">SCALE 1:1 &nbsp;·&nbsp; ALL DIMENSIONS IN EXPERIENCE</span>
+      <svg width="64" height="64" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-label="Working Complexity mark">
+        <polygon points="50,2 91.57,26 91.57,74 50,98 8.43,74 8.43,26" stroke="#5B9BD5" stroke-width="0.8" fill="none"/>
+        <polygon points="50,26 70.78,38 70.78,62 50,74 29.22,62 29.22,38" stroke="#C4A46B" stroke-width="0.8" fill="none"/>
+        <polygon points="50,38 60.39,44 60.39,56 50,62 39.61,56 39.61,44" stroke="#5B9BD5" stroke-width="0.8" fill="none"/>
+        <circle cx="50" cy="50" r="2.5" fill="#C4A46B"/>
+        <line x1="2" y1="50" x2="98" y2="50" stroke="#5B9BD5" stroke-width="0.3" stroke-dasharray="2 3" opacity="0.5"/>
+        <line x1="50" y1="2" x2="50" y2="98" stroke="#5B9BD5" stroke-width="0.3" stroke-dasharray="2 3" opacity="0.5"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════ THESIS ═══════════════════════════════ -->
+<section id="thesis">
+  <div class="container">
+    <div class="thesis-grid reveal">
+      <div>
+        <div class="section-label">The Problem</div>
+        <h2 class="thesis-statement">
+          The healthcare system doesn't need to be
+          <strong>simpler.</strong><br/>
+          It needs to be <strong>better understood.</strong>
+        </h2>
+      </div>
+      <div class="thesis-body">
+        <p>
+          We live in an era that reaches for simplification as its first response
+          to complexity — reducing systems to flowcharts, people to pathways,
+          and care to compliance metrics.
+        </p>
+        <p>
+          But the lived experience of illness — for the patient, the carer,
+          the clinician — is irreducibly complex. It is emergent, relational, uncertain,
+          and deeply human. No widget solves it.
+        </p>
+        <p>
+          Working Complexity exists to hold that complexity with the seriousness
+          it deserves: to map it, make sense of it, and design within it —
+          rapidly, sensitively, and with evidence at the centre.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ THREE PILLARS ════════════════════════ -->
+<section id="pillars" class="grid-bg">
+  <div class="container">
+    <div class="pillars-header reveal">
+      <div class="section-label" style="justify-content:center;">Three Dimensions</div>
+      <h2 class="pillars-title">The working model</h2>
+      <p class="pillars-sub">
+        Every engagement draws from three inseparable capacities.
+        None operates without the others.
+      </p>
+    </div>
+
+    <div class="pillars-grid">
+
+      <!-- Pillar 1 -->
+      <div class="pillar reveal">
+        <div class="pillar-number">01 &nbsp;/&nbsp; 03</div>
+        <svg class="pillar-icon" viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="26" cy="26" r="22" stroke="#4A90E2" stroke-width="0.8"/>
+          <circle cx="26" cy="26" r="12" stroke="#C4A46B" stroke-width="0.8"/>
+          <circle cx="26" cy="26" r="3"  fill="#C4A46B"/>
+          <line x1="4"  y1="26" x2="48" y2="26" stroke="#4A90E2" stroke-width="0.5" stroke-dasharray="2 3"/>
+          <line x1="26" y1="4"  x2="26" y2="48" stroke="#4A90E2" stroke-width="0.5" stroke-dasharray="2 3"/>
+        </svg>
+        <div class="pillar-title">Understand</div>
+        <div class="pillar-subtitle">Deep Thinking · Sense-Making</div>
+        <p class="pillar-text">
+          We begin with rigorous inquiry. Drawing on systems thinking, complexity theory,
+          and evidence-based methodology, we map the full assemblage of a situation —
+          its actors, its tensions, its hidden structures.
+          We do not rush past the hard questions.
+        </p>
+        <div class="pillar-accent"></div>
+      </div>
+
+      <!-- Pillar 2 -->
+      <div class="pillar reveal">
+        <div class="pillar-number">02 &nbsp;/&nbsp; 03</div>
+        <svg class="pillar-icon" viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="8" y="8" width="36" height="36" stroke="#4A90E2" stroke-width="0.8"/>
+          <rect x="16" y="16" width="20" height="20" stroke="#C4A46B" stroke-width="0.8"/>
+          <line x1="8"  y1="26" x2="16" y2="26" stroke="#4A90E2" stroke-width="0.5"/>
+          <line x1="36" y1="26" x2="44" y2="26" stroke="#4A90E2" stroke-width="0.5"/>
+          <line x1="26" y1="8"  x2="26" y2="16" stroke="#4A90E2" stroke-width="0.5"/>
+          <line x1="26" y1="36" x2="26" y2="44" stroke="#4A90E2" stroke-width="0.5"/>
+          <circle cx="26" cy="26" r="2" fill="#C4A46B"/>
+        </svg>
+        <div class="pillar-title">Deliver</div>
+        <div class="pillar-subtitle">Prototype · Pilot · Make It Work</div>
+        <p class="pillar-text">
+          Understanding without action is incomplete. We move from insight to pilot —
+          designing and testing in real environments, learning fast, adjusting responsively.
+          We produce things that actually work in the messy reality of healthcare delivery.
+        </p>
+        <div class="pillar-accent"></div>
+      </div>
+
+      <!-- Pillar 3 -->
+      <div class="pillar reveal">
+        <div class="pillar-number">03 &nbsp;/&nbsp; 03</div>
+        <svg class="pillar-icon" viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M26 44 C14 36 6 28 6 20 C6 14 11 9 17 9 C21 9 24 11 26 14 C28 11 31 9 35 9 C41 9 46 14 46 20 C46 28 38 36 26 44Z" stroke="#C4A46B" stroke-width="0.8" fill="none"/>
+          <path d="M26 38 C18 31 12 25 12 20 C12 17 14 15 17 15 C20 15 22 17 26 21 C30 17 32 15 35 15 C38 15 40 17 40 20 C40 25 34 31 26 38Z" stroke="#4A90E2" stroke-width="0.5" fill="none"/>
+        </svg>
+        <div class="pillar-title">Feel</div>
+        <div class="pillar-subtitle">Empathy · Experience · Human Depth</div>
+        <p class="pillar-text">
+          At the heart of everything is the person — the patient navigating diagnosis,
+          the family holding vigil, the clinician carrying impossible decisions.
+          We design for what it actually feels like to be inside these systems,
+          not merely for how they should function on paper.
+        </p>
+        <div class="pillar-accent"></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ APPROACH ═════════════════════════════ -->
+<section id="approach">
+  <div class="container">
+    <div class="approach-grid">
+      <div class="approach-left reveal">
+        <div class="section-label">How We Work</div>
+        <h2>Emergent by design. <em>Rigorous</em> by necessity.</h2>
+        <p>
+          We don't arrive with a predetermined answer.
+          We work with the situation as it actually is —
+          its contradictions, its partial information,
+          its pressures of time and resources.
+        </p>
+        <p>
+          Our process is iterative, adaptive, and evidence-anchored.
+          We move between rapid sense-making and careful analysis,
+          between whole-system thinking and the specific moment of a single patient encounter.
+        </p>
+        <p>
+          We bring together expertise across clinical pathways, service design,
+          behavioural science, organisational theory, and lived experience research —
+          because no single lens is sufficient.
+        </p>
+      </div>
+
+      <div class="process-steps reveal">
+        <div class="process-step">
+          <div class="step-num">01</div>
+          <div class="step-content">
+            <h4>Immersion &amp; Mapping</h4>
+            <p>Deep engagement with the situation: stakeholder interviews, observation,
+            data review, and systems mapping to understand the full assemblage
+            before proposing anything.</p>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="step-num">02</div>
+          <div class="step-content">
+            <h4>Sense-Making</h4>
+            <p>Making meaning from what we find — identifying patterns, tensions,
+            leverage points, and the experiences that most need redesigning.
+            Evidence-based. Never rushed.</p>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="step-num">03</div>
+          <div class="step-content">
+            <h4>Rapid Prototyping</h4>
+            <p>Designing at pace — creating testable versions of new processes,
+            pathways, and environments. Low fidelity where appropriate;
+            high fidelity where it matters.</p>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="step-num">04</div>
+          <div class="step-content">
+            <h4>Pilot &amp; Learn</h4>
+            <p>Testing in real conditions with real people. Gathering signal.
+            Adapting sensitively. Building towards something that actually holds
+            under the pressure of everyday care.</p>
+          </div>
+        </div>
+        <div class="process-step">
+          <div class="step-num">05</div>
+          <div class="step-content">
+            <h4>Embed &amp; Sustain</h4>
+            <p>Ensuring that change is organisationally owned and not dependent
+            on our presence. Building capability and confidence for ongoing
+            complexity work from within.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════ SERVICES ═════════════════════════════ -->
+<section id="services" class="grid-bg" style="border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+  <div class="container" style="padding-top:7rem; padding-bottom:7rem;">
+    <div class="services-header reveal">
+      <div class="section-label">What We Do</div>
+      <h2>Services designed for real healthcare systems</h2>
+    </div>
+
+    <div class="hex-grid">
+
+      <!-- Row 1 -->
+      <div class="hex-row">
+        <div class="service-hex reveal">
+          <div class="hex-num">SVC-01</div>
+          <div class="hex-title">Patient Experience Design</div>
+          <p class="hex-desc">Co-designing care journeys with patients and families — from first symptom to long-term condition management.</p>
+          <div class="hex-accent"></div>
+        </div>
+        <div class="service-hex reveal">
+          <div class="hex-num">SVC-02</div>
+          <div class="hex-title">System Complexity Analysis</div>
+          <p class="hex-desc">Mapping actors, feedback loops, and emergent behaviours that conventional management tools cannot see.</p>
+          <div class="hex-accent"></div>
+        </div>
+        <div class="service-hex reveal">
+          <div class="hex-num">SVC-03</div>
+          <div class="hex-title">Care Pathway Redesign</div>
+          <p class="hex-desc">Redesigning pathways from the perspective of lived experience — addressing the gaps data alone cannot capture.</p>
+          <div class="hex-accent"></div>
+        </div>
+      </div>
+
+      <!-- Row 2 — offset by half hex width to interlock -->
+      <div class="hex-row hex-row-offset">
+        <div class="service-hex reveal">
+          <div class="hex-num">SVC-04</div>
+          <div class="hex-title">Prototyping &amp; Rapid Pilots</div>
+          <p class="hex-desc">Moving from insight to action with speed and sensitivity — building evidence for change in real environments.</p>
+          <div class="hex-accent"></div>
+        </div>
+        <div class="service-hex reveal">
+          <div class="hex-num">SVC-05</div>
+          <div class="hex-title">Uncertainty &amp; Decision Support</div>
+          <p class="hex-desc">Designing conditions for good judgement under pressure — not false precision, but honest inquiry.</p>
+          <div class="hex-accent"></div>
+        </div>
+        <div class="service-hex reveal">
+          <div class="hex-num">SVC-06</div>
+          <div class="hex-title">Capability Building</div>
+          <p class="hex-desc">Building lasting confidence to work with complexity from within — through coaching and embedded practice.</p>
+          <div class="hex-accent"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════ MANIFESTO ══════════════════════════════ -->
+<section id="manifesto">
+  <div class="manifesto-bg-circle"></div>
+  <div class="container">
+    <div class="manifesto-inner reveal">
+      <div class="section-label" style="justify-content:center; margin-bottom:3rem;">Working Complexity</div>
+      <p class="manifesto-quote">
+        "The patient is not an edge case.<br/>
+        The family is not overhead.<br/>
+        The clinician's uncertainty is not a failure.<br/>
+        <em>These are the system.</em>"
+      </p>
+      <p class="manifesto-attr" style="margin-top:2.5rem;">
+        Working Complexity &nbsp;·&nbsp; Design Principles &nbsp;·&nbsp; 2024
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════ CONTACT ════════════════════════════════ -->
+<section id="contact">
+  <div class="container">
+    <div class="contact-grid">
+      <div class="contact-left reveal">
+        <div class="section-label">Get in Touch</div>
+        <h2>Let's work with your complexity</h2>
+        <p>
+          Every situation is different. We don't offer a brochure before
+          we've listened. Tell us what you're facing and we'll start
+          with an honest conversation about whether and how we can help.
+        </p>
+        <div class="contact-detail">
+          <div class="contact-item">
+            <span class="contact-item-label">Email</span>
+            <span class="contact-item-value"><a href="mailto:hello@workingcomplexity.health">hello@workingcomplexity.health</a></span>
+          </div>
+          <div class="contact-item">
+            <span class="contact-item-label">Based</span>
+            <span class="contact-item-value">United Kingdom &nbsp;·&nbsp; Working globally</span>
+          </div>
+          <div class="contact-item">
+            <span class="contact-item-label">Works with</span>
+            <span class="contact-item-value">NHS &nbsp;·&nbsp; Charities &nbsp;·&nbsp; Pharma &nbsp;·&nbsp; Commissioners</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="reveal">
+        <form class="contact-form" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+          <input type="hidden" name="form-name" value="contact" />
+          <p style="display:none;"><label>Don't fill this out: <input name="bot-field" /></label></p>
+          <div class="form-row">
+            <div class="form-field">
+              <label for="name">Your Name</label>
+              <input type="text" id="name" name="name" placeholder="Dr. Jane Smith" required />
+            </div>
+            <div class="form-field">
+              <label for="org">Organisation</label>
+              <input type="text" id="org" name="organisation" placeholder="NHS Trust / Company" />
+            </div>
+          </div>
+          <div class="form-field">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" placeholder="jane@nhstrust.nhs.uk" required />
+          </div>
+          <div class="form-field">
+            <label for="type">Area of Interest</label>
+            <select id="type" name="area-of-interest">
+              <option value="">Select one</option>
+              <option>Patient Experience Design</option>
+              <option>System Complexity Analysis</option>
+              <option>Care Pathway Redesign</option>
+              <option>Rapid Prototyping &amp; Pilots</option>
+              <option>Capability Building</option>
+              <option>Not Sure Yet</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label for="message">Tell Us About Your Situation</label>
+            <textarea id="message" name="message" placeholder="Describe what you're facing — there are no wrong answers here."></textarea>
+          </div>
+          <div class="form-submit">
+            <button type="submit" class="btn-primary">Send Message</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════ FOOTER ═════════════════════════════════ -->
+<footer>
+  <div class="footer-logo" style="display:flex; align-items:center; gap:0.75rem;">
+    <svg width="24" height="24" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <polygon points="50,2 91.57,26 91.57,74 50,98 8.43,74 8.43,26" stroke="#3E5870" stroke-width="0.8" fill="none"/>
+      <polygon points="50,26 70.78,38 70.78,62 50,74 29.22,62 29.22,38" stroke="#3E5870" stroke-width="0.8" fill="none"/>
+      <polygon points="50,38 60.39,44 60.39,56 50,62 39.61,56 39.61,44" stroke="#3E5870" stroke-width="0.8" fill="none"/>
+      <circle cx="50" cy="50" r="2.5" fill="#3E5870"/>
+    </svg>
+    <strong>workingcomplexity</strong>.health
+  </div>
+  <ul class="footer-links">
+    <li><a href="#pillars">Philosophy</a></li>
+    <li><a href="#approach">Approach</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="footer-copy">
+    © 2026 Working Complexity &nbsp;·&nbsp; WC-SITE-REV.A
+  </div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.reveal').forEach((el, i) => {
+    el.style.transitionDelay = (i % 4) * 80 + 'ms';
+    observer.observe(el);
+  });
+</script>
+
+</body>
+</html>

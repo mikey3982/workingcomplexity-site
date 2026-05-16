@@ -1,0 +1,16 @@
+# Private AI memory and project files
+.claude/
+
+# Office documents — keep out of public repo
+*.docx
+*.xlsx
+*.pptx
+
+# Large PDFs
+WC-BRAND-REV-B.pdf
+
+# Internal working files
+framework_architecture_white_paper.md
+
+# Mac
+.DS_Store
