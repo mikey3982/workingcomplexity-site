@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WC Brand Book — REV.C</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --navy:#060D1B;--navy-mid:#0B1629;--navy-card:#0F1E36;
+  --gold:#C4A46B;--gold-dim:rgba(196,164,107,0.2);
+  --blue:#5B9BD5;--blue-dia:#4A90E2;
+  --text:#E0E8F4;--muted:#7A9ABF;--dim:#3E5870;
+  --border:rgba(74,144,226,0.14);--border-med:rgba(74,144,226,0.28);
+  --mono:'Space Mono',ui-monospace,monospace;
+  --sans:'Inter','Helvetica Neue',Helvetica,Arial,sans-serif;
+}
+
+html{background:#0a0a0a;scroll-behavior:smooth}
+body{font-family:var(--sans);color:var(--text)}
+
+/* ── Slide shell ── */
+.slide-wrapper{
+  position:relative;width:1920px;height:1080px;
+  transform-origin:top left;margin:0 auto;
+}
+.slide{
+  position:absolute;inset:0;background:var(--navy);overflow:hidden;
+  font-family:var(--sans);
+}
+.slide.mid{background:var(--navy-mid)}
+
+/* ── Outer page container ── */
+.page{
+  width:1920px;margin:3rem auto;
+  transform-origin:top left;
+}
+
+/* ── Hex grid ── */
+.hex-bg{
+  position:absolute;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='69.28' height='120'%3E%3Cpolygon points='34.64,0 69.28,20 69.28,60 34.64,80 0,60 0,20' stroke='%234A90E2' stroke-width='0.5' fill='none' opacity='0.055'/%3E%3Cpolygon points='34.64,80 69.28,100 69.28,140 34.64,160 0,140 0,100' stroke='%234A90E2' stroke-width='0.5' fill='none' opacity='0.055'/%3E%3C/svg%3E");
+  background-size:69.28px 120px;pointer-events:none;
+}
+
+/* ── Corner marks ── */
+.corner{position:absolute;width:28px;height:28px}
+.corner::before,.corner::after{content:'';position:absolute;background:var(--dim);opacity:0.45}
+.corner.tl{top:52px;left:52px}
+.corner.tl::before{top:0;left:0;width:28px;height:1px}
+.corner.tl::after{top:0;left:0;width:1px;height:28px}
+.corner.tr{top:52px;right:52px}
+.corner.tr::before{top:0;right:0;width:28px;height:1px}
+.corner.tr::after{top:0;right:0;width:1px;height:28px}
+.corner.bl{bottom:52px;left:52px}
+.corner.bl::before{bottom:0;left:0;width:28px;height:1px}
+.corner.bl::after{bottom:0;left:0;width:1px;height:28px}
+.corner.br{bottom:52px;right:52px}
+.corner.br::before{bottom:0;right:0;width:28px;height:1px}
+.corner.br::after{bottom:0;right:0;width:1px;height:28px}
+
+/* ── Chrome labels ── */
+.doc-code{
+  position:absolute;top:52px;left:80px;
+  font-family:var(--mono);font-size:12px;font-weight:700;
+  letter-spacing:.22em;color:var(--dim);text-transform:uppercase;
+}
+.scale-line{
+  position:absolute;bottom:52px;right:80px;
+  font-family:var(--mono);font-size:10px;letter-spacing:.14em;
+  color:var(--dim);text-transform:uppercase;
+}
+.page-url{
+  position:absolute;bottom:52px;left:80px;
+  font-family:var(--mono);font-size:11px;letter-spacing:.12em;
+  color:var(--muted);text-transform:uppercase;
+}
+.part-tag{
+  position:absolute;top:52px;right:80px;
+  font-family:var(--mono);font-size:11px;letter-spacing:.18em;
+  color:var(--dim);text-transform:uppercase;
+}
+
+/* ── Eyebrow ── */
+.eyebrow{display:flex;align-items:center;gap:18px;margin-bottom:36px}
+.eyebrow-rule{width:36px;height:2px;background:var(--gold);flex-shrink:0}
+.eyebrow-text{
+  font-family:var(--mono);font-size:12px;font-weight:400;
+  letter-spacing:.25em;color:var(--gold);text-transform:uppercase;
+}
+
+/* ── Section number large ── */
+.sec-large{
+  font-family:var(--mono);font-size:220px;font-weight:700;
+  color:rgba(91,155,213,0.06);letter-spacing:-.04em;line-height:1;
+  position:absolute;right:80px;bottom:-20px;
+  pointer-events:none;user-select:none;
+}
+
+@media print{
+  html{background:#000}
+  .page{margin:0;page-break-after:always;break-after:page}
+  @page{size:1920px 1080px;margin:0}
+  .toc-nav{display:none!important}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════
+     COVER
+═══════════════════════════════════════════════════════════ -->
+<div class="page" id="cover">
+<div class="slide-wrapper">
+<div class="slide">
+<div class="hex-bg"></div>
+<div class="corner tl"></div><div class="corner tr"></div>
+<div class="corner bl"></div><div class="corner br"></div>
+<div class="doc-code">WC-BRAND &nbsp;/&nbsp; BRAND BOOK &nbsp;/&nbsp; REV.C</div>
+<div class="scale-line">Scale 1:1 &nbsp;·&nbsp; All Dimensions in Experience</div>
+<div class="page-url">workingcomplexity.health</div>
+
+<!-- Left content -->
+<div style="position:absolute;top:0;bottom:0;left:80px;right:680px;display:flex;flex-direction:column;justify-content:center;padding-top:40px">
+  <div class="eyebrow">
+    <div class="eyebrow-rule"></div>
+    <div class="eyebrow-text">Working Complexity &nbsp;·&nbsp; 2026</div>
+  </div>
+  <h1 style="font-size:80px;font-weight:800;line-height:1.04;letter-spacing:-.03em;color:var(--text);margin-bottom:44px;max-width:960px">
+    Not a style guide.<br>
+    A <em style="font-weight:300;font-style:normal;color:var(--gold)">system<br>for working.</em>
+  </h1>
+  <p style="font-size:22px;font-weight:300;line-height:1.65;color:var(--muted);max-width:620px">
+    The single source of truth for how Working Complexity looks,
+    sounds, and reads across every client-facing artefact.
+  </p>
+</div>
+
+<!-- Right: large logo mark -->
+<div style="position:absolute;right:80px;top:50%;transform:translateY(-50%);width:520px;height:520px">
+  <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%">
+    <polygon points="50,2 91.57,26 91.57,74 50,98 8.43,74 8.43,26" stroke="#5B9BD5" stroke-width="0.8" fill="none"/>
+    <polygon points="50,26 70.78,38 70.78,62 50,74 29.22,62 29.22,38" stroke="#C4A46B" stroke-width="0.8" fill="none"/>
+    <polygon points="50,38 60.39,44 60.39,56 50,62 39.61,56 39.61,44" stroke="#5B9BD5" stroke-width="0.8" fill="none"/>
+    <circle cx="50" cy="50" r="2.5" fill="#C4A46B"/>
+    <line x1="2" y1="50" x2="98" y2="50" stroke="#5B9BD5" stroke-width="0.3" stroke-dasharray="2 3" opacity="0.5"/>
+    <line x1="50" y1="2" x2="50" y2="98" stroke="#5B9BD5" stroke-width="0.3" stroke-dasharray="2 3" opacity="0.5"/>
+  </svg>
+</div>
+
+<!-- Contents strip bottom -->
+<div style="position:absolute;bottom:100px;left:80px;right:80px;display:flex;gap:0;border-top:1px solid var(--border);padding-top:20px">
+  <div style="flex:1;font-family:var(--mono);font-size:10px;letter-spacing:.14em;color:var(--dim);text-transform:uppercase">§2 Brand Essence</div>
+  <div style="flex:1;font-family:var(--mono);font-size:10px;letter-spacing:.14em;color:var(--dim);text-transform:uppercase">§3 Voice &amp; Tone</div>
+  <div style="flex:1;font-family:var(--mono);font-size:10px;letter-spacing:.14em;color:var(--dim);text-transform:uppercase">§4 Logo</div>
+  <div style="flex:1;font-family:var(--mono);font-size:10px;letter-spacing:.14em;color:var(--dim);text-transform:uppercase">§5 Colour</div>
+  <div style="flex:1;font-family:var(--mono);font-size:10px;letter-spacing:.14em;color:var(--dim);text-transform:uppercase">§6 Typography</div>
+  <div style="flex:1;font-family:var(--mono);font-size:10px;letter-spacing:.14em;color:var(--dim);text-transform:uppercase">§7 Graphic Language</div>
+  <div style="flex:1;font-family:var(--mono);font-size:10px;letter-spacing:.14em;color:var(--dim);text-transform:uppercase">§8 Signatures</div>
+  <div style="flex:1;font-family:var(--mono);font-size:10px;letter-spacing:.14em;color:var(--dim);text-transform:uppercase">§9–12 Application</div>
+  <div style="flex:1;font-family:var(--mono);font-size:10px;letter-spacing:.14em;color:var(--dim);text-transform:uppercase">§13 Quick Ref</div>
+</div>
+
+</div></div></div>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     §2 BRAND ESSENCE — divider
+═══════════════════════════════════════════════════════════ -->
+<div class="page" id="s2">
+<div class="slide-wrapper">
+<div class="slide">
+<div class="hex-bg"></div>
+<div class="corner tl"></div><div class="corner tr"></div>
+<div class="corner bl"></div><div class="corner br"></div>
+<div class="doc-code">WC-BRAND &nbsp;/&nbsp; §2 BRAND ESSENCE &nbsp;/&nbsp; REV.C</div>
+<div class="part-tag">Part 01 / 09</div>
+<div class="page-url">workingcomplexity.health</div>
+<div class="sec-large">02</div>
+
+<div style="position:absolute;top:0;bottom:0;left:80px;right:80px;display:flex;flex-direction:column;justify-content:center;max-width:1000px">
+  <div style="font-family:var(--mono);font-size:13px;letter-spacing:.2em;color:var(--gold);margin-bottom:24px;text-transform:uppercase">§ 02</div>
+  <div class="eyebrow"><div class="eyebrow-rule"></div><div class="eyebrow-text">Brand Essence</div></div>
+  <h2 style="font-size:72px;font-weight:800;line-height:1.07;letter-spacing:-.03em;color:var(--text);margin-bottom:36px">
+    The healthcare system<br>doesn't need to be simpler.
+  </h2>
+  <p style="font-size:22px;font-weight:300;line-height:1.65;color:var(--muted);max-width:740px">
+    Working Complexity is a healthcare design agency that works <em style="font-style:normal;color:var(--gold)">with</em> complexity rather than reducing it. We serve NHS, charities, pharma, and commissioners — in the UK and globally.
+  </p>
+</div>
+
+</div></div></div>
+
+
+<!-- §2 content -->
+<div class="page" id="s2b">
+<div class="slide-wrapper">
+<div class="slide mid">
+<div class="corner tl"></div><div class="corner tr"></div>
+<div class="corner bl"></div><div class="corner br"></div>
+<div class="doc-code">WC-BRAND &nbsp;/&nbsp; §2 BRAND ESSENCE &nbsp;/&nbsp; REV.C</div>
+<div class="page-url">workingcomplexity.health</div>
+
+<!-- Three dimensions -->
+<div style="position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:80px">
+  <div class="eyebrow" style="margin-bottom:52px"><div class="eyebrow-rule"></div><div class="eyebrow-text">The three dimensions of every engagement</div></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:3px;margin-bottom:60px">
+
+    <div style="background:var(--navy-card);padding:52px 52px 60px;border:1px solid var(--border)">
+      <div style="font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--gold);margin-bottom:28px;text-transform:uppercase">01 / 03 &nbsp;·&nbsp; Understand</div>
+      <h3 style="font-size:36px;font-weight:800;letter-spacing:-.02em;color:var(--text);margin-bottom:20px;line-height:1.1">Deep thinking.<br>Sense-making.</h3>
+      <p style="font-size:16px;font-weight:300;line-height:1.75;color:var(--muted)">Systems and complexity theory. We map before we propose — the actors, the tensions, the hidden structures.</p>
+    </div>
+
+    <div style="background:var(--navy-card);padding:52px 52px 60px;border:1px solid var(--border)">
+      <div style="font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--gold);margin-bottom:28px;text-transform:uppercase">02 / 03 &nbsp;·&nbsp; Deliver</div>
+      <h3 style="font-size:36px;font-weight:800;letter-spacing:-.02em;color:var(--text);margin-bottom:20px;line-height:1.1">Prototype.<br>Pilot. Build.</h3>
+      <p style="font-size:16px;font-weight:300;line-height:1.75;color:var(--muted)">Make it work in the messy reality of care. Low fidelity where appropriate; high fidelity where it matters.</p>
+    </div>
+
+    <div style="background:var(--navy-card);padding:52px 52px 60px;border:1px solid var(--border)">
+      <div style="font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--gold);margin-bottom:28px;text-transform:uppercase">03 / 03 &nbsp;·&nbsp; Feel</div>
+      <h3 style="font-size:36px;font-weight:800;letter-spacing:-.02em;color:var(--text);margin-bottom:20px;line-height:1.1">Empathy.<br>Lived experience.</h3>
+      <p style="font-size:16px;font-weight:300;line-height:1.75;color:var(--muted)">Human depth at the centre of every engagement. The patient is not an edge case. The family is not overhead.</p>
+    </div>
+
+  </div>
+
+  <!-- Manifesto -->
+  <div style="border-left:3px solid var(--gold);padding:24px 36px;max-width:1100px">
+    <p style="font-size:22px;font-weight:700;color:var(--text);line-height:1.5;margin-bottom:12px">
+      "The patient is not an edge case. The family is not overhead. The clinician's uncertainty is not a failure. <em style="font-style:normal;color:var(--gold)">These are the system.</em>"
+    </p>
+    <cite style="font-family:var(--mono);font-size:10px;letter-spacing:.18em;color:var(--dim);text-transform:uppercase;font-style:normal">— The WC Manifesto</cite>
+  </div>
+</div>
+
+</div></div></div>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     §3 VOICE — divider
+═══════════════════════════════════════════════════════════ -->
+<div class="page" id="s3">
+<div class="slide-wrapper">
+<div class="slide">
+<div class="hex-bg"></div>
+<div class="corner tl"></div><div class="corner tr"></div>
+<div class="corner bl"></div><div class="corner br"></div>
+<div class="doc-code">WC-BRAND &nbsp;/&nbsp; §3 VOICE &amp; TONE &nbsp;/&nbsp; REV.C</div>
+<div class="part-tag">Part 02 / 09</div>
+<div class="page-url">workingcomplexity.health</div>
+<div class="sec-large">03</div>
+
+<div style="position:absolute;top:0;bottom:0;left:80px;right:80px;display:flex;flex-direction:column;justify-content:center;max-width:1000px">
+  <div style="font-family:var(--mono);font-size:13px;letter-spacing:.2em;color:var(--gold);margin-bottom:24px;text-transform:uppercase">§ 03</div>
+  <div class="eyebrow"><div class="eyebrow-rule"></div><div class="eyebrow-text">Voice &amp; Tone</div></div>
+  <h2 style="font-size:72px;font-weight:800;line-height:1.07;letter-spacing:-.03em;color:var(--text);margin-bottom:36px">
+    Literate. Unhurried.<br><em style="font-weight:300;font-style:normal;color:var(--gold)">Never performative.</em>
+  </h2>
+  <p style="font-size:22px;font-weight:300;line-height:1.65;color:var(--muted);max-width:720px">
+    WC writes like a practitioner, not a consultancy. Authority without posturing. Complexity held, not flattened.
+  </p>
+</div>
+</div></div></div>
+
+
+<!-- §3 content -->
+<div class="page" id="s3b">
+<div class="slide-wrapper">
+<div class="slide mid">
+<div class="corner tl"></div><div class="corner tr"></div>
+<div class="corner bl"></div><div class="corner br"></div>
+<div class="doc-code">WC-BRAND &nbsp;/&nbsp; §3 VOICE &amp; TONE &nbsp;/&nbsp; REV.C</div>
+<div class="page-url">workingcomplexity.health</div>
+
+<div style="position:absolute;inset:0;display:grid;grid-template-columns:1fr 1fr;gap:0;padding:80px 80px 80px">
+
+  <div style="padding-right:60px;border-right:1px solid var(--border)">
+    <div class="eyebrow"><div class="eyebrow-rule"></div><div class="eyebrow-text">Eight principles</div></div>
+    <div style="display:flex;flex-direction:column;gap:0">
+      <div style="padding:18px 0;border-bottom:1px solid rgba(74,144,226,0.08)">
+        <div style="font-family:var(--mono);font-size:10px;letter-spacing:.18em;color:var(--gold);margin-bottom:6px;text-transform:uppercase">01 &nbsp;·&nbsp; Hold complexity</div>
+        <p style="font-size:15px;font-weight:300;color:var(--muted);line-height:1.6">Never reach for "simply" or "just". If something is hard, say so — then show how we work with it.</p>
+      </div>
+      <div style="padding:18px 0;border-bottom:1px solid rgba(74,144,226,0.08)">
+        <div style="font-family:var(--mono);font-size:10px;letter-spacing:.18em;color:var(--gold);margin-bottom:6px;text-transform:uppercase">02 &nbsp;·&nbsp; Short, paired statements</div>
+        <p style="font-size:15px;font-weight:300;color:var(--muted);line-height:1.6">WC's signature cadence. <em style="font-style:normal;color:var(--text)">"Not simplified. Understood."</em> Two sentences in counterpoint.</p>
+      </div>
+      <div style="padding:18px 0;border-bottom:1px solid rgba(74,144,226,0.08)">
+        <div style="font-family:var(--mono);font-size:10px;letter-spacing:.18em;color:var(--gold);margin-bottom:6px;text-transform:uppercase">03 &nbsp;·&nbsp; Concrete over abstract</div>
+        <p style="font-size:15px;font-weight:300;color:var(--muted);line-height:1.6">Name the clinician, the ward, the handoff, the moment. Avoid "stakeholders", "end users", "solutions".</p>
+      </div>
+      <div style="padding:18px 0;border-bottom:1px solid rgba(74,144,226,0.08)">
+        <div style="font-family:var(--mono);font-size:10px;letter-spacing:.18em;color:var(--gold);margin-bottom:6px;text-transform:uppercase">04 &nbsp;·&nbsp; UK English</div>
+        <p style="font-size:15px;font-weight:300;color:var(--muted);line-height:1.6">Organisation, centre, behaviour, programme, analyse. Always.</p>
+      </div>
+      <div style="padding:18px 0;border-bottom:1px solid rgba(74,144,226,0.08)">
+        <div style="font-family:var(--mono);font-size:10px;letter-spacing:.18em;color:var(--gold);margin-bottom:6px;text-transform:uppercase">05 &nbsp;·&nbsp; Em dashes, used well</div>
+        <p style="font-size:15px;font-weight:300;color:var(--muted);line-height:1.6">Hold two ideas in relation — not as a pause-of-convenience.</p>
+      </div>
+      <div style="padding:18px 0">
+        <div style="font-family:var(--mono);font-size:10px;letter-spacing:.18em;color:var(--gold);margin-bottom:6px;text-transform:uppercase">06 &nbsp;·&nbsp; First person plural</div>
+        <p style="font-size:15px;font-weight:300;color:var(--muted);line-height:1.6">"We" — not "the team" or "WC". The company speaks as a working practice.</p>
+      </div>
+    </div>
+  </div>
+
+  <div style="padding-left:60px">
+    <div class="eyebrow"><div class="eyebrow-rule"></div><div class="eyebrow-text">Vocabulary — avoid / prefer</div></div>
+    <table style="width:100%;border-collapse:collapse;font-size:14px">
+      <thead>
+        <tr>
+          <th style="font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);padding:8px 12px 8px 0;border-bottom:1px solid var(--border);text-align:left">Avoid</th>
+          <th style="font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);padding:8px 12px;border-bottom:1px solid var(--border);text-align:left">Prefer</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td style="padding:9px 12px 9px 0;color:var(--text);border-bottom:1px solid rgba(74,144,226,0.06);font-family:var(--mono);font-size:12px">solution, solutioning</td><td style="padding:9px 12px;color:var(--muted);border-bottom:1px solid rgba(74,144,226,0.06)">approach, work, design</td></tr>
+        <tr><td style="padding:9px 12px 9px 0;color:var(--text);border-bottom:1px solid rgba(74,144,226,0.06);font-family:var(--mono);font-size:12px">stakeholder</td><td style="padding:9px 12px;color:var(--muted);border-bottom:1px solid rgba(74,144,226,0.06)">patient, clinician, family (name them)</td></tr>
+        <tr><td style="padding:9px 12px 9px 0;color:var(--text);border-bottom:1px solid rgba(74,144,226,0.06);font-family:var(--mono);font-size:12px">leverage (verb)</td><td style="padding:9px 12px;color:var(--muted);border-bottom:1px solid rgba(74,144,226,0.06)">use, draw on, put to work</td></tr>
+        <tr><td style="padding:9px 12px 9px 0;color:var(--text);border-bottom:1px solid rgba(74,144,226,0.06);font-family:var(--mono);font-size:12px">unlock, reimagine</td><td style="padding:9px 12px;color:var(--muted);border-bottom:1px solid rgba(74,144,226,0.06)">— (rewrite)</td></tr>
+        <tr><td style="padding:9px 12px 9px 0;color:var(--text);border-bottom:1px solid rgba(74,144,226,0.06);font-family:var(--mono);font-size:12px">simply, just</td><td style="padding:9px 12px;color:var(--muted);border-bottom:1px solid rgba(74,144,226,0.06)">— (delete)</td></tr>
+        <tr><td style="padding:9px 12px 9px 0;color:var(--text);border-bottom:1px solid rgba(74,144,226,0.06);font-family:var(--mono);font-size:12px">touchpoint</td><td style="padding:9px 12px;color:var(--muted);border-bottom:1px solid rgba(74,144,226,0.06)">moment, encounter, handoff</td></tr>
+        <tr><td style="padding:9px 12px 9px 0;color:var(--text);border-bottom:1px solid rgba(74,144,226,0.06);font-family:var(--mono);font-size:12px">end-to-end, seamless</td><td style="padding:9px 12px;color:var(--muted);border-bottom:1px solid rgba(74,144,226,0.06)">— (rewrite concretely)</td></tr>
+        <tr><td style="padding:9px 12px 9px 0;color:var(--text);border-bottom:1px solid rgba(74,144,226,0.06);font-family:var(--mono);font-size:12px">AI-powered</td><td style="padding:9px 12px;color:var(--muted);border-bottom:1px solid rgba(74,144,226,0.06)">evidence-based</td></tr>
+        <tr><td style="padding:9px 12px 9px 0;color:var(--text);border-bottom:1px solid rgba(74,144,226,0.06);font-family:var(--mono);font-size:12px">deliverable</td><td style="padding:9px 12px;color:var(--muted);border-bottom:1px solid rgba(74,144,226,0.06)">artefact, report, pilot</td></tr>
+        <tr><td style="padding:9px 12px 9px 0;color:var(--text);font-family:var(--mono);font-size:12px">world-class, best-in-class</td><td style="padding:9px 12px;color:var(--muted)">— (delete)</td></tr>
+      </tbody>
+    </table>
+
+    <div style="margin-top:28px;background:var(--navy-card);border:1px solid var(--border);padding:24px 28px">
+      <div style="font-family:var(--mono);font-size:10px;letter-spacing:.18em;color:var(--dim);text-transform:uppercase;margin-bottom:10px">Worked example</div>
+      <p style="font-size:14px;color:var(--muted);margin-bottom:10px;line-height:1.6"><span style="font-family:var(--mono);font-size:10px;color:rgba(196,164,107,0.5);letter-spacing:.1em;text-transform:uppercase;margin-right:8px">Avoid</span> "We leverage cutting-edge systems thinking to unlock transformational outcomes for healthcare stakeholders."</p>
+      <p style="font-size:14px;color:var(--text);line-height:1.6"><span style="font-family:var(--mono);font-size:10px;color:var(--gold);letter-spacing:.1em;text-transform:uppercase;margin-right:8px">Prefer</span> "We map the full assemblage of a situation — its actors, its tensions, its hidden structures — before we propose anything."</p>
+    </div>
+  </div>
+
+</div>
+</div></div></div>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     §4 LOGO — divider
+═══════════════════════════════════════════════════════════ -->
+<div class="page" id="s4">
+<div class="slide-wrapper">
+<div class="slide">
+<div class="hex-bg"></div>
+<div class="corner tl"></div><div class="corner tr"></div>
+<div class="corner bl"></div><div class="corner br"></div>
+<div class="doc-code">WC-BRAND &nbsp;/&nbsp; §4 LOGO &nbsp;/&nbsp; REV.C</div>
+<div class="part-tag">Part 03 / 09</div>
+<div class="page-url">workingcomplexity.health</div>
+<div class="sec-large">04</div>
+
+<div style="position:absolute;top:0;bottom:0;left:80px;right:80px;display:flex;flex-direction:column;justify-content:center;max-width:1000px">
+  <div style="font-family:var(--mono);font-size:13px;letter-spacing:.2em;color:var(--gold);margin-bottom:24px;text-transform:uppercase">§ 04</div>
+  <div class="eyebrow"><div class="eyebrow-rule"></div><div class="eyebrow-text">Logo</div></div>
+  <h2 style="font-size:72px;font-weight:800;line-height:1.07;letter-spacing:-.03em;color:var(--text);margin-bottom:36px">
+    The mark and<br>the <em style="font-weight:300;font-style:normal;color:var(--gold)">wordmark.</em>
+  </h2>
+  <p style="font-size:22px;font-weight:300;line-height:1.65;color:var(--muted);max-width:720px">
+    Three nested hexagons encode the practice. One word names it. Together, they are unmistakably WC.
+  </p>
+</div>
+</div></div></div>
+
+
+<!-- §4 content — logo mark -->
+<div class="page" id="s4b">
+<div class="slide-wrapper">
+<div class="slide mid">
+<div class="corner tl"></div><div class="corner tr"></div>
+<div class="corner bl"></div><div class="corner br"></div>
+<div class="doc-code">WC-BRAND &nbsp;/&nbsp; §4.2 LOGO MARK — PRIMARY SYMBOL &nbsp;/&nbsp; REV.C</div>
+<div class="page-url">workingcomplexity.health</div>
+
+<div style="position:absolute;inset:0;display:grid;grid-template-columns:1fr 1fr;padding:80px;gap:80px">
+
+  <!-- Left: mark display -->
+  <div style="display:flex;flex-direction:column;justify-content:center;align-items:center;gap:0">
+    <!-- Large mark centred -->
+    <svg width="360" height="360" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="margin-bottom:40px">
+      <polygon points="50,2 91.57,26 91.57,74 50,98 8.43,74 8.43,26" stroke="#5B9BD5" stroke-width="0.8" fill="none"/>
+      <polygon points="50,26 70.78,38 70.78,62 50,74 29.22,62 29.22,38" stroke="#C4A46B" stroke-width="0.8" fill="none"/>
+      <polygon points="50,38 60.39,44 60.39,56 50,62 39.61,56 39.61,44" stroke="#5B9BD5" stroke-width="0.8" fill="none"/>
+      <circle cx="50" cy="50" r="2.5" fill="#C4A46B"/>
+      <line x1="2" y1="50" x2="98" y2="50" stroke="#5B9BD5" stroke-width="0.3" stroke-dasharray="2 3" opacity="0.5"/>
+      <line x1="50" y1="2" x2="50" y2="98" stroke="#5B9BD5" stroke-width="0.3" stroke-dasharray="2 3" opacity="0.5"/>
+    </svg>
+    <!-- Scale row -->
+    <div style="display:flex;align-items:flex-end;gap:32px">
+      <div style="text-align:center">
+        <svg width="96" height="96" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="50,2 91.57,26 91.57,74 50,98 8.43,74 8.43,26" stroke="#5B9BD5" stroke-width="0.8" fill="none"/>
+          <polygon points="50,26 70.78,38 70.78,62 50,74 29.22,62 29.22,38" stroke="#C4A46B" stroke-width="0.8" fill="none"/>
+          <polygon points="50,38 60.39,44 60.39,56 50,62 39.61,56 39.61,44" stroke="#5B9BD5" stroke-width="0.8" fill="none"/>
+          <circle cx="50" cy="50" r="2.5" fill="#C4A46B"/>
+          <line x1="2" y1="50" x2="98" y2="50" stroke="#5B9BD5" stroke-width="0.3" stroke-dasharray="2 3" opacity="0.5"/>
+          <line x1="50" y1="2" x2="50" y2="98" stroke="#5B9BD5" stroke-width="0.3" stroke-dasharray="2 3" opacity="0.5"/>
+        </svg>
+        <div style="font-family:var(--mono);font-size:9px;color:var(--dim);margin-top:6px;letter-spacing:.1em;text-transform:uppercase">96px · crosshair</div>
+      </div>
+      <div style="text-align:center">
+        <svg width="48" height="48" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="50,2 91.57,26 91.57,74 50,98 8.43,74 8.43,26" stroke="#5B9BD5" stroke-width="1.2" fill="none"/>
+          <polygon points="50,26 70.78,38 70.78,62 50,74 29.22,62 29.22,38" stroke="#C4A46B" stroke-width="1.2" fill="none"/>
+          <polygon points="50,38 60.39,44 60.39,56 50,62 39.61,56 39.61,44" stroke="#5B9BD5" stroke-width="1.2" fill="none"/>
+          <circle cx="50" cy="50" r="2.5" fill="#C4A46B"/>
+        </svg>
+        <div style="font-family:var(--mono);font-size:9px;color:var(--dim);margin-top:6px;letter-spacing:.1em;text-transform:uppercase">48px · no xhair</div>
+      </div>
+      <div style="text-align:center">
+        <svg width="24" height="24" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="50,2 91.57,26 91.57,74 50,98 8.43,74 8.43,26" stroke="#5B9BD5" stroke-width="2" fill="none"/>
+          <polygon points="50,26 70.78,38 70.78,62 50,74 29.22,62 29.22,38" stroke="#C4A46B" stroke-width="2" fill="none"/>
+          <polygon points="50,38 60.39,44 60.39,56 50,62 39.61,56 39.61,44" stroke="#5B9BD5" stroke-width="2" fill="none"/>
+          <circle cx="50" cy="50" r="3" fill="#C4A46B"/>
+        </svg>
+        <div style="font-family:var(--mono);font-size:9px;color:var(--dim);margin-top:6px;letter-spacing:.1em;text-transform:uppercase">24px</div>
+      </div>
+      <div style="text-align:center">
+        <svg width="16" height="16" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="50,2 91.57,26 91.57,74 50,98 8.43,74 8.43,26" stroke="#5B9BD5" stroke-width="3" fill="none"/>
+          <polygon points="50,26 70.78,38 70.78,62 50,74 29.22,62 29.22,38" stroke="#C4A46B" stroke-width="3" fill="none"/>
+          <polygon points="50,38 60.39,44 60.39,56 50,62 39.61,56 39.61,44" stroke="#5B9BD5" stroke-width="3" fill="none"/>
+          <circle cx="50" cy="50" r="4" fill="#C4A46B"/>
+        </svg>
+        <div style="font-family:var(--mono);font-size:9px;color:var(--dim);margin-top:6px;letter-spacing:.1em;text-transform:uppercase">16px favicon</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Right: anatomy + rules -->
+  <div style="display:flex;flex-direction:column;justify-content:center">
+    <div class="eyebrow"><div class="eyebrow-rule"></div><div class="eyebrow-text">§4.2 Anatomy</div></div>
+
+    <div style="display:flex;flex-direction:column;gap:0;margin-bottom:44px">
+      <div style="display:flex;align-items:center;gap:20px;padding:16px 0;border-bottom:1px solid rgba(74,144,226,0.08)">
+        <div style="width:36px;height:2px;background:#5B9BD5;flex-shrink:0"></div>
+        <div>
+          <div style="font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:#5B9BD5;text-transform:uppercase;margin-bottom:4px">Outer hex — Blueprint Blue</div>
+          <div style="font-size:14px;font-weight:300;color:var(--muted)">Represents the system. Stroke #5B9BD5, width ≈0.8% of diameter.</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:20px;padding:16px 0;border-bottom:1px solid rgba(74,144,226,0.08)">
+        <div style="width:36px;height:2px;background:#C4A46B;flex-shrink:0"></div>
+        <div>
+          <div style="font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:#C4A46B;text-transform:uppercase;margin-bottom:4px">Middle hex — Brass Gold</div>
+          <div style="font-size:14px;font-weight:300;color:var(--muted)">Represents the working practice. 50% of outer diameter.</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:20px;padding:16px 0;border-bottom:1px solid rgba(74,144,226,0.08)">
+        <div style="width:36px;height:2px;background:#5B9BD5;flex-shrink:0"></div>
+        <div>
+          <div style="font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:#5B9BD5;text-transform:uppercase;margin-bottom:4px">Inner hex — Blueprint Blue</div>
+          <div style="font-size:14px;font-weight:300;color:var(--muted)">Represents the craft. 25% of outer diameter.</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:20px;padding:16px 0">
+        <div style="width:12px;height:12px;border-radius:50%;background:#C4A46B;flex-shrink:0;margin-left:12px"></div>
+        <div>
+          <div style="font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:#C4A46B;text-transform:uppercase;margin-bottom:4px">Centre dot — Brass Gold</div>
+          <div style="font-size:14px;font-weight:300;color:var(--muted)">Represents the person. Solid fill. ≈5% of outer diameter.</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="background:var(--navy-card);border:1px solid var(--border);padding:20px 24px">
+      <div style="font-family:var(--mono);font-size:10px;letter-spacing:.18em;color:var(--dim);text-transform:uppercase;margin-bottom:12px">Rules</div>
+      <ul style="list-style:none;display:flex;flex-direction:column;gap:8px">
+        <li style="font-size:13px;font-weight:300;color:var(--muted);padding-left:16px;position:relative"><span style="position:absolute;left:0;color:var(--dim)">—</span> All hexagons pointy-top. Never rotate.</li>
+        <li style="font-size:13px;font-weight:300;color:var(--muted);padding-left:16px;position:relative"><span style="position:absolute;left:0;color:var(--dim)">—</span> Crosshair at ≥48px; omit at smaller sizes.</li>
+        <li style="font-size:13px;font-weight:300;color:var(--muted);padding-left:16px;position:relative"><span style="position:absolute;left:0;color:var(--dim)">—</span> Never fill, recolour, rotate, or apply effects.</li>
+        <li style="font-size:13px;font-weight:300;color:var(--muted);padding-left:16px;position:relative"><span style="position:absolute;left:0;color:var(--dim)">—</span> File: <span style="font-family:var(--mono);color:var(--gold)">logo.svg</span> in project root.</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+</div></div></div>
+
+
+<!-- §4 lockups -->
+<div class="page" id="s4c">
+<div class="slide-wrapper">
+<div class="slide mid">
+<div class="corner tl"></div><div class="corner tr"></div>
+<div class="corner bl"></div><div class="corner br"></div>
+<div class="doc-code">WC-BRAND &nbsp;/&nbsp; §4.1 + §4.3 WORDMARK &amp; LOCKUPS &nbsp;/&nbsp; REV.C</div>
+<div class="page-url">workingcomplexity.health</div>
+
+<div style="position:absolute;inset:0;display:grid;grid-template-columns:1fr 1fr;padding:80px;gap:80px">
+
+  <!-- Left: wordmark -->
+  <div>
+    <div class="eyebrow"><div class="eyebrow-rule"></div><div class="eyebrow-text">§4.1 Wordmark</div></div>
+    <div style="background:var(--navy-card);border:1px solid var(--border);padding:48px;margin-bottom:24px">
+      <div style="font-family:var(--mono);font-weight:700;font-size:32px;letter-spacing:.08em;color:var(--text);margin-bottom:6px">workingcomplexity</div>
+      <div style="font-family:var(--mono);font-size:20px;letter-spacing:.2em;color:var(--gold)">— .HEALTH</div>
+    </div>
+    <ul style="list-style:none;font-size:14px;font-weight:300;color:var(--muted);display:flex;flex-direction:column;gap:8px;margin-bottom:40px">
+      <li style="padding-left:16px;position:relative"><span style="position:absolute;left:0;color:var(--dim)">—</span> Space Mono Bold 700, letter-spacing 0.08em</li>
+      <li style="padding-left:16px;position:relative"><span style="position:absolute;left:0;color:var(--dim)">—</span> Always one lowercase word — no space, no hyphen</li>
+      <li style="padding-left:16px;position:relative"><span style="position:absolute;left:0;color:var(--dim)">—</span> Subline: Space Mono 400, 0.8× size, Brass Gold</li>
+      <li style="padding-left:16px;position:relative"><span style="position:absolute;left:0;color:var(--dim)">—</span> Min size print 14pt · screen 11px</li>
+    </ul>
+
+    <div class="eyebrow"><div class="eyebrow-rule"></div><div class="eyebrow-text">Clear space</div></div>
+    <p style="font-size:14px;font-weight:300;color:var(--muted);line-height:1.65">Minimum clear space = x-height of the wordmark. Double on cover pages and external advertising.</p>
+  </div>
+
+  <!-- Right: four lockups -->
+  <div>
+    <div class="eyebrow"><div class="eyebrow-rule"></div><div class="eyebrow-text">§4.3 Four approved lockups</div></div>
+    <div style="display:flex;flex-direction:column;gap:12px">
+
+      <div style="background:var(--navy-card);border:1px solid var(--border);padding:24px 28px;display:flex;align-items:center;justify-content:space-between">
+        <div style="font-family:var(--mono);font-weight:700;font-size:18px;letter-spacing:.08em;color:var(--text)">workingcomplexity</div>
+        <div style="font-family:var(--mono);font-size:10px;letter-spacing:.15em;color:var(--dim);text-transform:uppercase">01 — Wordmark only</div>
+      </div>
+
+      <div style="background:var(--navy-card);border:1px solid var(--border);padding:24px 28px;display:flex;align-items:center;justify-content:space-between">
+        <div>
+          <div style="font-family:var(--mono);font-weight:700;font-size:18px;letter-spacing:.08em;color:var(--text);margin-bottom:4px">workingcomplexity</div>
+          <div style="font-family:var(--mono);font-size:12px;letter-spacing:.2em;color:var(--gold)">— .HEALTH</div>
+        </div>
+        <div style="font-family:var(--mono);font-size:10px;letter-spacing:.15em;color:var(--dim);text-transform:uppercase">02 — + Subline</div>
+      </div>
+
+      <div style="background:var(--navy-card);border:1px solid var(--border);padding:24px 28px;display:flex;align-items:center;justify-content:space-between">
+        <div style="display:flex;align-items:center;gap:20px">
+          <svg width="44" height="44" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <polygon points="50,2 91.57,26 91.57,74 50,98 8.43,74 8.43,26" stroke="#5B9BD5" stroke-width="1.2" fill="none"/>
+            <polygon points="50,26 70.78,38 70.78,62 50,74 29.22,62 29.22,38" stroke="#C4A46B" stroke-width="1.2" fill="none"/>
+            <polygon points="50,38 60.39,44 60.39,56 50,62 39.61,56 39.61,44" stroke="#5B9BD5" stroke-width="1.2" fill="none"/>
+            <circle cx="50" cy="50" r="2.5" fill="#C4A46B"/>
+          </svg>
+          <div style="font-family:var(--mono);font-weight:700;font-size:18px;letter-spacing:.08em;color:var(--text)">workingcomplexity</div>
+        </div>
+        <div style="font-family:var(--mono);font-size:10px;letter-spacing:.15em;color:var(--dim);text-transform:uppercase">03 — Horizontal</div>
+      </div>
+
+      <div style="background:var(--navy-card);border:1px solid var(--border);padding:24px 28px;display:flex;align-items:center;justify-content:space-between">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:10px">
+          <svg width="36" height="36" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <polygon points="50,2 91.57,26 91.57,74 50,98 8.43,74 8.43,26" stroke="#5B9BD5" stroke-width="1.4" fill="none"/>
+            <polygon points="50,26 70.78,38 70.78,62 50,74 29.22,62 29.22,38" stroke="#C4A46B" stroke-width="1.4" fill="none"/>
+            <polygon points="50,38 60.39,44 60.39,56 50,62 39.61,56 39.61,44" stroke="#5B9BD5" stroke-width="1.4" fill="none"/>
+            <circle cx="50" cy="50" r="3" fill="#C4A46B"/>
+          </svg>
+          <div style="font-family:var(--mono);font-weight:700;font-size:14px;letter-spacing:.08em;color:var(--text)">workingcomplexity</div>
+        </div>
+        <div style="font-family:var(--mono);font-size:10px;letter-spacing:.15em;color:var(--dim);text-transform:uppercase">04 — Stacked</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+</div></div></div>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     §5 COLOUR
+═══════════════════════════════════════════════════════════ -->
+<div class="page" id="s5">
+<div class="slide-wrapper">
+<div class="slide">
+<div class="hex-bg"></div>
+<div class="corner tl"></div><div class="corner tr"></div>
+<div class="corner bl"></div><div class="corner br"></div>
+<div class="doc-code">WC-BRAND &nbsp;/&nbsp; §5 COLOUR &nbsp;/&nbsp; REV.C</div>
+<div class="part-tag">Part 04 / 09</div>
+<div class="page-url">workingcomplexity.health</div>
+<div class="sec-large">05</div>
+
+<div style="position:absolute;top:0;bottom:0;left:80px;right:80px;display:flex;flex-direction:column;justify-content:center;max-width:1000px">
+  <div style="font-family:var(--mono);font-size:13px;letter-spacing:.2em;color:var(--gold);margin-bottom:24px;text-transform:uppercase">§ 05</div>
+  <div class="eyebrow"><div class="eyebrow-rule"></div><div class="eyebrow-text">Colour</div></div>
+  <h2 style="font-size:72px;font-weight:800;line-height:1.07;letter-spacing:-.03em;color:var(--text);margin-bottom:36px">
+    Dark-first.<br>Gold is <em style="font-weight:300;font-style:normal;color:var(--gold)">scarce.</em>
+  </h2>
+  <p style="font-size:22px;font-weight:300;line-height:1.65;color:var(--muted);max-width:720px">Blueprint Navy is the default backdrop. Brass Gold is reserved for one element per composition — one word, one ring, one call to action.</p>
+</div>
+</div></div></div>
+
+
+<div class="page" id="s5b">
+<div class="slide-wrapper">
+<div class="slide mid">
+<div class="corner tl"></div><div class="corner tr"></div>
+<div class="corner bl"></div><div class="corner br"></div>
+<div class="doc-code">WC-BRAND &nbsp;/&nbsp; §5 COLOUR PALETTE &nbsp;/&nbsp; REV.C</div>
+<div class="page-url">workingcomplexity.health</div>
+
+<div style="position:absolute;inset:0;padding:80px;display:flex;flex-direction:column;justify-content:center">
+  <div class="eyebrow" style="margin-bottom:44px"><div class="eyebrow-rule"></div><div class="eyebrow-text">§5.1 Dark palette — nine tokens</div></div>
+
+  <div style="display:grid;grid-template-columns:repeat(9,1fr);gap:12px;margin-bottom:52px">
+    <div><div style="height:80px;background:#060D1B;border:1px solid rgba(255,255,255,0.1);margin-bottom:10px"></div><div style="font-family:var(--mono);font-size:10px;color:var(--text);margin-bottom:3px">Blueprint Navy</div><div style="font-family:var(--mono);font-size:10px;color:var(--dim)">#060D1B</div><div style="font-size:11px;color:var(--dim);margin-top:4px">Background primary</div></div>
+    <div><div style="height:80px;background:#0B1629;margin-bottom:10px"></div><div style="font-family:var(--mono);font-size:10px;color:var(--text);margin-bottom:3px">Deep Navy</div><div style="font-family:var(--mono);font-size:10px;color:var(--dim)">#0B1629</div><div style="font-size:11px;color:var(--dim);margin-top:4px">Section bands</div></div>
+    <div><div style="height:80px;background:#0F1E36;margin-bottom:10px"></div><div style="font-family:var(--mono);font-size:10px;color:var(--text);margin-bottom:3px">Card Navy</div><div style="font-family:var(--mono);font-size:10px;color:var(--dim)">#0F1E36</div><div style="font-size:11px;color:var(--dim);margin-top:4px">Cards, panels</div></div>
+    <div><div style="height:80px;background:#C4A46B;margin-bottom:10px"></div><div style="font-family:var(--mono);font-size:10px;color:var(--text);margin-bottom:3px">Brass Gold</div><div style="font-family:var(--mono);font-size:10px;color:var(--dim)">#C4A46B</div><div style="font-size:11px;color:var(--dim);margin-top:4px">Accent — 1%</div></div>
+    <div><div style="height:80px;background:#5B9BD5;margin-bottom:10px"></div><div style="font-family:var(--mono);font-size:10px;color:var(--text);margin-bottom:3px">Blueprint Blue</div><div style="font-family:var(--mono);font-size:10px;color:var(--dim)">#5B9BD5</div><div style="font-size:11px;color:var(--dim);margin-top:4px">Mark, diagrams</div></div>
+    <div><div style="height:80px;background:#4A90E2;margin-bottom:10px"></div><div style="font-family:var(--mono);font-size:10px;color:var(--text);margin-bottom:3px">Diagram Blue</div><div style="font-family:var(--mono);font-size:10px;color:var(--dim)">#4A90E2</div><div style="font-size:11px;color:var(--dim);margin-top:4px">SVG strokes</div></div>
+    <div><div style="height:80px;background:#E0E8F4;margin-bottom:10px"></div><div style="font-family:var(--mono);font-size:10px;color:var(--navy);margin-bottom:3px">Paper Light</div><div style="font-family:var(--mono);font-size:10px;color:var(--dim)">#E0E8F4</div><div style="font-size:11px;color:var(--dim);margin-top:4px">Body text</div></div>
+    <div><div style="height:80px;background:#7A9ABF;margin-bottom:10px"></div><div style="font-family:var(--mono);font-size:10px;color:var(--text);margin-bottom:3px">Muted Blue</div><div style="font-family:var(--mono);font-size:10px;color:var(--dim)">#7A9ABF</div><div style="font-size:11px;color:var(--dim);margin-top:4px">Secondary copy</div></div>
+    <div><div style="height:80px;background:#3E5870;margin-bottom:10px"></div><div style="font-family:var(--mono);font-size:10px;color:var(--text);margin-bottom:3px">Dim Blue</div><div style="font-family:var(--mono);font-size:10px;color:var(--dim)">#3E5870</div><div style="font-size:11px;color:var(--dim);margin-top:4px">Annotations only</div></div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:80px">
+    <div>
+      <div class="eyebrow" style="margin-bottom:20px"><div class="eyebrow-rule"></div><div class="eyebrow-text">70 / 25 / 4 / 1 — the usage ratio</div></div>
+      <div style="display:flex;gap:4px;height:52px;align-items:stretch;margin-bottom:16px">
+        <div style="flex:70;background:#060D1B;border:1px solid rgba(255,255,255,0.08);display:flex;align-items:flex-end;padding:4px 6px"><span style="font-family:var(--mono);font-size:9px;color:var(--dim)">70%</span></div>
+        <div style="flex:25;background:linear-gradient(to right,#E0E8F4,#7A9ABF);display:flex;align-items:flex-end;padding:4px 4px"><span style="font-family:var(--mono);font-size:9px;color:var(--navy)">25%</span></div>
+        <div style="flex:4;background:#4A90E2;display:flex;align-items:flex-end;padding:4px 2px"><span style="font-family:var(--mono);font-size:8px;color:white">4%</span></div>
+        <div style="flex:1;background:#C4A46B"></div>
+      </div>
+      <p style="font-size:13px;font-weight:300;color:var(--muted)">Navy backgrounds → Text → Blueprint Blue lines → Brass Gold accent. The 1% gold is intentional scarcity.</p>
+    </div>
+    <div>
+      <div class="eyebrow" style="margin-bottom:20px"><div class="eyebrow-rule"></div><div class="eyebrow-text">§5.4 Light variant — print only</div></div>
+      <div style="display:flex;gap:8px;margin-bottom:14px">
+        <div style="flex:1"><div style="height:44px;background:#F4F1E8;border:1px solid #ccc;margin-bottom:6px"></div><div style="font-family:var(--mono);font-size:9px;color:var(--muted)">#F4F1E8 · Warm paper</div></div>
+        <div style="flex:1"><div style="height:44px;background:#7A5A2A;margin-bottom:6px"></div><div style="font-family:var(--mono);font-size:9px;color:var(--muted)">#7A5A2A · Deepened brass</div></div>
+        <div style="flex:1"><div style="height:44px;background:#1E4A7A;margin-bottom:6px"></div><div style="font-family:var(--mono);font-size:9px;color:var(--muted)">#1E4A7A · Deepened blue</div></div>
+      </div>
+      <p style="font-size:13px;font-weight:300;color:var(--muted)">Use only for documents that must photocopy or print in low-ink environments. Do not mix dark and light in one artefact.</p>
+    </div>
+  </div>
+</div>
+</div></div></div>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     §6 TYPOGRAPHY
+═══════════════════════════════════════════════════════════ -->
+<div class="page" id="s6">
+<div class="slide-wrapper">
+<div class="slide">
+<div class="hex-bg"></div>
+<div class="corner tl"></div><div class="corner tr"></div>
+<div class="corner bl"></div><div class="corner br"></div>
+<div class="doc-code">WC-BRAND &nbsp;/&nbsp; §6 TYPOGRAPHY &nbsp;/&nbsp; REV.C</div>
+<div class="part-tag">Part 05 / 09</div>
+<div class="page-url">workingcomplexity.health</div>
+<div class="sec-large">06</div>
+
+<div style="position:absolute;top:0;bottom:0;left:80px;right:80px;display:flex;flex-direction:column;justify-content:center;max-width:1000px">
+  <div style="font-family:var(--mono);font-size:13px;letter-spacing:.2em;color:var(--gold);margin-bottom:24px;text-transform:uppercase">§ 06</div>
+  <div class="eyebrow"><div class="eyebrow-rule"></div><div class="eyebrow-text">Typography</div></div>
+  <h2 style="font-size:72px;font-weight:800;line-height:1.07;letter-spacing:-.03em;color:var(--text);margin-bottom:36px">
+    Inter + Space Mono.<br><em style="font-weight:300;font-style:normal;color:var(--gold)">No substitutions.</em>
+  </h2>
+  <p style="font-size:22px;font-weight:300;line-height:1.65;color:var(--muted);max-width:720px">Inter for everything human-readable. Space Mono for everything that annotates, labels, or identifies.</p>
+</div>
+</div></div></div>
+
+
+<div class="page" id="s6b">
+<div class="slide-wrapper">
+<div class="slide mid">
+<div class="corner tl"></div><div class="corner tr"></div>
+<div class="corner bl"></div><div class="corner br"></div>
+<div class="doc-code">WC-BRAND &nbsp;/&nbsp; §6 TYPE SPECIMEN &nbsp;/&nbsp; REV.C</div>
+<div class="page-url">workingcomplexity.health</div>
+
+<div style="position:absolute;inset:0;padding:80px;display:flex;flex-direction:column;justify-content:center">
+  <div style="display:flex;flex-direction:column;gap:0">
+    <div style="padding:20px 0;border-bottom:1px solid var(--border)">
+      <div style="font-family:var(--mono);font-size:9px;letter-spacing:.18em;color:var(--dim);text-transform:uppercase;margin-bottom:8px">Display · Inter 800 · -0.03em · 72–96px</div>
+      <div style="font-family:var(--sans);font-weight:800;font-size:72px;letter-spacing:-.03em;line-height:1;color:var(--text)">Healthcare <em style="font-weight:300;font-style:normal;color:var(--gold)">understood.</em></div>
+    </div>
+    <div style="padding:18px 0;border-bottom:1px solid var(--border)">
+      <div style="font-family:var(--mono);font-size:9px;letter-spacing:.18em;color:var(--dim);text-transform:uppercase;margin-bottom:6px">H1 · Inter 800 · -0.03em · 48px</div>
+      <div style="font-family:var(--sans);font-weight:800;font-size:48px;letter-spacing:-.03em;line-height:1.1;color:var(--text)">The system holds more than it shows.</div>
+    </div>
+    <div style="padding:16px 0;border-bottom:1px solid var(--border)">
+      <div style="font-family:var(--mono);font-size:9px;letter-spacing:.18em;color:var(--dim);text-transform:uppercase;margin-bottom:6px">H2 · Inter 700 · -0.025em · 32px</div>
+      <div style="font-family:var(--sans);font-weight:700;font-size:32px;letter-spacing:-.025em;line-height:1.2;color:var(--text)">Complexity is not the problem. Misunderstanding it is.</div>
+    </div>
+    <div style="padding:14px 0;border-bottom:1px solid var(--border)">
+      <div style="font-family:var(--mono);font-size:9px;letter-spacing:.18em;color:var(--dim);text-transform:uppercase;margin-bottom:6px">Body · Inter 300 · 0 · 18px · lh 1.75</div>
+      <div style="font-family:var(--sans);font-weight:300;font-size:18px;line-height:1.75;color:var(--muted);max-width:1200px">We map the full assemblage of a situation — its actors, its tensions, its hidden structures — before we propose anything. That mapping takes the form of prototypes, workshops, and artefacts that make the situation legible to those inside it.</div>
+    </div>
+    <div style="padding:14px 0;border-bottom:1px solid var(--border)">
+      <div style="font-family:var(--mono);font-size:9px;letter-spacing:.18em;color:var(--dim);text-transform:uppercase;margin-bottom:6px">Eyebrow · Space Mono 400 · 0.25em · UPPERCASE · 12px</div>
+      <div style="font-family:var(--mono);font-size:12px;letter-spacing:.25em;color:var(--gold);text-transform:uppercase">Working Complexity &nbsp;·&nbsp; Healthcare Design &nbsp;·&nbsp; 2026</div>
+    </div>
+    <div style="padding:14px 0;border-bottom:1px solid var(--border)">
+      <div style="font-family:var(--mono);font-size:9px;letter-spacing:.18em;color:var(--dim);text-transform:uppercase;margin-bottom:6px">Document code · Space Mono 700 · 0.22em · 11px</div>
+      <div style="font-family:var(--mono);font-weight:700;font-size:11px;letter-spacing:.22em;color:var(--dim);text-transform:uppercase">WC-RPT-001 &nbsp;/&nbsp; STRATEGY &nbsp;/&nbsp; REV.A</div>
+    </div>
+    <div style="padding:14px 0">
+      <div style="font-family:var(--mono);font-size:9px;letter-spacing:.18em;color:var(--dim);text-transform:uppercase;margin-bottom:6px">Scale line · Space Mono 400 · 0.14em · 10px</div>
+      <div style="font-family:var(--mono);font-size:10px;letter-spacing:.14em;color:var(--dim);text-transform:uppercase">Scale 1:1 &nbsp;·&nbsp; All Dimensions in Experience</div>
+    </div>
+  </div>
+</div>
+</div></div></div>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     §7 GRAPHIC LANGUAGE
+═══════════════════════════════════════════════════════════ -->
+<div class="page" id="s7">
+<div class="slide-wrapper">
+<div class="slide">
+<div class="hex-bg"></div>
+<div class="corner tl"></div><div class="corner tr"></div>
+<div class="corner bl"></div><div class="corner br"></div>
+<div class="doc-code">WC-BRAND &nbsp;/&nbsp; §7 GRAPHIC LANGUAGE &nbsp;/&nbsp; REV.C</div>
+<div class="part-tag">Part 06 / 09</div>
+<div class="page-url">workingcomplexity.health</div>
+<div class="sec-large">07</div>
+
+<div style="position:absolute;top:0;bottom:0;left:80px;right:80px;display:flex;flex-direction:column;justify-content:center;max-width:1000px">
+  <div style="font-family:var(--mono);font-size:13px;letter-spacing:.2em;color:var(--gold);margin-bottom:24px;text-transform:uppercase">§ 07</div>
+  <div class="eyebrow"><div class="eyebrow-rule"></div><div class="eyebrow-text">Graphic Language</div></div>
+  <h2 style="font-size:72px;font-weight:800;line-height:1.07;letter-spacing:-.03em;color:var(--text);margin-bottom:36px">
+    Architectural blueprint<br>meets <em style="font-weight:300;font-style:normal;color:var(--gold)">data network.</em>
+  </h2>
+  <p style="font-size:22px;font-weight:300;line-height:1.65;color:var(--muted);max-width:720px">Hex grids, corner marks, dimension ticks, annotations. Never medical illustration — never infographic.</p>
+</div>
+</div></div></div>
+
+
+<div class="page" id="s7b">
+<div class="slide-wrapper">
+<div class="slide mid">
+<div class="corner tl"></div><div class="corner tr"></div>
+<div class="corner bl"></div><div class="corner br"></div>
+<div class="doc-code">WC-BRAND &nbsp;/&nbsp; §7 GRAPHIC LANGUAGE &nbsp;/&nbsp; REV.C</div>
+<div class="page-url">workingcomplexity.health</div>
+
+<div style="position:absolute;inset:0;display:grid;grid-template-columns:1fr 1fr;padding:80px;gap:80px">
+
+  <div>
+    <div class="eyebrow"><div class="eyebrow-rule"></div><div class="eyebrow-text">§7.1 The hex grid</div></div>
+    <div style="position:relative;height:160px;background:var(--navy-card);border:1px solid var(--border);overflow:hidden;margin-bottom:16px">
+      <div style="position:absolute;inset:0;background-image:url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2269.28%22 height=%22120%22%3E%3Cpolygon points=%2234.64,0 69.28,20 69.28,60 34.64,80 0,60 0,20%22 stroke=%22%234A90E2%22 stroke-width=%220.5%22 fill=%22none%22 opacity=%220.3%22/%3E%3Cpolygon points=%2234.64,80 69.28,100 69.28,140 34.64,160 0,140 0,100%22 stroke=%22%234A90E2%22 stroke-width=%220.5%22 fill=%22none%22 opacity=%220.3%22/%3E%3C/svg%3E');background-size:69.28px 120px;"></div>
+      <div style="position:absolute;bottom:10px;left:12px;font-family:var(--mono);font-size:9px;letter-spacing:.12em;color:var(--dim);text-transform:uppercase">Pointy-top · 40px centre-to-vertex · tile 69.28 × 120px</div>
+    </div>
+    <ul style="list-style:none;font-size:14px;font-weight:300;color:var(--muted);display:flex;flex-direction:column;gap:8px;margin-bottom:40px">
+      <li style="padding-left:16px;position:relative"><span style="position:absolute;left:0;color:var(--dim)">—</span> Covers and section dividers only. Never on body content.</li>
+      <li style="padding-left:16px;position:relative"><span style="position:absolute;left:0;color:var(--dim)">—</span> Opacity: rgba(74,144,226,0.055) default · 0.08 for hero/poster.</li>
+    </ul>
+
+    <div class="eyebrow"><div class="eyebrow-rule"></div><div class="eyebrow-text">§7.2 Corner marks</div></div>
+    <div style="position:relative;width:120px;height:80px;margin:12px 0 16px">
+      <div style="position:absolute;top:0;left:0;width:20px;height:1px;background:var(--dim);opacity:0.5"></div>
+      <div style="position:absolute;top:0;left:0;width:1px;height:20px;background:var(--dim);opacity:0.5"></div>
+      <div style="position:absolute;top:0;right:0;width:20px;height:1px;background:var(--dim);opacity:0.5"></div>
+      <div style="position:absolute;top:0;right:0;width:1px;height:20px;background:var(--dim);opacity:0.5"></div>
+      <div style="position:absolute;bottom:0;left:0;width:20px;height:1px;background:var(--dim);opacity:0.5"></div>
+      <div style="position:absolute;bottom:0;left:0;width:1px;height:20px;background:var(--dim);opacity:0.5"></div>
+      <div style="position:absolute;bottom:0;right:0;width:20px;height:1px;background:var(--dim);opacity:0.5"></div>
+      <div style="position:absolute;bottom:0;right:0;width:1px;height:20px;background:var(--dim);opacity:0.5"></div>
+    </div>
+    <p style="font-size:14px;font-weight:300;color:var(--muted)">Dim Blue #3E5870 · 40% opacity · 20px legs · 1px stroke. Covers and dividers only.</p>
+  </div>
+
+  <div>
+    <div class="eyebrow"><div class="eyebrow-rule"></div><div class="eyebrow-text">§7.5 Hex sizing ladder</div></div>
+    <div style="display:flex;flex-direction:column;gap:20px;margin-bottom:40px">
+      <div style="display:flex;align-items:center;gap:20px">
+        <svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><polygon points="50,2 91.57,26 91.57,74 50,98 8.43,74 8.43,26" stroke="#4A90E2" stroke-width="0.8" fill="none" opacity="0.25"/></svg>
+        <div><div style="font-family:var(--mono);font-size:10px;letter-spacing:.15em;color:var(--dim);text-transform:uppercase;margin-bottom:4px">120–200px · Section divider accent</div><p style="font-size:13px;font-weight:300;color:var(--muted)">One per composition. Blueprint Blue at 10% opacity. Never filled.</p></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:20px">
+        <svg width="52" height="52" viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg"><polygon points="26,0 51.98,13 51.98,39 26,52 0.02,39 0.02,13" stroke="#5B9BD5" stroke-width="0.8" fill="none"/><circle cx="26" cy="26" r="5" fill="#C4A46B"/></svg>
+        <div><div style="font-family:var(--mono);font-size:10px;letter-spacing:.15em;color:var(--dim);text-transform:uppercase;margin-bottom:4px">52-unit grid · Icon frame</div><p style="font-size:13px;font-weight:300;color:var(--muted)">Standard container for all system icons. Gold datum at centre.</p></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:20px">
+        <svg width="24" height="24" viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg"><polygon points="26,0 51.98,13 51.98,39 26,52 0.02,39 0.02,13" stroke="#5B9BD5" stroke-width="2" fill="none"/></svg>
+        <div><div style="font-family:var(--mono);font-size:10px;letter-spacing:.15em;color:var(--dim);text-transform:uppercase;margin-bottom:4px">12px · Diagram node marker</div><p style="font-size:13px;font-weight:300;color:var(--muted)">Stroke only. Marks connection points in network diagrams.</p></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:20px">
+        <svg width="12" height="12" viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg"><polygon points="26,0 51.98,13 51.98,39 26,52 0.02,39 0.02,13" fill="#C4A46B"/></svg>
+        <div><div style="font-family:var(--mono);font-size:10px;letter-spacing:.15em;color:var(--dim);text-transform:uppercase;margin-bottom:4px">6px solid · Data point bullet</div><p style="font-size:13px;font-weight:300;color:var(--muted)">Brass Gold. Replaces round dots for list bullets and data points.</p></div>
+      </div>
+    </div>
+
+    <div style="background:var(--navy-card);border:1px solid var(--border);padding:20px 24px">
+      <div style="font-family:var(--mono);font-size:10px;letter-spacing:.18em;color:var(--dim);text-transform:uppercase;margin-bottom:12px">Hex rules</div>
+      <ul style="list-style:none;font-size:13px;font-weight:300;color:var(--muted);display:flex;flex-direction:column;gap:8px">
+        <li style="padding-left:16px;position:relative"><span style="position:absolute;left:0;color:var(--dim)">—</span> Never fill a large hex with solid colour.</li>
+        <li style="padding-left:16px;position:relative"><span style="position:absolute;left:0;color:var(--dim)">—</span> Never rotate off the pointy-top axis.</li>
+        <li style="padding-left:16px;position:relative"><span style="position:absolute;left:0;color:var(--dim)">—</span> Nested hexagons reserved for the logo mark only (§4.2).</li>
+        <li style="padding-left:16px;position:relative"><span style="position:absolute;left:0;color:var(--dim)">—</span> Use only the sizes in the ladder above.</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+</div></div></div>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     §8 SIGNATURE DEVICES
+═══════════════════════════════════════════════════════════ -->
+<div class="page" id="s8">
+<div class="slide-wrapper">
+<div class="slide">
+<div class="hex-bg"></div>
+<div class="corner tl"></div><div class="corner tr"></div>
+<div class="corner bl"></div><div class="corner br"></div>
+<div class="doc-code">WC-BRAND &nbsp;/&nbsp; §8 SIGNATURE DEVICES &nbsp;/&nbsp; REV.C</div>
+<div class="part-tag">Part 07 / 09</div>
+<div class="page-url">workingcomplexity.health</div>
+
+<div style="position:absolute;inset:0;padding:80px;display:flex;flex-direction:column;justify-content:center">
+  <div class="eyebrow" style="margin-bottom:52px"><div class="eyebrow-rule"></div><div class="eyebrow-text">§8 — The ten tells · use at least two per deliverable</div></div>
+  <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:16px">
+
+    <div style="background:var(--navy-card);border:1px solid var(--border);padding:28px 24px">
+      <div style="font-family:var(--mono);font-weight:700;font-size:32px;color:var(--gold);margin-bottom:14px;line-height:1">01</div>
+      <div style="font-size:14px;font-weight:400;color:var(--text);margin-bottom:8px">Document code</div>
+      <div style="font-family:var(--mono);font-size:9px;letter-spacing:.12em;color:var(--dim);text-transform:uppercase">WC-### / SUBJECT / REV.A · top-left of every cover</div>
+    </div>
+
+    <div style="background:var(--navy-card);border:1px solid var(--border);padding:28px 24px">
+      <div style="font-family:var(--mono);font-weight:700;font-size:32px;color:var(--gold);margin-bottom:14px;line-height:1">02</div>
+      <div style="font-size:14px;font-weight:400;color:var(--text);margin-bottom:8px">Scale line</div>
+      <div style="font-family:var(--mono);font-size:9px;letter-spacing:.12em;color:var(--dim);text-transform:uppercase">SCALE 1:1 · ALL DIMENSIONS IN EXPERIENCE · once per artefact</div>
+    </div>
+
+    <div style="background:var(--navy-card);border:1px solid var(--border);padding:28px 24px">
+      <div style="font-family:var(--mono);font-weight:700;font-size:32px;color:var(--gold);margin-bottom:14px;line-height:1">03</div>
+      <div style="font-size:14px;font-weight:400;color:var(--text);margin-bottom:8px">Paired statement</div>
+      <div style="font-size:13px;font-weight:300;color:var(--muted);line-height:1.5">"Emergent by design. Rigorous by necessity."</div>
+    </div>
+
+    <div style="background:var(--navy-card);border:1px solid var(--border);padding:28px 24px">
+      <div style="font-family:var(--mono);font-weight:700;font-size:32px;color:var(--gold);margin-bottom:14px;line-height:1">04</div>
+      <div style="font-size:14px;font-weight:400;color:var(--text);margin-bottom:8px">Logo mark</div>
+      <div style="font-size:13px;font-weight:300;color:var(--muted)">Three nested hexagons. At least once per document.</div>
+    </div>
+
+    <div style="background:var(--navy-card);border:1px solid var(--border);padding:28px 24px">
+      <div style="font-family:var(--mono);font-weight:700;font-size:32px;color:var(--gold);margin-bottom:14px;line-height:1">05</div>
+      <div style="font-size:14px;font-weight:400;color:var(--text);margin-bottom:8px">Corner marks</div>
+      <div style="font-size:13px;font-weight:300;color:var(--muted)">Cover and section dividers only — never on content slides.</div>
+    </div>
+
+    <div style="background:var(--navy-card);border:1px solid var(--border);padding:28px 24px">
+      <div style="font-family:var(--mono);font-weight:700;font-size:32px;color:var(--gold);margin-bottom:14px;line-height:1">06</div>
+      <div style="font-size:14px;font-weight:400;color:var(--text);margin-bottom:8px">Eyebrow label</div>
+      <div style="font-size:13px;font-weight:300;color:var(--muted)">Gold rule + Space Mono UPPERCASE above every major headline.</div>
+    </div>
+
+    <div style="background:var(--navy-card);border:1px solid var(--border);padding:28px 24px">
+      <div style="font-family:var(--mono);font-weight:700;font-size:32px;color:var(--gold);margin-bottom:14px;line-height:1">07</div>
+      <div style="font-size:14px;font-weight:400;color:var(--text);margin-bottom:8px">Numbered sequences</div>
+      <div style="font-family:var(--mono);font-size:9px;letter-spacing:.12em;color:var(--dim);text-transform:uppercase">01 / 03 · SVC-01 · §01</div>
+    </div>
+
+    <div style="background:var(--navy-card);border:1px solid var(--border);padding:28px 24px">
+      <div style="font-family:var(--mono);font-weight:700;font-size:32px;color:var(--gold);margin-bottom:14px;line-height:1">08</div>
+      <div style="font-size:14px;font-weight:400;color:var(--text);margin-bottom:8px">Gold word</div>
+      <div style="font-size:13px;font-weight:300;color:var(--muted)">One word in Inter 300 Brass Gold per major headline.</div>
+    </div>
+
+    <div style="background:var(--navy-card);border:1px solid var(--border);padding:28px 24px">
+      <div style="font-family:var(--mono);font-weight:700;font-size:32px;color:var(--gold);margin-bottom:14px;line-height:1">09</div>
+      <div style="font-size:14px;font-weight:400;color:var(--text);margin-bottom:8px">Hex grid</div>
+      <div style="font-size:13px;font-weight:300;color:var(--muted)">On covers and dividers at specified opacity. Never on body content.</div>
+    </div>
+
+    <div style="background:var(--navy-card);border:1px solid var(--border);padding:28px 24px">
+      <div style="font-family:var(--mono);font-weight:700;font-size:32px;color:var(--gold);margin-bottom:14px;line-height:1">10</div>
+      <div style="font-size:14px;font-weight:400;color:var(--text);margin-bottom:8px">Hex accent</div>
+      <div style="font-size:13px;font-weight:300;color:var(--muted)">One per composition: large bg hex, node markers, or hex callout.</div>
+    </div>
+
+  </div>
+</div>
+</div></div></div>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     APPLICATION
+═══════════════════════════════════════════════════════════ -->
+<div class="page" id="s9">
+<div class="slide-wrapper">
+<div class="slide">
+<div class="hex-bg"></div>
+<div class="corner tl"></div><div class="corner tr"></div>
+<div class="corner bl"></div><div class="corner br"></div>
+<div class="doc-code">WC-BRAND &nbsp;/&nbsp; §9–12 APPLICATION &nbsp;/&nbsp; REV.C</div>
+<div class="part-tag">Part 08 / 09</div>
+<div class="page-url">workingcomplexity.health</div>
+<div class="sec-large">09</div>
+
+<div style="position:absolute;top:0;bottom:0;left:80px;right:80px;display:flex;flex-direction:column;justify-content:center;max-width:1000px">
+  <div style="font-family:var(--mono);font-size:13px;letter-spacing:.2em;color:var(--gold);margin-bottom:24px;text-transform:uppercase">§ 09–12</div>
+  <div class="eyebrow"><div class="eyebrow-rule"></div><div class="eyebrow-text">Application</div></div>
+  <h2 style="font-size:72px;font-weight:800;line-height:1.07;letter-spacing:-.03em;color:var(--text);margin-bottom:36px">
+    Reports. PDFs.<br>Decks. <em style="font-weight:300;font-style:normal;color:var(--gold)">The web.</em>
+  </h2>
+  <p style="font-size:22px;font-weight:300;line-height:1.65;color:var(--muted);max-width:720px">Four artefact families. One voice, one palette, one mark — different formats for different contexts.</p>
+</div>
+</div></div></div>
+
+
+<div class="page" id="s9b">
+<div class="slide-wrapper">
+<div class="slide mid">
+<div class="corner tl"></div><div class="corner tr"></div>
+<div class="corner bl"></div><div class="corner br"></div>
+<div class="doc-code">WC-BRAND &nbsp;/&nbsp; §9–12 APPLICATION &nbsp;/&nbsp; REV.C</div>
+<div class="page-url">workingcomplexity.health</div>
+
+<div style="position:absolute;inset:0;display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:3px;padding:80px">
+
+  <div style="background:var(--navy-card);border:1px solid var(--border);padding:36px 28px;display:flex;flex-direction:column">
+    <div style="font-family:var(--mono);font-size:10px;letter-spacing:.18em;color:var(--gold);text-transform:uppercase;margin-bottom:20px">§9 &nbsp;·&nbsp; Word reports</div>
+    <h3 style="font-size:22px;font-weight:700;color:var(--text);margin-bottom:20px;line-height:1.2">Long-form written deliverables</h3>
+    <ul style="list-style:none;font-size:13px;font-weight:300;color:var(--muted);display:flex;flex-direction:column;gap:8px;flex:1">
+      <li style="padding-left:14px;position:relative"><span style="position:absolute;left:0;color:var(--dim)">—</span> A4 portrait · 25mm margins</li>
+      <li style="padding-left:14px;position:relative"><span style="position:absolute;left:0;color:var(--dim)">—</span> Light variant (photocopies cleanly)</li>
+      <li style="padding-left:14px;position:relative"><span style="position:absolute;left:0;color:var(--dim)">—</span> Body: Inter 11pt 300 · lh 1.5</li>
+      <li style="padding-left:14px;position:relative"><span style="position:absolute;left:0;color:var(--dim)">—</span> Bullets: em dash — not dot</li>
+      <li style="padding-left:14px;position:relative"><span style="position:absolute;left:0;color:var(--dim)">—</span> References: Harvard author-date</li>
+      <li style="padding-left:14px;position:relative"><span style="position:absolute;left:0;color:var(--dim)">—</span> Logo mark 40mm on cover</li>
+    </ul>
+  </div>
+
+  <div style="background:var(--navy-card);border:1px solid var(--border);padding:36px 28px;display:flex;flex-direction:column">
+    <div style="font-family:var(--mono);font-size:10px;letter-spacing:.18em;color:var(--gold);text-transform:uppercase;margin-bottom:20px">§10 &nbsp;·&nbsp; PDFs</div>
+    <h3 style="font-size:22px;font-weight:700;color:var(--text);margin-bottom:20px;line-height:1.2">Print-ready or digital-first</h3>
+    <ul style="list-style:none;font-size:13px;font-weight:300;color:var(--muted);display:flex;flex-direction:column;gap:8px;flex:1">
+      <li style="padding-left:14px;position:relative"><span style="position:absolute;left:0;color:var(--dim)">—</span> Two families: long-form (light) + presentation (dark)</li>
+      <li style="padding-left:14px;position:relative"><span style="position:absolute;left:0;color:var(--dim)">—</span> Presentation: 1920×1080 · dark variant</li>
+      <li style="padding-left:14px;position:relative"><span style="position:absolute;left:0;color:var(--dim)">—</span> Research report → light</li>
+      <li style="padding-left:14px;position:relative"><span style="position:absolute;left:0;color:var(--dim)">—</span> One-pager, leave-behind → dark</li>
+      <li style="padding-left:14px;position:relative"><span style="position:absolute;left:0;color:var(--dim)">—</span> Embed all fonts. Never rasterise type.</li>
+    </ul>
+  </div>
+
+  <div style="background:var(--navy-card);border:1px solid var(--border);padding:36px 28px;display:flex;flex-direction:column">
+    <div style="font-family:var(--mono);font-size:10px;letter-spacing:.18em;color:var(--gold);text-transform:uppercase;margin-bottom:20px">§11 &nbsp;·&nbsp; Decks</div>
+    <h3 style="font-size:22px;font-weight:700;color:var(--text);margin-bottom:20px;line-height:1.2">Primary client-facing artefact</h3>
+    <ul style="list-style:none;font-size:13px;font-weight:300;color:var(--muted);display:flex;flex-direction:column;gap:8px;flex:1">
+      <li style="padding-left:14px;position:relative"><span style="position:absolute;left:0;color:var(--dim)">—</span> 1920×1080 · Blueprint Navy</li>
+      <li style="padding-left:14px;position:relative"><span style="position:absolute;left:0;color:var(--dim)">—</span> Six masters: Title · Divider · Content · Quote · Diagram · Close</li>
+      <li style="padding-left:14px;position:relative"><span style="position:absolute;left:0;color:var(--dim)">—</span> No animations or transitions</li>
+      <li style="padding-left:14px;position:relative"><span style="position:absolute;left:0;color:var(--dim)">—</span> 15–25 slides · no pie charts</li>
+      <li style="padding-left:14px;position:relative"><span style="position:absolute;left:0;color:var(--dim)">—</span> Hero numbers: Inter 128pt 800 gold</li>
+    </ul>
+  </div>
+
+  <div style="background:var(--navy-card);border:1px solid var(--border);padding:36px 28px;display:flex;flex-direction:column">
+    <div style="font-family:var(--mono);font-size:10px;letter-spacing:.18em;color:var(--gold);text-transform:uppercase;margin-bottom:20px">§12 &nbsp;·&nbsp; Web</div>
+    <h3 style="font-size:22px;font-weight:700;color:var(--text);margin-bottom:20px;line-height:1.2">workingcomplexity.health</h3>
+    <ul style="list-style:none;font-size:13px;font-weight:300;color:var(--muted);display:flex;flex-direction:column;gap:8px;flex:1">
+      <li style="padding-left:14px;position:relative"><span style="position:absolute;left:0;color:var(--dim)">—</span> Plain HTML/CSS/JS · no framework</li>
+      <li style="padding-left:14px;position:relative"><span style="position:absolute;left:0;color:var(--dim)">—</span> Netlify hosting · GitHub CI/CD</li>
+      <li style="padding-left:14px;position:relative"><span style="position:absolute;left:0;color:var(--dim)">—</span> Dark-first only (no light variant)</li>
+      <li style="padding-left:14px;position:relative"><span style="position:absolute;left:0;color:var(--dim)">—</span> Logo mark hero at 65% opacity</li>
+      <li style="padding-left:14px;position:relative"><span style="position:absolute;left:0;color:var(--dim)">—</span> Hex honeycomb services section</li>
+      <li style="padding-left:14px;position:relative"><span style="position:absolute;left:0;color:var(--dim)">—</span> Update via <span style="font-family:var(--mono);color:var(--gold)">wc-update-site</span> skill</li>
+    </ul>
+  </div>
+
+</div>
+</div></div></div>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     §13 QUICK REFERENCE
+═══════════════════════════════════════════════════════════ -->
+<div class="page" id="s13">
+<div class="slide-wrapper">
+<div class="slide">
+<div class="hex-bg"></div>
+<div class="corner tl"></div><div class="corner tr"></div>
+<div class="corner bl"></div><div class="corner br"></div>
+<div class="doc-code">WC-BRAND &nbsp;/&nbsp; §13 QUICK REFERENCE &nbsp;/&nbsp; REV.C</div>
+<div class="part-tag">Part 09 / 09</div>
+<div class="page-url">workingcomplexity.health</div>
+
+<div style="position:absolute;inset:0;padding:80px;display:flex;flex-direction:column;justify-content:center">
+  <div class="eyebrow" style="margin-bottom:40px"><div class="eyebrow-rule"></div><div class="eyebrow-text">§13 Quick reference</div></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:80px">
+    <div>
+      <div style="font-family:var(--mono);font-size:10px;letter-spacing:.18em;color:var(--gold);text-transform:uppercase;margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid var(--border)">Always</div>
+      <ul style="list-style:none;display:flex;flex-direction:column;gap:0">
+        <li style="padding:9px 0;border-bottom:1px solid rgba(74,144,226,0.06);font-size:15px;font-weight:300;color:var(--text);padding-left:20px;position:relative"><span style="position:absolute;left:0;color:var(--gold);font-weight:700">+</span> Dark navy first — light only for print economy</li>
+        <li style="padding:9px 0;border-bottom:1px solid rgba(74,144,226,0.06);font-size:15px;font-weight:300;color:var(--text);padding-left:20px;position:relative"><span style="position:absolute;left:0;color:var(--gold);font-weight:700">+</span> Gold sparingly — one word or one element</li>
+        <li style="padding:9px 0;border-bottom:1px solid rgba(74,144,226,0.06);font-size:15px;font-weight:300;color:var(--text);padding-left:20px;position:relative"><span style="position:absolute;left:0;color:var(--gold);font-weight:700">+</span> Sentence case everywhere except Space Mono labels</li>
+        <li style="padding:9px 0;border-bottom:1px solid rgba(74,144,226,0.06);font-size:15px;font-weight:300;color:var(--text);padding-left:20px;position:relative"><span style="position:absolute;left:0;color:var(--gold);font-weight:700">+</span> Paired statements for headlines</li>
+        <li style="padding:9px 0;border-bottom:1px solid rgba(74,144,226,0.06);font-size:15px;font-weight:300;color:var(--text);padding-left:20px;position:relative"><span style="position:absolute;left:0;color:var(--gold);font-weight:700">+</span> Em dashes and UK English throughout</li>
+        <li style="padding:9px 0;border-bottom:1px solid rgba(74,144,226,0.06);font-size:15px;font-weight:300;color:var(--text);padding-left:20px;position:relative"><span style="position:absolute;left:0;color:var(--gold);font-weight:700">+</span> First person plural ("we")</li>
+        <li style="padding:9px 0;border-bottom:1px solid rgba(74,144,226,0.06);font-size:15px;font-weight:300;color:var(--text);padding-left:20px;position:relative"><span style="position:absolute;left:0;color:var(--gold);font-weight:700">+</span> Named people — never "stakeholders"</li>
+        <li style="padding:9px 0;border-bottom:1px solid rgba(74,144,226,0.06);font-size:15px;font-weight:300;color:var(--text);padding-left:20px;position:relative"><span style="position:absolute;left:0;color:var(--gold);font-weight:700">+</span> Hex grid on covers and dividers — never on body</li>
+        <li style="padding:9px 0;border-bottom:1px solid rgba(74,144,226,0.06);font-size:15px;font-weight:300;color:var(--text);padding-left:20px;position:relative"><span style="position:absolute;left:0;color:var(--gold);font-weight:700">+</span> Pointy-top hexagons, vertically aligned</li>
+        <li style="padding:9px 0;font-size:15px;font-weight:300;color:var(--text);padding-left:20px;position:relative"><span style="position:absolute;left:0;color:var(--gold);font-weight:700">+</span> Inter + Space Mono — no third typeface</li>
+      </ul>
+    </div>
+    <div>
+      <div style="font-family:var(--mono);font-size:10px;letter-spacing:.18em;color:var(--dim);text-transform:uppercase;margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid var(--border)">Never</div>
+      <ul style="list-style:none;display:flex;flex-direction:column;gap:0">
+        <li style="padding:9px 0;border-bottom:1px solid rgba(74,144,226,0.06);font-size:15px;font-weight:300;color:var(--muted);padding-left:20px;position:relative"><span style="position:absolute;left:0;color:var(--dim)">×</span> Mix dark and light variants in one artefact</li>
+        <li style="padding:9px 0;border-bottom:1px solid rgba(74,144,226,0.06);font-size:15px;font-weight:300;color:var(--muted);padding-left:20px;position:relative"><span style="position:absolute;left:0;color:var(--dim)">×</span> Fill large areas in gold</li>
+        <li style="padding:9px 0;border-bottom:1px solid rgba(74,144,226,0.06);font-size:15px;font-weight:300;color:var(--muted);padding-left:20px;position:relative"><span style="position:absolute;left:0;color:var(--dim)">×</span> Title case in Inter</li>
+        <li style="padding:9px 0;border-bottom:1px solid rgba(74,144,226,0.06);font-size:15px;font-weight:300;color:var(--muted);padding-left:20px;position:relative"><span style="position:absolute;left:0;color:var(--dim)">×</span> Question-mark headlines</li>
+        <li style="padding:9px 0;border-bottom:1px solid rgba(74,144,226,0.06);font-size:15px;font-weight:300;color:var(--muted);padding-left:20px;position:relative"><span style="position:absolute;left:0;color:var(--dim)">×</span> Stock clinician-pointing-at-tablet imagery</li>
+        <li style="padding:9px 0;border-bottom:1px solid rgba(74,144,226,0.06);font-size:15px;font-weight:300;color:var(--muted);padding-left:20px;position:relative"><span style="position:absolute;left:0;color:var(--dim)">×</span> Recolour, rotate, or fill the logo mark</li>
+        <li style="padding:9px 0;border-bottom:1px solid rgba(74,144,226,0.06);font-size:15px;font-weight:300;color:var(--muted);padding-left:20px;position:relative"><span style="position:absolute;left:0;color:var(--dim)">×</span> Pie charts (ever)</li>
+        <li style="padding:9px 0;border-bottom:1px solid rgba(74,144,226,0.06);font-size:15px;font-weight:300;color:var(--muted);padding-left:20px;position:relative"><span style="position:absolute;left:0;color:var(--dim)">×</span> Animations or transitions in decks</li>
+        <li style="padding:9px 0;border-bottom:1px solid rgba(74,144,226,0.06);font-size:15px;font-weight:300;color:var(--muted);padding-left:20px;position:relative"><span style="position:absolute;left:0;color:var(--dim)">×</span> Corner marks on content slides</li>
+        <li style="padding:9px 0;font-size:15px;font-weight:300;color:var(--muted);padding-left:20px;position:relative"><span style="position:absolute;left:0;color:var(--dim)">×</span> Crosshair on logo mark below 48px</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- Footer mark -->
+<svg style="position:absolute;bottom:40px;right:80px;width:52px;height:52px;opacity:0.25" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <polygon points="50,2 91.57,26 91.57,74 50,98 8.43,74 8.43,26" stroke="#5B9BD5" stroke-width="0.8" fill="none"/>
+  <polygon points="50,26 70.78,38 70.78,62 50,74 29.22,62 29.22,38" stroke="#C4A46B" stroke-width="0.8" fill="none"/>
+  <polygon points="50,38 60.39,44 60.39,56 50,62 39.61,56 39.61,44" stroke="#5B9BD5" stroke-width="0.8" fill="none"/>
+  <circle cx="50" cy="50" r="2.5" fill="#C4A46B"/>
+</svg>
+<div class="scale-line">WC-BRAND / REV.C &nbsp;·&nbsp; Scale 1:1 &nbsp;·&nbsp; All Dimensions in Experience</div>
+</div></div></div>
+
+
+<!-- ── Scale-to-fit script ── -->
+<script>
+function scalePages(){
+  const vw=window.innerWidth-48;
+  const s=Math.min(vw/1920,1);
+  document.querySelectorAll('.slide-wrapper').forEach(el=>{
+    el.style.transform='scale('+s+')';
+    el.style.marginBottom=(s*1080-1080)+'px';
+  });
+  document.querySelectorAll('.page').forEach(el=>{
+    el.style.width=(1920*s)+'px';
+  });
+}
+scalePages();
+window.addEventListener('resize',scalePages);
+</script>
+
+</body>
+</html>

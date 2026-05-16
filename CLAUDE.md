@@ -14,7 +14,7 @@ This is a Working Complexity project. Every artefact — document, deck, PDF, re
 
 - **Dark-first.** Blueprint Navy `#060D1B` as the default background. Light variant only for print-economy documents.
 - **Hex grid.** Pointy-top hexagonal grid on all covers and section dividers at specified opacity. Never on body content slides.
-- **Companion mark.** Three nested pointy-top hexagons (Blueprint Blue / Brass Gold / Blueprint Blue) with centre dot. Never recoloured, rotated, or filled solid.
+- **Logo mark.** Three nested pointy-top hexagons (Blueprint Blue / Brass Gold / Blueprint Blue) with centre dot — the primary visual symbol. Never recoloured, rotated, or filled solid. File: `logo.svg`.
 - **Typefaces.** Inter + Space Mono only. No substitutions.
 - **Gold is scarce.** One word in a headline, one element in a diagram, one CTA. Never large fills.
 - **No stock healthcare imagery.** No stethoscopes, pill bottles, smiling clinicians, or doctors pointing at tablets.
@@ -24,5 +24,6 @@ This is a Working Complexity project. Every artefact — document, deck, PDF, re
 ## Reference files in this directory
 
 - `BRAND.md` — the complete brand system (single source of truth)
-- `WC-BRAND-REV-B.pdf` — the designed brand book PDF (visual reference)
+- `WC-Brand-REV-C.html` — the designed HTML brand book (visual reference, printable to PDF)
+- `logo.svg` — standalone logo mark SVG
 - `title-page-preview.html` — live title page preview

@@ -1,6 +1,6 @@
 # Working Complexity — Brand Book
 
-**Document code:** WC-BRAND / REV.B
+**Document code:** WC-BRAND / REV.C
 **Owner:** Michael Baldwin · workingcomplexity.health
 **Purpose:** the single source of truth for how Working Complexity looks, sounds, and reads across every client-facing artefact.
 
@@ -680,4 +680,4 @@ Use the `wc-update-site` skill. It reads this file, reads `index.html`, makes th
 
 ---
 
-**WC-BRAND / REV.B · SCALE 1:1 · ALL DIMENSIONS IN EXPERIENCE**
+**WC-BRAND / REV.C · SCALE 1:1 · ALL DIMENSIONS IN EXPERIENCE**
