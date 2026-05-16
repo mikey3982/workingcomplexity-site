@@ -1,6 +1,6 @@
 # Working Complexity — Brand Book
 
-**Document code:** WC-BRAND / REV.A
+**Document code:** WC-BRAND / REV.B
 **Owner:** Michael Baldwin · workingcomplexity.health
 **Purpose:** the single source of truth for how Working Complexity looks, sounds, and reads across every client-facing artefact.
 
@@ -26,7 +26,8 @@ This document is the brand system for Working Complexity. When producing any art
 | Producing a PDF deliverable | 2, 3, 5, 6, 7, 8, 10 |
 | Producing a PowerPoint deck | 2, 3, 5, 6, 7, 8, 11 |
 | Designing a logo lockup, icon, or diagram | 4, 5, 7 |
-| In doubt | 12 |
+| Editing the website | 2, 3, 5, 6, 7, 12 |
+| In doubt | 13 |
 
 **Hard rules, always:**
 
@@ -181,7 +182,7 @@ The mark reads at favicon scale (16px) without the crosshair and scales to poste
 
 ### 4.3 Lockups
 
-Three approved lockups:
+Four approved lockups:
 
 1. **Wordmark only** — default for most applications.
 2. **Wordmark + subline** — for web headers, deck title slides, report covers.
@@ -305,7 +306,7 @@ Fallbacks (for environments without the typefaces): `Helvetica Neue, Helvetica, 
 
 ## 7. Graphic language
 
-WC's visual register is **architectural blueprint meets data network**: hex grids, corner marks, dimension ticks, annotations, concentric circles, and hexagonal geometry throughout. It is never "medical illustration".
+WC's visual register is **architectural blueprint meets data network**: hex grids, corner marks, dimension ticks, annotations, and hexagonal geometry throughout. It is never "medical illustration".
 
 ### 7.1 The hex grid
 
@@ -422,7 +423,7 @@ Hexagons are WC's primary geometric unit. They reference data networks, molecula
 - Never rotate a hexagon off the pointy-top axis. All hexes are vertically aligned.
 - Do not use hexagons on body content slides or report pages where they are not a functional element.
 
-### 7.7 Photography
+### 7.6 Photography
 
 Photography is **rare and high-bar**. When used:
 
@@ -433,7 +434,7 @@ Photography is **rare and high-bar**. When used:
 
 If suitable photography is not available, **do not** substitute with stock. Use the hex graphic language instead.
 
-### 7.8 Diagrams
+### 7.7 Diagrams
 
 Diagrams are the primary illustrative form at WC. Standards:
 
@@ -479,7 +480,7 @@ Word reports are the default for long-form written deliverables (research output
 - Document code top-left: `WC-### / [SUBJECT] / REV.A` in Space Mono 8pt.
 - Title: Inter 32pt 800, sentence case, left-aligned. Two-line max. One word may be set in Inter 300 deepened brass.
 - Subtitle: Inter 14pt 400, Muted Blue (print-variant), directly below title, max three lines.
-- The companion mark (light-variant colours) bottom-left at 40mm diameter.
+- The logo mark (§4.2, light-variant colours) bottom-left at 40mm diameter.
 - `hello@workingcomplexity.health · workingcomplexity.health` bottom-right in Space Mono 8pt.
 - Four corner marks.
 
@@ -500,7 +501,7 @@ Word reports are the default for long-form written deliverables (research output
 
 - Tables: no vertical rules. Single horizontal rule top and bottom in Dim Blue, and below the header row. Header row in Inter 10pt 700.
 - Every figure has a caption in Space Mono 8pt UPPERCASE: `FIG. 01 · [TITLE]` on the first line, plain-case description in Inter 9pt Muted Blue on the second.
-- Diagrams follow §7.6.
+- Diagrams follow §7.7.
 
 ### 9.6 References and footnotes
 
@@ -562,7 +563,7 @@ Six masters, no more. Every slide in a WC deck is one of these:
 - Eyebrow: gold rule + Space Mono UPPERCASE label (e.g. `BOARD BRIEFING · 2026-04-21`).
 - Title: Inter 64pt 800, sentence case, left-aligned, up to three lines. One word may be Inter 300 gold.
 - Subtitle: Inter 20pt 400 Muted Blue, below title, max two lines.
-- Companion mark bottom-right at 120px diameter, with crosshair.
+- Logo mark (§4.2) bottom-right at 120px diameter, with crosshair.
 - Bottom-left: `workingcomplexity.health`, Space Mono 10pt.
 - Bottom-right: `SCALE 1:1 · ALL DIMENSIONS IN EXPERIENCE`, Space Mono 8pt Dim Blue (optional, use once per deck).
 
@@ -583,7 +584,7 @@ Six masters, no more. Every slide in a WC deck is one of these:
 - Centred composition on Deep Navy.
 - Quote: Inter 36pt 700, centred, max six lines. One word may be Inter 800 gold.
 - Attribution: Space Mono 10pt UPPERCASE Dim Blue, below quote, preceded by an em dash.
-- Optional faint concentric-circle background at 7% opacity.
+- Optional faint logo mark or hex lattice background at 7% opacity.
 
 **Master E — Diagram slide**
 - Diagram centred, occupying ~70% of slide width.
@@ -594,7 +595,7 @@ Six masters, no more. Every slide in a WC deck is one of these:
 **Master F — Closing slide**
 - Wordmark + subline centred at 40% slide width.
 - `hello@workingcomplexity.health` and `workingcomplexity.health` in Inter 18pt Paper Light, centred below wordmark with 48px gap.
-- Companion mark, bottom-centre at 80px diameter.
+- Logo mark (§4.2), bottom-centre at 80px diameter.
 
 ### 11.3 Charts
 
@@ -619,7 +620,40 @@ None. Content cuts between slides. No builds, no fades, no motion paths. A slide
 
 ---
 
-## 12. Quick reference — do / don't
+## 12. Application: Web
+
+The live site is at `workingcomplexity.health`. It is a single-page HTML/CSS document, hosted on Netlify, deployed automatically from the GitHub repository `mikey3982/workingcomplexity-site`.
+
+### 12.1 Site setup
+
+- Stack: plain HTML + CSS + vanilla JS. No framework, no build step.
+- Hosting: Netlify (free tier), continuous deployment from `main` branch.
+- Domain: `workingcomplexity.health` (Namecheap registrar). A record + CNAME pointing to Netlify.
+- Forms: Netlify Forms (contact form, `name="contact"`). Notification to `hello@workingcomplexity.health`.
+- Fonts: Inter + Space Mono via Google Fonts CDN.
+
+### 12.2 Visual spec
+
+- Background: Blueprint Navy `#060D1B` (dark-first; no light variant for the web).
+- Hero hex grid background: pointy-top, `rgba(74,144,226,0.05)`, CSS `background-image` SVG pattern, 69.28×120px tile.
+- Nav: `rgba(6,13,27,0.82)` with `backdrop-filter: blur(16px)`, `border-bottom: 1px solid var(--border)`.
+- Logo mark (§4.2) appears in the hero at 65% opacity (480×480px), in the nav as the favicon, and in the footer at 48px.
+- Contact CTA button: Brass Gold text, Blueprint Blue border, no fill on dark; hover fills Blueprint Blue at 15%.
+
+### 12.3 Content structure
+
+- Hero → Thesis → Services → About → Contact.
+- Services section uses an interlocking hexagonal honeycomb layout: `clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)`, hex width 300px, height 346px.
+- Section eyebrows: Space Mono UPPERCASE in Brass Gold, 32px gold rule before the text.
+- Footer: `Working Complexity Ltd`, domain, revision code.
+
+### 12.4 Updating the site
+
+Use the `wc-update-site` skill. It reads this file, reads `index.html`, makes the edit, commits with a `WC-SITE` code in the message, and pushes. Netlify deploys automatically in under 60 seconds.
+
+---
+
+## 13. Quick reference — do / don't
 
 | Do | Don't |
 |---|---|
@@ -632,7 +666,7 @@ None. Content cuts between slides. No builds, no fades, no motion paths. A slide
 | Documentary photography with dignity | Stock clinician-smiling-at-tablet imagery |
 | A document code on every cover | Decorative "hero imagery" on covers |
 | Inter + Space Mono, and nothing else | Any third typeface, ever |
-| Companion mark at datum-point scale | Mark filled in solid, rotated, or recoloured |
+| Logo mark (§4.2) at datum-point scale | Mark filled in solid, rotated, or recoloured |
 | First person plural ("we") | "The team at WC", "WC delivers…" |
 | "Hold complexity" | "Simplify", "streamline", "unlock" |
 | Numbers as Inter 800 gold | Numbers as default chart labels |
@@ -642,8 +676,8 @@ None. Content cuts between slides. No builds, no fades, no motion paths. A slide
 | Hex grid on covers and dividers at specified opacity | Hex grid on body content slides or report text pages |
 | Hex orientation pointy-top, vertically aligned | Rotated hexagons or flat-top orientation |
 | Hex node markers in diagrams (12px, stroke only) | Solid-filled large hexagons |
-| Hex frame on companion mark above 200px only | Hex frame at small sizes or on content slides |
+| Crosshair on logo mark above 48px only | Crosshair on the mark at small sizes or on content slides |
 
 ---
 
-**WC-BRAND / REV.A · SCALE 1:1 · ALL DIMENSIONS IN EXPERIENCE**
+**WC-BRAND / REV.B · SCALE 1:1 · ALL DIMENSIONS IN EXPERIENCE**
