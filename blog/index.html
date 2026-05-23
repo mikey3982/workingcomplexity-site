@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blog — Working Complexity</title>
+  <meta name="description" content="Long-form thinking on complexity-informed healthcare design, chronic disease, AI in health systems, and the structures that make change possible or impossible." />
+  <link rel="canonical" href="https://workingcomplexity.health/blog/" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='100' height='100' fill='%23060D1B'/%3E%3Cpolygon points='50,2 91.57,26 91.57,74 50,98 8.43,74 8.43,26' stroke='%235B9BD5' stroke-width='0.8' fill='none'/%3E%3Cpolygon points='50,26 70.78,38 70.78,62 50,74 29.22,62 29.22,38' stroke='%23C4A46B' stroke-width='0.8' fill='none'/%3E%3Cpolygon points='50,38 60.39,44 60.39,56 50,62 39.61,56 39.61,44' stroke='%235B9BD5' stroke-width='0.8' fill='none'/%3E%3Ccircle cx='50' cy='50' r='2.5' fill='%23C4A46B'/%3E%3C/svg%3E" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:           #060D1B;
+      --bg-mid:       #0B1629;
+      --bg-card:      #0F1E36;
+      --border:       rgba(74, 144, 226, 0.14);
+      --border-strong:rgba(74, 144, 226, 0.28);
+      --gold:         #C4A46B;
+      --gold-dim:     rgba(196, 164, 107, 0.35);
+      --blue-light:   #5B9BD5;
+      --blue-dim:     rgba(91, 155, 213, 0.12);
+      --text:         #E0E8F4;
+      --text-muted:   #7A9ABF;
+      --text-dim:     #3E5870;
+      --mono:         'Space Mono', monospace;
+      --sans:         'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    /* ── Hex Grid ────────────────────────────────────────── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='h' width='69.28' height='120' patternUnits='userSpaceOnUse'%3E%3Cpolygon points='34.64,0 69.28,20 69.28,60 34.64,80 0,60 0,20' stroke='rgba(74,144,226,0.055)' stroke-width='0.6' fill='none'/%3E%3Cpolygon points='34.64,80 69.28,100 69.28,140 34.64,160 0,140 0,100' stroke='rgba(74,144,226,0.055)' stroke-width='0.6' fill='none'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='url(%23h)'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+    }
+    body > * { position: relative; z-index: 1; }
+
+    /* ── Nav ─────────────────────────────────────────────── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.25rem 3rem;
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(16px);
+      background: rgba(6, 13, 27, 0.82);
+    }
+    .nav-logo {
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      color: var(--text);
+      text-decoration: none;
+      display: flex; flex-direction: column; gap: 2px;
+    }
+    .nav-logo-main { color: var(--text); font-weight: 700; }
+    .nav-logo-sub  { color: var(--gold); font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; }
+    .nav-links {
+      display: flex; gap: 2.5rem; list-style: none;
+    }
+    .nav-links a {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover,
+    .nav-links a.active { color: var(--gold); }
+    .nav-cta {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--bg);
+      background: var(--gold);
+      padding: 0.55rem 1.2rem;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+    .nav-cta:hover { opacity: 0.85; }
+
+    /* ── Page layout ─────────────────────────────────────── */
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 3rem; }
+
+    /* ── Hero ────────────────────────────────────────────── */
+    .blog-hero {
+      padding: 9rem 3rem 5rem;
+      max-width: 1100px; margin: 0 auto;
+    }
+    .blog-eyebrow {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 2rem;
+      display: flex; align-items: center; gap: 1rem;
+    }
+    .blog-eyebrow span { display: inline-block; width: 40px; height: 1px; background: var(--gold); opacity: 0.6; }
+    .blog-hero h1 {
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      color: var(--text);
+      margin-bottom: 1.5rem;
+    }
+    .blog-hero h1 em { font-style: normal; font-weight: 300; color: var(--gold); }
+    .blog-hero-sub {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      max-width: 580px;
+      line-height: 1.7;
+      font-weight: 300;
+    }
+
+    /* ── Post grid ───────────────────────────────────────── */
+    .posts-section {
+      padding: 3rem 3rem 6rem;
+      max-width: 1100px; margin: 0 auto;
+    }
+    .section-label {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 2.5rem;
+      display: flex; align-items: center; gap: 0.8rem;
+    }
+    .section-label::before {
+      content: '';
+      display: inline-block; width: 32px; height: 1px;
+      background: var(--gold); opacity: 0.6;
+    }
+
+    /* ── Featured post ───────────────────────────────────── */
+    .post-featured {
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      gap: 0;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      margin-bottom: 2rem;
+      transition: border-color 0.25s;
+      text-decoration: none;
+      color: inherit;
+    }
+    .post-featured:hover { border-color: var(--border-strong); }
+    .post-featured-body {
+      padding: 3rem 3.5rem;
+      display: flex; flex-direction: column; justify-content: space-between;
+    }
+    .post-featured-right {
+      border-left: 1px solid var(--border);
+      padding: 3rem 2.5rem;
+      display: flex; flex-direction: column; justify-content: flex-end;
+      background: rgba(11,22,41,0.6);
+    }
+    .post-tag {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.25rem;
+      display: flex; align-items: center; gap: 0.75rem;
+    }
+    .post-tag::before {
+      content: '';
+      display: inline-block; width: 24px; height: 1px;
+      background: var(--gold); opacity: 0.6;
+    }
+    .post-title {
+      font-size: clamp(1.4rem, 3vw, 2.2rem);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      margin-bottom: 1.25rem;
+    }
+    .post-title em { font-style: italic; color: var(--gold); font-weight: 300; }
+    .post-subtitle {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+      font-weight: 300;
+      margin-bottom: 2rem;
+    }
+    .post-meta {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      color: var(--text-dim);
+      display: flex; gap: 1.5rem; flex-wrap: wrap;
+    }
+    .post-meta-item strong { color: var(--text-muted); font-weight: 400; }
+    .post-cta {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--bg);
+      background: var(--gold);
+      padding: 0.65rem 1.4rem;
+      display: inline-block;
+      transition: opacity 0.2s;
+      margin-top: auto;
+    }
+    .post-featured:hover .post-cta { opacity: 0.85; }
+
+    /* Right panel — series parts list */
+    .parts-label {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 1.25rem;
+    }
+    .parts-list { list-style: none; }
+    .parts-list li {
+      padding: 0.85rem 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.45;
+      display: flex; align-items: baseline; gap: 0.75rem;
+    }
+    .parts-list li:last-child { border-bottom: none; padding-bottom: 0; }
+    .parts-list li .part-num {
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.15em;
+      color: var(--text-dim);
+      flex-shrink: 0;
+    }
+
+    /* ── Smaller post cards grid ─────────────────────────── */
+    .posts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      margin-top: 0;
+    }
+    .post-card {
+      background: var(--bg-card);
+      padding: 2rem 2.25rem;
+      text-decoration: none;
+      color: inherit;
+      transition: background 0.2s;
+      display: flex; flex-direction: column;
+    }
+    .post-card:hover { background: #0f2040; }
+    .post-card-tag {
+      font-family: var(--mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 0.9rem;
+    }
+    .post-card-title {
+      font-size: 1.05rem;
+      font-weight: 600;
+      line-height: 1.3;
+      color: var(--text);
+      margin-bottom: 0.65rem;
+      letter-spacing: -0.01em;
+    }
+    .post-card-sub {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      flex: 1;
+      margin-bottom: 1.5rem;
+    }
+    .post-card-arrow {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      letter-spacing: 0.08em;
+      transition: color 0.2s;
+    }
+    .post-card:hover .post-card-arrow { color: var(--gold); }
+
+    /* Coming-soon card */
+    .post-card.coming-soon {
+      opacity: 0.45;
+      cursor: default;
+      pointer-events: none;
+    }
+    .post-card.coming-soon .post-card-tag { color: var(--text-dim); }
+
+    /* ── Separator ───────────────────────────────────────── */
+    .section-rule {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 4rem 0 3rem;
+    }
+
+    /* ── Footer ──────────────────────────────────────────── */
+    footer {
+      background: var(--bg-mid);
+      border-top: 1px solid var(--border);
+      padding: 2.5rem 3rem;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 1rem;
+    }
+    .footer-logo {
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      letter-spacing: 0.06em;
+      color: var(--text);
+      display: flex; align-items: center; gap: 0.75rem;
+    }
+    .footer-logo strong { font-weight: 700; }
+    .footer-links { display: flex; gap: 2rem; list-style: none; }
+    .footer-links a {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--gold); }
+    .footer-copy {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      color: var(--text-dim);
+    }
+
+    @media (max-width: 900px) {
+      .post-featured { grid-template-columns: 1fr; }
+      .post-featured-right { border-left: none; border-top: 1px solid var(--border); }
+    }
+    @media (max-width: 640px) {
+      nav { padding: 1rem 1.25rem; }
+      .nav-links, .nav-cta { display: none; }
+      .blog-hero, .posts-section { padding-left: 1.25rem; padding-right: 1.25rem; }
+      footer { padding: 2rem 1.25rem; }
+      .footer-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Nav ─────────────────────────────────────────────── -->
+<nav>
+  <a href="https://workingcomplexity.health" class="nav-logo">
+    <span class="nav-logo-main">workingcomplexity</span>
+    <span class="nav-logo-sub">— .health</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="https://workingcomplexity.health#pillars">Philosophy</a></li>
+    <li><a href="https://workingcomplexity.health#approach">Approach</a></li>
+    <li><a href="https://workingcomplexity.health#services">Services</a></li>
+    <li><a href="/blog/" class="active">Blog</a></li>
+    <li><a href="https://workingcomplexity.health#contact">Contact</a></li>
+  </ul>
+  <a href="https://workingcomplexity.health#contact" class="nav-cta">Start a Conversation</a>
+</nav>
+
+
+<!-- ── Hero ─────────────────────────────────────────────── -->
+<div class="blog-hero">
+  <p class="blog-eyebrow"><span></span>Working Complexity</p>
+  <h1>Long-form <em>thinking</em><br/>on complex systems</h1>
+  <p class="blog-hero-sub">We write when we have something worth saying. These are extended arguments on the architecture of healthcare, the politics of change, and the design decisions that shape how care actually works.</p>
+</div>
+
+
+<!-- ── Posts ─────────────────────────────────────────────── -->
+<div class="posts-section">
+
+  <div class="section-label">Published</div>
+
+  <!-- FEATURED: Soft Drift Series -->
+  <a href="/blog/soft-drift-series.html" class="post-featured">
+    <div class="post-featured-body">
+      <div>
+        <p class="post-tag">Series · Three parts · Complete</p>
+        <h2 class="post-title">Managing the <em>Soft</em> Drift</h2>
+        <p class="post-subtitle">A three-part argument on chronic disease, AI, and the architecture of change in healthcare systems built around the wrong event. Why health systems are structurally blind to the slow transitions that matter most — and what it would take to change that.</p>
+        <div class="post-meta">
+          <span class="post-meta-item"><strong>Published</strong> 2025–2026</span>
+          <span class="post-meta-item"><strong>Reading time</strong> 40 min</span>
+          <span class="post-meta-item"><strong>Topics</strong> Chronic disease · AI · Health systems · Change</span>
+        </div>
+      </div>
+      <div style="margin-top: 2.5rem;">
+        <span class="post-cta">Read the series →</span>
+      </div>
+    </div>
+    <div class="post-featured-right">
+      <p class="parts-label">Three parts</p>
+      <ul class="parts-list">
+        <li>
+          <span class="part-num">01</span>
+          <span>Managing the Soft Drift — a reframing of care trajectories in chronic disease</span>
+        </li>
+        <li>
+          <span class="part-num">02</span>
+          <span>The Attentive Machine — how AI can serve the soft transition, and the conditions that make it possible</span>
+        </li>
+        <li>
+          <span class="part-num">03</span>
+          <span>The Crooked Road — change vehicles, stuck systems, and where the soft transition might actually be managed first</span>
+        </li>
+      </ul>
+    </div>
+  </a>
+
+  <hr class="section-rule" />
+
+  <div class="section-label">Coming next</div>
+
+  <div class="posts-grid">
+    <div class="post-card coming-soon">
+      <span class="post-card-tag">Essay · Forthcoming</span>
+      <h3 class="post-card-title">The Payer Problem</h3>
+      <p class="post-card-sub">Why the most consequential AI in healthcare is being built for insurers, not clinicians — and what that means for who benefits.</p>
+      <span class="post-card-arrow">Coming soon</span>
+    </div>
+
+    <div class="post-card coming-soon">
+      <span class="post-card-tag">Analysis · Forthcoming</span>
+      <h3 class="post-card-title">Singapore's Experiment</h3>
+      <p class="post-card-sub">Healthier SG is the world's most explicit attempt to build relational continuity into a national primary care system. What three years of data shows.</p>
+      <span class="post-card-arrow">Coming soon</span>
+    </div>
+
+    <div class="post-card coming-soon">
+      <span class="post-card-tag">Argument · Forthcoming</span>
+      <h3 class="post-card-title">What McKinsey Gets Wrong About Complexity</h3>
+      <p class="post-card-sub">The conventional consulting approach treats system transformation as a complicated problem. It isn't. The category error is structural — and consequential.</p>
+      <span class="post-card-arrow">Coming soon</span>
+    </div>
+  </div>
+
+</div>
+
+
+<!-- ── Footer ─────────────────────────────────────────────── -->
+<footer>
+  <div class="footer-logo">
+    <svg width="22" height="22" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <polygon points="50,2 91.57,26 91.57,74 50,98 8.43,74 8.43,26" stroke="#3E5870" stroke-width="0.8" fill="none"/>
+      <polygon points="50,26 70.78,38 70.78,62 50,74 29.22,62 29.22,38" stroke="#3E5870" stroke-width="0.8" fill="none"/>
+      <polygon points="50,38 60.39,44 60.39,56 50,62 39.61,56 39.61,44" stroke="#3E5870" stroke-width="0.8" fill="none"/>
+      <circle cx="50" cy="50" r="2.5" fill="#3E5870"/>
+    </svg>
+    <span><strong>workingcomplexity</strong>.health</span>
+  </div>
+  <ul class="footer-links">
+    <li><a href="https://workingcomplexity.health#pillars">Philosophy</a></li>
+    <li><a href="https://workingcomplexity.health#approach">Approach</a></li>
+    <li><a href="https://workingcomplexity.health#services">Services</a></li>
+    <li><a href="https://workingcomplexity.health#contact">Contact</a></li>
+  </ul>
+  <div class="footer-copy">© 2026 Working Complexity Ltd &nbsp;·&nbsp; complexity.health</div>
+</footer>
+
+</body>
+</html>
