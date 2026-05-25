@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The price of not knowing — Working Complexity</title>
+<meta name="description" content="The value of perfect information is a powerful concept in health economics. But in progressive lung disease — and across complex chronic medicine — healthcare prices uncertainty wrong." />
+<link rel="canonical" href="https://workingcomplexity.health/blog/value-of-perfect-information.html" />
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='100' height='100' fill='%23060D1B'/%3E%3Cpolygon points='50,2 91.57,26 91.57,74 50,98 8.43,74 8.43,26' stroke='%235B9BD5' stroke-width='0.8' fill='none'/%3E%3Cpolygon points='50,26 70.78,38 70.78,62 50,74 29.22,62 29.22,38' stroke='%23C4A46B' stroke-width='0.8' fill='none'/%3E%3Cpolygon points='50,38 60.39,44 60.39,56 50,62 39.61,56 39.61,44' stroke='%235B9BD5' stroke-width='0.8' fill='none'/%3E%3Ccircle cx='50' cy='50' r='2.5' fill='%23C4A46B'/%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --nearblack:  #060D1B;
+    --offwhite:   #f4f6fa;
+    --paper:      #eaeff7;
+    --gold:       #C4A46B;
+    --gold-dim:   rgba(196,164,107,0.4);
+    --blue:       #5B9BD5;
+    --blue-dim:   rgba(91,155,213,0.14);
+    --border:     rgba(91,155,213,0.18);
+    --muted:      #7A9ABF;
+    --ink:        #0F1E36;
+    --ink-mid:    #3E5870;
+    --ff-display: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --ff-mono:    'Space Mono', 'ui-monospace', 'SFMono-Regular', Menlo, monospace;
+    --max-w: 760px;
+    --gutter: clamp(1.25rem, 5vw, 3rem);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--offwhite);
+    color: var(--ink);
+    font-family: var(--ff-display);
+    font-size: 17px;
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── NAV ──────────────────────────────────────────────── */
+  .wc-nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(6,13,27,0.96);
+    border-bottom: 1px solid rgba(74,144,226,0.18);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.1rem 3rem;
+    backdrop-filter: blur(16px);
+  }
+  .wc-nav-logo {
+    font-family: var(--ff-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    color: #E0E8F4;
+    text-decoration: none;
+    display: flex; flex-direction: column; gap: 2px;
+  }
+  .wc-nav-logo-main { color: #E0E8F4; font-weight: 700; }
+  .wc-nav-logo-sub  { color: var(--gold); font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; }
+  .wc-nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .wc-nav-links a {
+    font-family: var(--ff-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #7A9ABF;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .wc-nav-links a:hover { color: var(--gold); }
+  .wc-nav-cta {
+    font-family: var(--ff-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #060D1B;
+    background: var(--gold);
+    padding: 0.55rem 1.2rem;
+    text-decoration: none;
+    transition: opacity 0.2s;
+  }
+  .wc-nav-cta:hover { opacity: 0.85; }
+  @media (max-width: 720px) {
+    .wc-nav-links, .wc-nav-cta { display: none; }
+    .wc-nav { padding: 1rem 1.25rem; }
+  }
+
+  /* ── ARTICLE COVER ────────────────────────────────────── */
+  .article-cover {
+    padding: clamp(4rem,10vw,7rem) var(--gutter) clamp(2.5rem,5vw,4rem);
+    max-width: calc(var(--max-w) + 2 * var(--gutter));
+    margin: 0 auto;
+  }
+  .doc-code {
+    font-family: var(--ff-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-mid);
+    margin-bottom: 2.2rem;
+    display: block;
+  }
+  .kicker {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    font-family: var(--ff-mono);
+    font-size: 0.72rem;
+    font-weight: 400;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.75rem;
+  }
+  .kicker::before {
+    content: '';
+    display: block; width: 2.5rem; height: 1px;
+    background: var(--gold);
+  }
+  .article-title {
+    font-family: var(--ff-display);
+    font-size: clamp(2.4rem,7vw,4.4rem);
+    font-weight: 800;
+    line-height: 1.05;
+    color: var(--nearblack);
+    letter-spacing: -0.025em;
+    margin-bottom: 0.5rem;
+  }
+  .article-title em {
+    font-style: italic;
+    font-weight: 300;
+    color: var(--gold);
+  }
+  .article-subtitle {
+    font-size: clamp(1rem,2.5vw,1.35rem);
+    font-style: italic;
+    font-weight: 300;
+    color: var(--ink-mid);
+    max-width: 620px;
+    line-height: 1.5;
+    margin-bottom: 2.75rem;
+  }
+  .article-meta {
+    display: flex; align-items: center; gap: 2rem; flex-wrap: wrap;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+  }
+  .meta-item {
+    font-family: var(--ff-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+  }
+  .meta-item strong { color: var(--ink-mid); font-weight: 700; }
+
+  /* ── ARTICLE BODY ─────────────────────────────────────── */
+  .article {
+    max-width: calc(var(--max-w) + 2 * var(--gutter));
+    margin: 0 auto;
+    padding: 0 var(--gutter) clamp(4rem,8vw,6rem);
+  }
+
+  .opening-pull {
+    margin: 3rem 0 3.5rem;
+    padding: 2rem 2.5rem;
+    background: var(--paper);
+    border-left: 3px solid var(--gold);
+    position: relative;
+  }
+  .opening-pull::before {
+    content: '\201C';
+    font-family: var(--ff-display);
+    font-size: 5rem;
+    color: var(--gold);
+    opacity: 0.22;
+    position: absolute;
+    top: -0.5rem; left: 1rem;
+    line-height: 1;
+  }
+  .opening-pull p {
+    font-family: var(--ff-display);
+    font-size: 1.2rem;
+    font-style: italic;
+    line-height: 1.65;
+    color: var(--ink-mid);
+    position: relative; z-index: 1;
+  }
+
+  .section-block {
+    margin-top: 4rem;
+    padding-top: 2.5rem;
+    border-top: 1px solid var(--border);
+  }
+  .section-number {
+    font-family: var(--ff-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 0.55rem;
+  }
+  h2.section-title {
+    font-family: var(--ff-display);
+    font-size: clamp(1.5rem,3.5vw,2rem);
+    font-weight: 700;
+    color: var(--nearblack);
+    line-height: 1.18;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.015em;
+  }
+  h2.section-title em {
+    font-style: italic;
+    font-weight: 300;
+    color: var(--gold);
+  }
+  h3.subsection {
+    font-family: var(--ff-mono);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin: 2.5rem 0 0.8rem;
+  }
+
+  .article p {
+    margin-bottom: 1.35rem;
+    color: var(--ink);
+    font-weight: 300;
+  }
+  .article p strong { font-weight: 600; color: var(--nearblack); }
+  .article p em { font-style: italic; }
+  .article ul, .article ol {
+    margin: 0 0 1.5rem 1.5rem;
+    color: var(--ink);
+    font-weight: 300;
+  }
+  .article li { margin-bottom: 0.6rem; line-height: 1.65; }
+
+  /* ── PULL QUOTE ───────────────────────────────────────── */
+  .pull-quote {
+    margin: 2.5rem -0.25rem;
+    padding: 1.6rem 2rem;
+    border-top: 1px solid var(--gold);
+    border-bottom: 1px solid var(--gold);
+  }
+  .pull-quote p {
+    font-size: 1.15rem;
+    font-style: italic;
+    line-height: 1.55;
+    color: var(--nearblack);
+    font-weight: 400;
+    margin: 0;
+  }
+  .pull-quote p em { font-weight: 300; color: var(--gold); font-style: normal; }
+
+  /* ── VPI MATRIX ───────────────────────────────────────── */
+  .vpi-matrix {
+    margin: 2.5rem 0;
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+  .vpi-matrix-header {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr 1.6fr;
+    background: var(--nearblack);
+    padding: 0.75rem 0;
+  }
+  .vpi-matrix-header span {
+    font-family: var(--ff-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    padding: 0 1.2rem;
+  }
+  .vpi-row {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr 1.6fr;
+    border-top: 1px solid var(--border);
+    background: var(--paper);
+  }
+  .vpi-row:nth-child(odd) { background: var(--offwhite); }
+  .vpi-cell {
+    padding: 0.9rem 1.2rem;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: var(--ink-mid);
+    vertical-align: top;
+    border-right: 1px solid var(--border);
+  }
+  .vpi-cell:last-child { border-right: none; }
+  .vpi-cell strong { font-weight: 600; color: var(--nearblack); display: block; margin-bottom: 0.1rem; }
+  .vpi-cell .tag {
+    font-family: var(--ff-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.15rem 0.5rem;
+    display: inline-block;
+    margin-top: 0.35rem;
+  }
+  .tag-works  { background: rgba(91,155,213,0.15); color: #5B9BD5; }
+  .tag-partial{ background: rgba(196,164,107,0.15); color: #C4A46B; }
+  .tag-breaks { background: rgba(196,107,107,0.12); color: #C47A6B; }
+  @media (max-width: 640px) {
+    .vpi-matrix-header, .vpi-row { grid-template-columns: 1fr; }
+    .vpi-matrix-header span:not(:first-child) { display: none; }
+    .vpi-cell { border-right: none; border-top: 1px solid var(--border); }
+  }
+
+  /* ── PERSONA CARD ─────────────────────────────────────── */
+  .persona-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+    margin: 2.5rem 0;
+    border: 1px solid var(--border);
+  }
+  @media (max-width: 600px) { .persona-cards { grid-template-columns: 1fr; } }
+  .persona-card {
+    background: var(--paper);
+    padding: 1.4rem 1.6rem;
+  }
+  .persona-label {
+    font-family: var(--ff-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin-bottom: 0.4rem;
+    display: block;
+  }
+  .persona-name {
+    font-weight: 700;
+    font-size: 1.0rem;
+    color: var(--nearblack);
+    margin-bottom: 0.6rem;
+  }
+  .persona-card p {
+    font-size: 0.9rem;
+    color: var(--ink-mid);
+    margin: 0 !important;
+    line-height: 1.6;
+  }
+  .persona-card .vpi-verdict {
+    font-family: var(--ff-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-top: 0.75rem;
+    padding-top: 0.6rem;
+    border-top: 1px solid var(--border);
+    display: block;
+  }
+
+  /* ── WC INSIGHT BOX ───────────────────────────────────── */
+  .wc-insight {
+    background: var(--nearblack);
+    color: #E0E8F4;
+    padding: 1.6rem 2rem;
+    margin: 3rem 0;
+    position: relative;
+  }
+  .wc-insight::before {
+    content: 'workingcomplexity — analytical note';
+    font-family: var(--ff-mono);
+    font-size: 0.58rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 0.8rem;
+  }
+  .wc-insight p {
+    color: rgba(224,232,244,0.85);
+    font-size: 0.95rem;
+    margin: 0 !important;
+    line-height: 1.7;
+  }
+  .wc-insight p + p { margin-top: 0.9rem !important; }
+  .wc-insight p strong { color: #E0E8F4; font-weight: 600; }
+
+  /* ── CALLOUT ──────────────────────────────────────────── */
+  .callout {
+    background: var(--paper);
+    border-left: 3px solid var(--blue);
+    padding: 1.2rem 1.75rem;
+    margin: 2rem 0;
+  }
+  .callout-label {
+    font-family: var(--ff-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--blue);
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+  .callout p {
+    font-size: 0.92rem;
+    color: var(--ink-mid);
+    margin: 0 !important;
+    line-height: 1.65;
+  }
+  .callout p + p { margin-top: 0.6rem !important; }
+
+  /* ── FRAMEWORK BOX ────────────────────────────────────── */
+  .framework-box {
+    border: 1px solid var(--border);
+    margin: 3rem 0;
+    overflow: hidden;
+  }
+  .framework-box-header {
+    background: var(--nearblack);
+    padding: 1rem 1.6rem;
+  }
+  .framework-box-header span {
+    font-family: var(--ff-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+  .framework-box-body {
+    background: var(--paper);
+    padding: 1.5rem 1.6rem;
+  }
+  .framework-box-body ol {
+    margin: 0 0 0 1.2rem;
+    color: var(--ink);
+    font-weight: 300;
+  }
+  .framework-box-body li {
+    margin-bottom: 0.75rem;
+    font-size: 0.95rem;
+    line-height: 1.65;
+  }
+  .framework-box-body li strong { font-weight: 600; color: var(--nearblack); }
+  .framework-box-body li em { font-style: italic; color: var(--ink-mid); }
+
+  /* ── CLOSING ──────────────────────────────────────────── */
+  .article-close {
+    background: var(--nearblack);
+    padding: clamp(3rem,7vw,5rem) var(--gutter);
+    margin-top: 4rem;
+  }
+  .close-inner {
+    max-width: var(--max-w);
+    margin: 0 auto;
+  }
+  .close-kicker {
+    font-family: var(--ff-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+    display: block;
+  }
+  .close-statement {
+    font-size: clamp(1.4rem,3vw,2rem);
+    font-weight: 700;
+    color: #E0E8F4;
+    line-height: 1.25;
+    margin-bottom: 1.75rem;
+    letter-spacing: -0.015em;
+  }
+  .close-statement em { font-style: italic; font-weight: 300; color: var(--gold); }
+  .close-body {
+    font-size: 1rem;
+    color: rgba(224,232,244,0.75);
+    line-height: 1.75;
+    max-width: 600px;
+    font-weight: 300;
+  }
+  .close-logo {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(74,144,226,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .close-logo-wordmark {
+    font-family: var(--ff-mono);
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    color: #E0E8F4;
+    text-decoration: none;
+  }
+  .close-logo-sub {
+    font-family: var(--ff-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-top: 3px;
+  }
+  .close-scale {
+    font-family: var(--ff-mono);
+    font-size: 0.58rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #3E5870;
+  }
+</style>
+</head>
+<body>
+
+<!-- ── NAV ────────────────────────────────────────────────────── -->
+<nav class="wc-nav" aria-label="Site navigation">
+  <a href="https://workingcomplexity.health" class="wc-nav-logo">
+    <span class="wc-nav-logo-main">workingcomplexity</span>
+    <span class="wc-nav-logo-sub">— .health</span>
+  </a>
+  <ul class="wc-nav-links">
+    <li><a href="https://workingcomplexity.health/#services">Services</a></li>
+    <li><a href="https://workingcomplexity.health/#about">About</a></li>
+    <li><a href="/blog/">Writing</a></li>
+  </ul>
+  <a href="https://workingcomplexity.health/#contact" class="wc-nav-cta">Get in touch</a>
+</nav>
+
+<!-- ── ARTICLE COVER ─────────────────────────────────────────── -->
+<header class="article-cover">
+  <span class="doc-code">WC-BLOG-004 / VALUE OF PERFECT INFORMATION / REV.A</span>
+  <span class="kicker">Uncertainty &amp; Economics</span>
+  <h1 class="article-title">
+    The price of not knowing.<br>
+    <em>What we cannot buy down.</em>
+  </h1>
+  <p class="article-subtitle">
+    Value of perfect information is one of health economics' most useful concepts. Applied to complex chronic disease, it encodes assumptions that do not hold — and creates research priorities that systematically price uncertainty wrong.
+  </p>
+  <div class="article-meta">
+    <span class="meta-item"><strong>Michael Baldwin</strong></span>
+    <span class="meta-item">workingcomplexity.health</span>
+    <span class="meta-item">May 2026</span>
+    <span class="meta-item">Relates to: <strong>Living with Not Knowing</strong> — Scholarly Paper, May 2026</span>
+  </div>
+</header>
+
+<!-- ── ARTICLE BODY ───────────────────────────────────────────── -->
+<main class="article">
+
+  <div class="opening-pull">
+    <p>Harold is sitting in a car outside the hospital. His daughter drove. He has just been told he has IPF — idiopathic pulmonary fibrosis. He asks her: "What does 'slowing progression' mean, in practice?" She doesn't know. He doesn't ask the consultant because the appointment has already ended. He goes home carrying a diagnosis, a prescription, and a formless weight of uncertainty that nobody has helped him map.</p>
+  </div>
+
+  <!-- ── SECTION 1 ── -->
+  <div class="section-block">
+    <span class="section-number">§ 01</span>
+    <h2 class="section-title">What economists mean by the value of perfect information</h2>
+
+    <p>Decision theory offers a precise answer to a deceptively simple question: how much should a rational actor pay to eliminate uncertainty before making a choice? The answer is the <strong>expected value of perfect information</strong> — EVPI. It is the difference between what you would expect to gain if you could know the true state of the world before acting, and what you can expect to gain using only the information you currently have.</p>
+
+    <p>The calculation is elegant. You have a decision to make. Several possible states of the world exist, each with a probability. Under the current information set, you choose the action with the highest expected value — weighted across those probabilities. Under perfect information, you would know which state obtained and could choose the optimal action for it. The gap between those two expected values is your EVPI. It is the maximum you should rationally pay to remove uncertainty before acting.</p>
+
+    <p>In health technology assessment, EVPI has become an indispensable tool. When NICE evaluates a new technology — an antifibrotic drug for IPF, say — the cost-effectiveness model is surrounded by parameter uncertainty. What is the true hazard ratio for mortality? How durable are the treatment effects? What is the appropriate utility for moderate disease? Each uncertain parameter is a gap between the model's estimate and the truth. EVPI analysis asks: how often would the decision change if we had better estimates? How much is that switch worth — in QALYs, in pounds per patient across the eligible population?</p>
+
+    <p>If the EVPI is large relative to the cost of a further study, more research is worth commissioning before a coverage decision is taken. If EVPI is small, the system should act on its best current estimate and not wait. This is rational, proportionate, and methodologically sophisticated. It has improved healthcare decision-making.</p>
+
+    <p>It is also, applied to diseases like IPF and progressive pulmonary fibrosis, deeply incomplete.</p>
+  </div>
+
+  <!-- ── SECTION 2 ── -->
+  <div class="section-block">
+    <span class="section-number">§ 02</span>
+    <h2 class="section-title">The taxonomy of uncertainty and where EVPI fits</h2>
+
+    <p>The uncertainty framework developed in <em>Living with Not Knowing</em> identifies five distinct forms of clinical uncertainty, each with different properties, different sources, and different implications for patients and systems. EVPI is a tool calibrated to one of them.</p>
+
+    <div class="vpi-matrix">
+      <div class="vpi-matrix-header">
+        <span>Uncertainty type</span>
+        <span>Reducible?</span>
+        <span>EVPI applies?</span>
+        <span>The complication</span>
+      </div>
+      <div class="vpi-row">
+        <div class="vpi-cell"><strong>Epistemic</strong>What we do not yet know but could, in principle, learn through research</div>
+        <div class="vpi-cell">Yes<span class="tag tag-works">Works</span></div>
+        <div class="vpi-cell">Yes — this is its home territory</div>
+        <div class="vpi-cell">EVPI is well-defined and genuinely useful. The question is whether the research population will match the clinical population for whom the decision is being made.</div>
+      </div>
+      <div class="vpi-row">
+        <div class="vpi-cell"><strong>Aleatory</strong>Irreducible randomness — the genuine stochasticity of complex biological systems</div>
+        <div class="vpi-cell">No<span class="tag tag-breaks">Breaks</span></div>
+        <div class="vpi-cell">EVPI is theoretically zero or undefined</div>
+        <div class="vpi-cell">"Perfect information" about an irreducibly random outcome does not exist. You can better characterise the distribution; you cannot eliminate the uncertainty about where within it any individual sits.</div>
+      </div>
+      <div class="vpi-row">
+        <div class="vpi-cell"><strong>Ontological</strong>Uncertainty embedded in the classification frameworks themselves — the disease as a category</div>
+        <div class="vpi-cell">Only by revising the framework<span class="tag tag-partial">Partial</span></div>
+        <div class="vpi-cell">EVPI prices the wrong question</div>
+        <div class="vpi-cell">More data gathered within a flawed taxonomy produces more data within a flawed taxonomy. EVPI calculated inside a misspecified model is EVPI for a question the system is not actually asking.</div>
+      </div>
+      <div class="vpi-row">
+        <div class="vpi-cell"><strong>Systemic</strong>Uncertainty arising from institutional behaviour, referral delays, and incentive structures</div>
+        <div class="vpi-cell">Partially — by redesigning the system<span class="tag tag-partial">Partial</span></div>
+        <div class="vpi-cell">EVPI does not price system redesign</div>
+        <div class="vpi-cell">The delay between GP presentation and MDT diagnosis in ILD is not an information problem in the EVPI sense. It is a design problem. The tool cannot price the value of fixing what it was not built to see.</div>
+      </div>
+      <div class="vpi-row">
+        <div class="vpi-cell"><strong>Existential</strong>The lived uncertainty of not knowing what will happen — to the body, the identity, the future</div>
+        <div class="vpi-cell">Not through research<span class="tag tag-breaks">Breaks</span></div>
+        <div class="vpi-cell">EVPI cannot price it at all</div>
+        <div class="vpi-cell">Harold's uncertainty — will I see my grandchild start school? — is not a parameter in any cost-effectiveness model. It is not denominated in QALYs. It is the uncertainty that matters most and the one the framework cannot touch.</div>
+      </div>
+    </div>
+
+    <p>The critical insight is not that EVPI is wrong. It is that EVPI is precisely right for one type of uncertainty and structurally blind to the other four. When it is applied as the primary decision-rule for research prioritisation across all forms of uncertainty, it does not produce neutral outcomes. It produces a systematic skew.</p>
+
+  </div>
+
+  <!-- ── SECTION 3 ── -->
+  <div class="section-block">
+    <span class="section-number">§ 03</span>
+    <h2 class="section-title">What EVPI assumes — and where those assumptions crack</h2>
+
+    <p>The EVPI framework encodes a set of structural assumptions. In stable, acute, or well-characterised diseases, these assumptions are reasonable approximations. In progressive fibrotic lung disease, they are tested — and several of them fail.</p>
+
+    <h3 class="subsection">Assumption one: a single decision-maker at the population level</h3>
+    <p>EVPI as used in HTA is calculated from the perspective of the commissioning body — NICE in England, the SMC in Scotland, equivalent agencies internationally. The relevant "decision" is whether to fund a technology across the eligible population. The EVPI measures the value of that population-level switch in expected value.</p>
+
+    <p>But in IPF, there is no single decision-maker. The MDT decides on treatment selection. The patient decides on adherence, on lifestyle, on how much to tell their family and when. The GP decides whether to refer. Harold's wife, who accompanies him to appointments and moderates his symptom reports, is also making decisions — continuously, invisibly, and with information that no clinical record captures. Each of these agents has their own uncertainty landscape and their own EVPI. The HTA calculation cannot be disaggregated to theirs.</p>
+
+    <h3 class="subsection">Assumption two: the decision can be deferred while information accumulates</h3>
+    <p>EVPI logic asks: is it worth waiting for better evidence before acting? This implicitly assumes that waiting is a neutral option — that time costs nothing except the cost of not deciding. In a disease with median survival measured in years from diagnosis, this assumption is badly wrong.</p>
+
+    <p>The patient who is not treated while a trial accrues is not in suspended animation. They are declining. The EVPI framework values information in terms of better future decisions; it underweights the cost of a present moment in which the decision being deferred is the patient's own clinical management. For progressive terminal disease, information has a time-value asymmetry that standard EVPI does not capture: information available now is worth far more than the same information available in three years, because the patient for whom it was gathered may not still be the patient in front of the clinician.</p>
+
+    <h3 class="subsection">Assumption three: perfect information exists and is, in principle, obtainable</h3>
+    <p>This is the deepest structural assumption. EVPI is meaningful only if there is a true state of the world that could, given sufficient research, be known. For epistemic uncertainty, this is true. For aleatory uncertainty, it is not.</p>
+
+    <p>George's acute exacerbation probability — the risk that his disease will suddenly accelerate — is genuinely stochastic at the biological level. The stochasticity is not a function of our ignorance. It is a feature of the system. A prognostic model that says "72% probability of exacerbation within 18 months" is not a worse version of a number that will eventually become 0% or 100% with more research. It is the best possible characterisation of an irreducibly uncertain event. The EVPI of eliminating that uncertainty is not large and imprecisely known. It is undefined, because the perfect information state does not exist.</p>
+
+    <div class="pull-quote">
+      <p>EVPI is zero for aleatory uncertainty — not because the uncertainty is unimportant, but because <em>the information it prices does not exist</em>. The concept breaks down precisely where the uncertainty is deepest.</p>
+    </div>
+
+    <h3 class="subsection">Assumption four: the value of information is always positive</h3>
+    <p>Standard economic reasoning assumes that more information is weakly better — it can never make you worse off, because you can always ignore it. This is correct for a rational expected-utility maximiser operating in a model. It is not obviously correct for an adaptive agent — a person — navigating a complex, uncertain life.</p>
+
+    <p>Victor does not want to know his resting oxygen saturation during dinner at his favourite restaurant. This is not irrational. His adaptive strategy depends on maintaining a sense of velocity — of being in the game. Information that forces him to confront his decline in real time would undermine the very strategy that is keeping him functional. His EVPI for that information is negative. The information would make him measurably worse off by his own utility function. The EVPI framework, which assumes information is freely disposable, cannot accommodate this.</p>
+
+  </div>
+
+  <!-- ── SECTION 4 ── -->
+  <div class="section-block">
+    <span class="section-number">§ 04</span>
+    <h2 class="section-title">Whose EVPI? The multiple decision-makers in a care system</h2>
+
+    <p>The four personas from <em>Living with Not Knowing</em> each face genuinely different uncertainty landscapes. Their individual EVPIs — the amounts they would rationally pay for information that resolved their uncertainty — differ radically, in both magnitude and kind.</p>
+
+    <div class="persona-cards">
+      <div class="persona-card">
+        <span class="persona-label">Harold · Farmer, 74</span>
+        <div class="persona-name">Legacy-denominated uncertainty</div>
+        <p>Harold's existential uncertainty is denominated in farm-management time and grandchildren's milestones. Will he be functional enough to transfer the farm? Will he see his first grandchild start school? These are not QALY questions. His EVPI for better prognostic information is very high — he is making irreversible inheritance decisions against a timeline he cannot see. But the information that would resolve his uncertainty (a precise individual trajectory) exists nowhere.</p>
+        <span class="vpi-verdict">EVPI: high willingness-to-pay · information unavailable</span>
+      </div>
+      <div class="persona-card">
+        <span class="persona-label">George · Engineer, 70</span>
+        <div class="persona-name">Systems-framed uncertainty</div>
+        <p>George wants the uncertainty resolved through better data. He would read the trial, understand the hazard ratios, interrogate the confidence intervals. His EVPI is real and well-defined in his own framing. But the uncertainty that most distresses him — will the disease take him before he can no longer contribute to the lives of his grandchildren? — is aleatory. More research will not answer it. His distress is, in part, the distress of a man who has always solved problems through information, encountering a problem that information cannot solve.</p>
+        <span class="vpi-verdict">EVPI: well-defined for epistemic · undefined for what matters most</span>
+      </div>
+      <div class="persona-card">
+        <span class="persona-label">Francis · Civil servant, 74</span>
+        <div class="persona-name">Process-denominated uncertainty</div>
+        <p>Francis's uncertainty is primarily systemic and existential. He wants to know the pathway — when the next appointment is, what the criteria for treatment escalation are, what happens if he deteriorates over a weekend. This is systemic uncertainty: it reflects gaps in the care architecture, not gaps in the biomedical evidence. His EVPI for a better-designed care system is very high; but this is not a quantity that appears in any NICE model.</p>
+        <span class="vpi-verdict">EVPI: high for system design · not modelled anywhere</span>
+      </div>
+      <div class="persona-card">
+        <span class="persona-label">Victor · Entrepreneur, 74</span>
+        <div class="persona-name">Velocity-preserving uncertainty</div>
+        <p>Victor's relationship with information is sophisticated and frequently misread as denial. He is not ignorant of his prognosis; he has thought carefully about mortality in the abstract for years. His adaptive strategy requires enough uncertainty to maintain forward motion. The EVPI for some categories of information — what his oxygen saturation is during exertion, what his six-month decline trajectory looks like — is negative by his own utility function. He would pay to not know.</p>
+        <span class="vpi-verdict">EVPI: negative for some information · framework cannot model this</span>
+      </div>
+    </div>
+
+    <p>None of these individual EVPIs is captured by the NICE cost-effectiveness model for antifibrotic therapy. That model is calculating something real and important — whether the NHS should fund this treatment across the eligible population. But it is operating at a different level of abstraction from the uncertainty that Harold and George and Francis and Victor are living. The two calculations are not the same calculation. Treating one as a proxy for the other systematically undervalues what the other is measuring.</p>
+
+  </div>
+
+  <!-- ── SECTION 5 ── -->
+  <div class="section-block">
+    <span class="section-number">§ 05</span>
+    <h2 class="section-title">The institutional consequences of pricing uncertainty wrong</h2>
+
+    <p>EVPI does not merely describe uncertainty; it structures how institutions respond to it. When EVPI is the primary decision-rule for research prioritisation, it creates incentive structures with predictable consequences.</p>
+
+    <h3 class="subsection">Research skew toward epistemic uncertainty</h3>
+    <p>Only epistemic uncertainty generates a calculable, positive EVPI in the HTA model. Aleatory uncertainty is irreducible. Ontological uncertainty requires revising the models within which EVPI is calculated — the research that would address it is not "more of the same, with better endpoints." Systemic and existential uncertainty do not generate QALY-weighted EVPIs at all. The result is that research funding concentrates on the one form of uncertainty that the tool can price, and the other four go structurally underfunded — not as a matter of policy, but as an emergent consequence of the framework.</p>
+
+    <p>This is the institutional version of the data sufficiency narrative. If EVPI is how we decide what research is worth doing, and EVPI is only calculable for epistemic uncertainty, then epistemic uncertainty is by definition the only uncertainty that is ever "worth" resolving. The other four forms are not rejected — they are never considered.</p>
+
+    <h3 class="subsection">The cost of false certainty is invisible</h3>
+    <p>EVPI measures the value of moving from the current uncertainty to perfect information. It does not price the cost of false certainty — the cost of the system projecting confidence it does not have. Harold was reassured by his GP with a COPD diagnosis and an inhaler. He did not have COPD. The "resolution" of his uncertainty was a fiction that delayed his correct diagnosis by an estimated two years. The cost of that false certainty is not modelled anywhere in the EVPI framework, because EVPI assumes the current state is genuine uncertainty, not spurious confidence.</p>
+
+    <p>In complex chronic disease, spurious confidence may be more costly than honest uncertainty. A patient who knows their disease is genuinely uncertain can adapt — seek second opinions, maintain watchful attention, prepare for multiple eventualities. A patient who believes their disease is understood and managed when it is not does none of these things. The cost of false certainty, in a QALY-weighted population model, would in many conditions be large. We do not routinely calculate it.</p>
+
+    <div class="wc-insight">
+      <p>We would suggest a concept worth naming: the <strong>expected cost of false certainty</strong> — ECFC. Where EVPI asks "how much is it worth to resolve genuine uncertainty?", ECFC asks "how much does it cost when the system presents resolved uncertainty that is not resolved?" In progressive fibrotic lung disease, where average diagnostic delay exceeds two years and where misclassification persists even after specialist review, the ECFC may be of the same order as the EVPI — and is almost never calculated.</p>
+      <p>Uncertainty acknowledged is navigable. Uncertainty disguised as certainty is not. The asymmetry matters.</p>
+    </div>
+
+    <h3 class="subsection">The time-value of information in progressive disease</h3>
+    <p>Standard EVPI discounts costs and benefits across time but does not naturally incorporate the asymmetric urgency of progressive terminal disease. Harold needs prognostic information now — not because the information will be different in three years, but because in three years the farm transfer decisions will already have been made, the grandchild will already have been born, and Harold may or may not have been present for any of it. The value of the information is not discounted by time; it is destroyed by time.</p>
+
+    <p>A complexity-informed extension of EVPI for progressive terminal disease would weight information value by the probability that the patient is still in a position to act on it. This would fundamentally change research prioritisation: fast, moderately accurate prognostic tools that arrive in time for patients to use them would rank above slow, highly accurate tools that arrive after the relevant decisions have been made. The current framework, calibrated to population-level coverage decisions with three-to-five-year evidence horizons, has no mechanism for this.</p>
+
+  </div>
+
+  <!-- ── SECTION 6 ── -->
+  <div class="section-block">
+    <span class="section-number">§ 06</span>
+    <h2 class="section-title">EVSI and the distributed sensing alternative</h2>
+
+    <p>If EVPI is the ceiling — the value of knowing everything — then the <strong>expected value of sample information</strong> (EVSI) is its working counterpart: the value of a specific, feasible piece of research. EVSI is how HTA bodies decide whether a particular trial design, at a particular sample size and follow-up horizon, is worth funding.</p>
+
+    <p>The WorkingComplexity framework for engaging productively with uncertainty proposes distributing sensing across the full care system — treating Harold's wife's observations, George's notebooks, Francis's monthly calls with his specialist nurse, and Victor's dinner-table oxygen saturation as clinical signal, not background noise. What is the EVSI of these distributed signals?</p>
+
+    <p>It is not a question the framework currently asks, because these signals are not counted as "research" in the EVSI sense. They do not contribute to a trial dataset. They are not analysed by a biostatistician. They do not generate evidence that enters a cost-effectiveness model. They are invisible to the EVSI calculation — not because they have no information value, but because the framework is not designed to receive them.</p>
+
+    <p>This is an architectural problem. The sensing capacity of the system is broader than the evidence capture capacity of the system. Signals that are genuinely informative — about trajectory change, about adherence, about the patient's functional state in their own environment rather than in clinic — are generated continuously and lost continuously, because the system has no channel to capture them as structured data.</p>
+
+    <div class="callout">
+      <span class="callout-label">The EVSI of a carer</span>
+      <p>Harold's wife detects a change in his respiratory effort before any clinic measurement registers it. She has, in effect, continuous access to the most ecologically valid functional data in the system. The EVSI of that information — if it could be captured, structured, and incorporated into clinical management — would likely exceed the EVSI of many proposed trial extensions. We have not calculated it because we have not built the capture infrastructure, and we have not built the capture infrastructure partly because we have not calculated its value.</p>
+      <p>This is a feedback loop. The tool that prices information shapes the infrastructure built to gather it. Infrastructure built around the tool's assumptions gathers only the information the tool can price. The cycle is stable, self-reinforcing, and systematically blind to the information that falls outside it.</p>
+    </div>
+
+    <p>The AI development agenda in ILD is partly an attempt to escape this loop — to build sensing infrastructure that can capture signals from continuous monitoring, wearable devices, and patient-generated data. This is genuinely promising. But AI tools trained on existing clinical datasets inherit the sensing gaps of those datasets. A model trained on FVC trajectories in clinical trial populations will not capture the signal that Harold's wife is generating, because that signal was never in the training data.</p>
+
+  </div>
+
+  <!-- ── SECTION 7 ── -->
+  <div class="section-block">
+    <span class="section-number">§ 07</span>
+    <h2 class="section-title">Productive uncertainty has a value that EVPI cannot price</h2>
+
+    <p>The WorkingComplexity framework makes a stronger claim than "EVPI is incomplete." It argues that uncertainty is not only a cost to be minimised — it is a signal. Some uncertainty should not be eliminated. It should be held, navigated, and used as information.</p>
+
+    <p>This claim has economic implications. If uncertainty contains signal, then the EVPI framework — which treats all uncertainty as a cost, and prices the elimination of that cost — is not merely incomplete. In some cases, it is pointing in the wrong direction.</p>
+
+    <p>Consider ontological uncertainty: the category "unclassifiable ILD." A patient who receives this designation has not been failed by the system. The system has registered — accurately — that the patient's presentation does not fit its existing frameworks. This is diagnostic signal about the adequacy of the taxonomy. Eliminating this uncertainty by forcing the patient into the nearest available category destroys that signal. The "resolved" uncertainty is not a gain; it is a loss of information about where the framework itself is failing.</p>
+
+    <p>This is an extreme case, but the principle is general. In a complex system, uncertainty is often the earliest indicator that the model is wrong. The clinical instinct that says "this doesn't quite fit" — the MDT discussion that goes on longer than usual, the specialist's hedged language — these are weak signals about the limits of current knowledge. A system designed to eliminate uncertainty as efficiently as possible will systematically suppress these signals in favour of confident-looking outputs. The EVPI framework provides the economic justification for that suppression.</p>
+
+    <div class="pull-quote">
+      <p>The clinician who says "I'm not sure, and here is what I'm not sure about" is generating more useful information than the clinician who gives a confident diagnosis that is wrong. But the EVPI framework cannot price the value of <em>acknowledged uncertainty</em> — only the value of reducing it.</p>
+    </div>
+
+    <p>What would it mean to price the value of productive uncertainty? It would require a framework that includes the information content of uncertainty itself — the signal value of not-knowing, held honestly, as distinct from the cost of not-knowing, suppressed or papered over. This is not a standard decision-theory construct. It is, however, what complexity science predicts: in systems near critical transitions, the entropy of the distribution — the shape of the uncertainty — carries more information than any single expected value.</p>
+
+    <p>The field of early warning signals research has shown that systems approaching regime shifts display characteristic changes in their fluctuation patterns before the transition occurs. Variability increases. Autocorrelation increases. The system's "uncertainty" — in the sense of its departure from a stable attractor — is the signal. The tool that prices uncertainty only as a cost to be bought down would recommend eliminating this variability as soon as possible. The tool that treats uncertainty as signal would recommend monitoring it carefully, because the shape of the uncertainty is telling you something the expected value is not.</p>
+
+  </div>
+
+  <!-- ── SECTION 8 ── -->
+  <div class="section-block">
+    <span class="section-number">§ 08</span>
+    <h2 class="section-title">Toward a complexity-appropriate value of information framework</h2>
+
+    <p>We are not arguing that EVPI should be abandoned. We are arguing that it should be used precisely — applied to the uncertainty types for which it is well-defined, augmented by additional tools for those where it is not, and understood as a tool built for one kind of decision-maker in one kind of decision context.</p>
+
+    <p>A complexity-appropriate value of information framework for progressive fibrotic lung disease would need to incorporate the following extensions.</p>
+
+    <div class="framework-box">
+      <div class="framework-box-header">
+        <span>WorkingComplexity — VoI Framework Extensions</span>
+      </div>
+      <div class="framework-box-body">
+        <ol>
+          <li><strong>Decompose by uncertainty type before calculating value.</strong> <em>Epistemic uncertainty generates well-defined EVPI. Aleatory uncertainty does not — research investment here should aim for better characterisation of the distribution, not elimination of the uncertainty. Ontological uncertainty requires framework revision before any data can be valued. Systemic and existential uncertainty require different tools entirely.</em></li>
+          <li><strong>Calculate EVPI for multiple decision-makers, not just the payer.</strong> <em>The patient's EVPI, the carer's EVPI, the MDT's EVPI, and the GP's EVPI are different calculations. A research programme that maximises payer-level EVPI may have very low value to the people making the decisions that most affect the patient's quality of life.</em></li>
+          <li><strong>Include the time-cost of information latency in progressive disease.</strong> <em>Information that arrives after the relevant decision window has closed has zero value. Research programmes for progressive terminal conditions should be evaluated against the speed of disease progression, not just the precision of their outputs.</em></li>
+          <li><strong>Calculate the expected cost of false certainty alongside EVPI.</strong> <em>EVPI prices moving from genuine uncertainty to better information. ECFC prices the cost of spurious confidence. In conditions with long diagnostic delay and high misclassification rates, ECFC may be of comparable magnitude to EVPI and should be reported alongside it.</em></li>
+          <li><strong>Value the signal content of distributed sensing.</strong> <em>Carer-reported observations, patient-generated longitudinal data, and continuous functional monitoring have EVSI that is not captured in standard research prioritisation because the infrastructure to receive them is not in place. Building that infrastructure is itself a value-of-information investment — one that should be costed and evaluated as such.</em></li>
+          <li><strong>Include the value of adaptive capacity, not just the value of resolved uncertainty.</strong> <em>Information that improves the patient's capacity to adapt to an uncertain trajectory — even if it does not reduce the uncertainty itself — has value that the EVPI framework cannot price. Designing care around this kind of value requires different evidence standards: longitudinal, adaptive, and calibrated to the patient's own utility function rather than population-average QALYs.</em></li>
+        </ol>
+      </div>
+    </div>
+
+    <p>These are not merely methodological refinements. They reflect a different model of what uncertainty is and what healthcare is for. Standard EVPI encodes a vision of healthcare as an information-processing system converging on correct decisions. A complexity-informed framework encodes a vision of healthcare as an adaptive system navigating irreducible uncertainty on behalf of adaptive agents — patients — who have their own EVPIs, their own time horizons, and their own relationships with what they want to know and what they do not.</p>
+
+  </div>
+
+</main>
+
+<!-- ── CLOSING ─────────────────────────────────────────────────── -->
+<footer class="article-close">
+  <div class="close-inner">
+    <span class="close-kicker">WorkingComplexity — Conclusion</span>
+    <p class="close-statement">
+      Not all uncertainty can be bought down.<br>
+      <em>The work is learning to navigate what will not go away.</em>
+    </p>
+    <p class="close-body">Harold is still in the car. His daughter doesn't know what "slowing progression" means. The consultant has given the correct information in the correct format. The EVPI for a better explanation at that moment is not large — it would not change the coverage decision for antifibrotic therapy. It would not appear in any health economic model. It would not count toward any research priority.</p>
+    <p class="close-body" style="margin-top: 1rem;">And yet it is the moment that determines whether Harold leaves the hospital system with a formless weight of uncertainty, or with the beginning of a map — imperfect, provisional, but honest — of the terrain he is about to traverse. The value of that map is not zero. We have simply not built the tool to price it.</p>
+    <p class="close-body" style="margin-top: 1rem;">The value of perfect information is a powerful concept in health economics. Applied precisely — to epistemic uncertainty, at the decision-maker level that matters, over time horizons that respect the pace of progressive disease — it is an important tool. Applied as a universal proxy for the value of knowing in complex chronic illness, it systematically prices what matters most at zero, and calls that rigour.</p>
+    <div class="close-logo">
+      <div>
+        <a href="https://workingcomplexity.health" class="close-logo-wordmark">workingcomplexity</a>
+        <div class="close-logo-sub">— .health</div>
+      </div>
+      <span class="close-scale">WC-BLOG-004 / REV.A · SCALE 1:1 · ALL DIMENSIONS IN EXPERIENCE</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
