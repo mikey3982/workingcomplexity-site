@@ -284,6 +284,27 @@
   .wc-insight p strong { color: #E0E8F4; font-weight: 600; }
   .wc-insight h4 { color: #E0E8F4; font-size: 0.95rem; margin: 1rem 0 0.5rem; }
 
+  /* ── EXAMPLE CARD ──────────────────────────────────────── */
+  .example-card {
+    background: var(--paper);
+    border-left: 3px solid var(--blue);
+    padding: 1.5rem 2rem;
+    margin: 2rem 0;
+  }
+  .example-num {
+    font-family: var(--ff-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+  }
+  .example-card h4 { font-size: 1.1rem; font-weight: 700; color: var(--nearblack); margin: 0.5rem 0 1rem; }
+  .example-card p { font-size: 0.95rem; margin: 0.75rem 0 !important; line-height: 1.65; }
+  .example-card .tripwire { font-weight: 600; color: var(--ink-mid); margin-top: 1rem; padding-top: 1rem; border-top: 1px solid rgba(91,155,213,0.1); }
+
   /* ── CALLOUT ──────────────────────────────────────────── */
   .callout {
     background: var(--paper);
@@ -302,6 +323,32 @@
   }
   .callout p { font-size: 0.95rem; margin: 0 !important; line-height: 1.65; }
   .callout p + p { margin-top: 0.6rem !important; }
+
+  /* ── TABLE ─────────────────────────────────────────────── */
+  .taxonomy-table {
+    margin: 3rem 0;
+    overflow-x: auto;
+  }
+  .taxonomy-table table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+  }
+  .taxonomy-table th {
+    background: var(--ink);
+    color: #E0E8F4;
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.85rem;
+  }
+  .taxonomy-table td {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--border);
+    color: var(--ink);
+  }
+  .taxonomy-table tr:nth-child(even) { background: var(--paper); }
+  .taxonomy-table tr:hover { background: #f0f3fa; }
 </style>
 </head>
 <body>
@@ -321,18 +368,18 @@
 <div class="article-cover">
   <span class="doc-code">WC-HEUR / TAXONOMY & ELEVEN EXAMPLES / 2026</span>
   <span class="kicker">Heuristics</span>
-  <h1 class="article-title">When simple rules beat complex models — <em>taxonomy edition</em></h1>
-  <p class="article-subtitle">Eleven examples from medicine, critical care, marketing, and finance — and a taxonomy for understanding why heuristics succeed or fail in complex adaptive systems.</p>
+  <h1 class="article-title">When simple rules beat complex models — <em>full taxonomy</em></h1>
+  <p class="article-subtitle">Eleven examples from medicine, critical care, marketing, and finance — and a four-type taxonomy for understanding why heuristics succeed or fail in complex adaptive systems.</p>
   <div class="article-meta">
     <div class="meta-item"><strong>Date</strong> 2 June 2026</div>
     <div class="meta-item"><strong>Author</strong> Michael Baldwin</div>
-    <div class="meta-item"><strong>Type</strong> Extended essay</div>
+    <div class="meta-item"><strong>Type</strong> Extended essay with taxonomy</div>
   </div>
 </div>
 
 <div class="article">
   <div class="opening-pull">
-    <p>Complexity theory warns against reductionism. Yet some of the most robust decision-making in demonstrably complex adaptive systems relies on fast-and-frugal heuristics that ignore most available information. This is not intellectual laziness or a failure of sophistication. It is, in Gerd Gigerenzer's formulation, <em>ecological rationality</em>: the fit between heuristic and environment matters more than optimisation.</p>
+    <p>Complexity theory warns against reductionism. Yet some of the most robust decision-making in demonstrably complex adaptive systems relies on fast-and-frugal heuristics that ignore most available information. This is not intellectual laziness or a failure of sophistication. It is ecological rationality: the fit between heuristic and environment matters more than optimisation.</p>
   </div>
 
   <div class="section-block">
@@ -353,7 +400,7 @@
     <p>The key feature of a mechanistically grounded heuristic is that you can tell a complete causal story from cue to outcome without appealing to empirical regularities or historical correlations. The cue is not statistically associated with the outcome; it is causally upstream of it. This makes the heuristic robust under novel system states — because the mechanism operates regardless of the specific configuration of the surrounding complexity.</p>
 
     <div class="wc-insight">
-      <p><strong>Mechanistic heuristic</strong></p>
+      <h4>Mechanistic heuristic</h4>
       <p>The cue is causally upstream of the outcome through an identifiable mechanism.</p>
       <p><strong>Why it works:</strong> Works because the mechanism is relatively invariant across different instances of the CAS. Novel system states do not break the logic unless the mechanism itself is disrupted.</p>
       <p><strong>Tripwire logic:</strong> Degrades when the causal pathway is interfered with directly — by biological variation that interrupts the mechanism or by system shifts that change the upstream causal chain.</p>
@@ -361,27 +408,146 @@
 
     <h3 class="subsection">Type 2: Structurally Grounded Heuristics</h3>
     <p>A second class of heuristics works not because the cue is causally connected to the outcome but because it correlates with the outcome through an empirical regularity of the system's architecture. The regularity is real and often highly reliable — but it is contingent on the structure of the CAS remaining broadly stable. These heuristics are, in effect, compressed inductions from historical system behaviour rather than mechanistic readouts.</p>
-    <p>The market leadership heuristic illustrates this precisely. The rule — only invest in category development if you are the clear market leader — does not rest on a direct causal mechanism linking share position to category capture. It rests on a set of structural regularities: that leaders tend to have higher mental and physical availability, that category growth tends to benefit the best-distributed and most salient brand, that challenger investment in category development tends to subsidise the leader's returns. These regularities hold on average across mature consumer markets. They are grounded in real mechanisms — availability, distribution, mental salience — but those mechanisms are themselves products of the market structure, not invariant features of the world.</p>
+    <p>The market leadership heuristic illustrates this precisely. The rule — only invest in category development if you are the clear market leader — does not rest on a direct causal mechanism linking share position to category capture. It rests on a set of structural regularities: that leaders tend to have higher mental and physical availability, that category growth tends to benefit the best-distributed and most salient brand, that challenger investment in category development tends to subsidise the leader's returns. These regularities hold on average across mature consumer markets.</p>
 
     <div class="wc-insight">
-      <p><strong>Structural heuristic</strong></p>
+      <h4>Structural heuristic</h4>
       <p>The cue correlates with the outcome through an empirical regularity of the system's architecture — not a direct causal pathway.</p>
       <p><strong>Why it works:</strong> Works because certain structural features of competitive, economic, or social systems are stable enough to make the regularity predictive across many instances. Valid on average and ecologically rational within its structural context.</p>
-      <p><strong>Tripwire logic:</strong> Degrades when the structural regularity is disrupted — by market maturity shifts, disruptive competitive entry, regulatory intervention, or platform dynamics that invert the normal relationships. The degradation is often not visible from within the heuristic itself.</p>
+      <p><strong>Tripwire logic:</strong> Degrades when the structural regularity is disrupted — by market maturity shifts, disruptive competitive entry, regulatory intervention, or platform dynamics that invert the normal relationships.</p>
+    </div>
+
+    <h3 class="subsection">Type 3: Normatively Grounded Heuristics</h3>
+    <p>A third category encompasses rules that work not primarily because they read the system accurately — mechanistically or structurally — but because they coordinate behaviour in ways that produce good aggregate outcomes regardless of whether they are locally optimal. The cue is not a signal from the system; it is a trigger for a social or procedural protocol. The heuristic is a coordination device.</p>
+    <p>The WHO Surgical Safety Checklist is the clearest example. It is not derived from surgical pathophysiology. There is no mechanism by which completing a ten-point checklist before incision causally prevents the specific failure that will occur in any given operation. The checklist works because surgical errors are predominantly failures of communication, omission, and assumption in teams operating under time pressure — a CAS of human coordination dynamics rather than tissue biology. The checklist creates a mandatory pause that surfaces tacit information, equalises voice across professional hierarchies, and interrupts the social dynamics that allow assumptions to go unchallenged.</p>
+
+    <div class="wc-insight">
+      <h4>Normative heuristic</h4>
+      <p>The rule coordinates behaviour in ways that produce good aggregate outcomes — not by reading the system accurately but by restructuring how people interact with it.</p>
+      <p><strong>Why it works:</strong> Works because the CAS failure modes being addressed are primarily failures of human coordination, communication, and omission under pressure. The heuristic creates a structural intervention in social dynamics rather than a measurement of clinical state.</p>
+      <p><strong>Tripwire logic:</strong> Degrades through checklist fatigue, ritual compliance without genuine engagement, and situations where the social dynamics the rule is designed to interrupt are absent.</p>
+    </div>
+
+    <h3 class="subsection">Type 4: Adversarially Robust Heuristics</h3>
+    <p>A fourth category is less well recognised but arguably the most important in competitive, regulatory, and market access contexts. These are heuristics whose simplicity is itself a strategic feature — because they operate in environments where sophisticated models will be gamed, and simplicity resists gaming.</p>
+    <p>Andrew Haldane's analysis of the 2008 financial crisis articulated this argument most clearly. The Basel III regulatory framework attempted to model financial system complexity with thousands of risk parameters and sophisticated weighting algorithms. But banks employed large teams of quantitative analysts to identify and exploit the model's parameters, producing capital positions that satisfied the letter of the framework while building systemic fragility that the model could not see. A simple leverage ratio — total assets divided by equity — predicted bank failure during 2008 better than the risk-weighted models. The mechanism of its superiority is adversarial: the ratio is too coarse to be gamed without genuinely reducing leverage. Every dimension of sophistication added to the model became a degree of freedom for the adversary.</p>
+
+    <div class="wc-insight">
+      <h4>Adversarial heuristic</h4>
+      <p>The heuristic's simplicity is itself a strategic property — it succeeds in environments where more sophisticated models will be gamed.</p>
+      <p><strong>Why it works:</strong> Works because every additional dimension of a model is an additional degree of freedom for adversarial optimisation. Crudeness that would be a liability in a neutral system becomes robustness in a competitive one. Simplicity collapses the optimisation space available to actors who would otherwise exploit model complexity.</p>
+      <p><strong>Tripwire logic:</strong> Degrades when the adversarial pressure decreases and the information loss from crudeness becomes costly — and in situations where the simple rule is itself gameable at a higher level.</p>
     </div>
 
   </div>
 
   <div class="section-block">
     <span class="section-number">03</span>
-    <h2 class="section-title">When to read this essay</h2>
-    <p>This extended version offers a complete four-type taxonomy (including normative and adversarially robust heuristics), detailed analysis of the tripwire logic for each type, and eleven worked examples spanning healthcare, markets, finance, and organisational design.</p>
-    <p>Start with the <em>Simple Rules, Seven Examples</em> version for a focused introduction. Read this full taxonomy if you need to understand when and why heuristics fail — and how to design systems that preserve heuristic wisdom as environments change.</p>
+    <h2 class="section-title">The eleven examples, mapped to type</h2>
+
+    <h3 class="subsection">Mechanistically Grounded</h3>
+
+    <div class="example-card">
+      <span class="example-num">Example 01</span>
+      <h4>The sepsis 1-hour bundle</h4>
+      <p>Sepsis is a textbook CAS. Yet the Surviving Sepsis Campaign's 1-hour bundle reduces the decision to a single trigger: suspected sepsis initiates cultures, broad-spectrum antibiotics, and IV fluids within sixty minutes. The mechanism is bacterial doubling time and the immune window: early antibiotic exposure interrupts a biological process before it becomes irreversible. One cue — elapsed time — dominates all others because the mechanism is time-invariant across essentially all bacterial presentations.</p>
+      <div class="tripwire"><strong>Tripwire:</strong> Viral sepsis mimics, culture-negative presentations, and antibiotic resistance environments where the risk calculus shifts.</div>
+    </div>
+
+    <div class="example-card">
+      <span class="example-num">Example 02</span>
+      <h4>Capillary refill time in septic shock</h4>
+      <p>First introduced in 1947 to evaluate circulatory status in battlefield casualties, CRT requires pressing a glass slide to a fingernail and counting seconds. The ANDROMEDA-SHOCK RCT (JAMA, 2019) directly pitted CRT-guided resuscitation against lactate-targeted resuscitation in septic shock. The CRT group had lower mortality (34.9% vs 43.4%), required less fluid, and had less organ dysfunction at 72 hours. The lactate group received more fluid boluses, vasopressor interventions, and inodilators — the sophisticated biochemical target was driving overtreatment. Lactate carries non-hypoperfusion signal from hepatic sources that persists after circulatory restoration; CRT does not.</p>
+      <div class="tripwire"><strong>Tripwire:</strong> Temperature, patient age, skin pigmentation, nail polish, and inter-observer variability all interfere with the mechanism.</div>
+    </div>
+
+    <div class="example-card">
+      <span class="example-num">Example 03</span>
+      <h4>Paediatric shock index</h4>
+      <p>In paediatric trauma, the shock index — heart rate divided by systolic blood pressure — provides a single value that triggers major haemorrhage protocol activation when it exceeds 1.0. The mechanism is straightforward: compensated haemorrhagic shock in children produces tachycardia before hypotension, so the ratio captures early circulatory compromise. The complexity of paediatric physiology is not modelled. The ratio exploits one invariant fact: that the tachycardia-to-hypotension sequence is consistent across paediatric haemorrhage presentations.</p>
+      <div class="tripwire"><strong>Tripwire:</strong> Vagal responses, non-haemorrhagic tachycardia from pain or anxiety, and pre-existing cardiac conditions.</div>
+    </div>
+
+    <div class="example-card">
+      <span class="example-num">Example 04</span>
+      <h4>UIP pattern diagnosis in IPF</h4>
+      <p>The 2022 ATS/ERS/JRS/ALAT guidelines moved decisively toward pattern-based HRCT classification: typical UIP pattern equals probable IPF, surgical lung biopsy no longer required in most presentations. The mechanism is radiological: the honeycombing and traction bronchiectasis of typical UIP reflect a fibrogenic process with sufficient histopathological predictability that tissue confirmation adds procedural risk without proportional diagnostic yield in high-probability cases. The heuristic exploits a stable mechanistic relationship between radiological pattern and underlying fibrotic biology.</p>
+      <div class="tripwire"><strong>Tripwire:</strong> Atypical patterns, combined ILD phenotypes, and early or indeterminate disease represent boundary conditions where the mechanism is less stable.</div>
+    </div>
+
+    <div class="example-card">
+      <span class="example-num">Example 05</span>
+      <h4>Universal ART initiation in HIV</h4>
+      <p>Early HIV treatment strategy tried to model the CAS: CD4 thresholds, viral load triggers, structured treatment interruptions. The field eventually converged on a single rule — treat everyone immediately regardless of CD4 count. The mechanism is viral reservoir dynamics: early treatment forestalls establishment of the latent reservoir before immune architecture is compromised. The surrounding complexity of viral evolution is not modelled; the heuristic sidesteps it by intervening at the one point where the causal chain can be reliably interrupted.</p>
+      <div class="tripwire"><strong>Tripwire:</strong> Drug resistance prevalence and adherence infrastructure. The universal treatment heuristic assumes functional access.</div>
+    </div>
+
+    <div class="example-card">
+      <span class="example-num">Example 06</span>
+      <h4>Antibiotic de-escalation</h4>
+      <p>Antibiotic stewardship relies on a simple rule: negative blood cultures at 48 hours, plus clinical improvement, means narrow or stop antibiotics. The mechanism is microbiological: clinically significant bacteraemia is detectable within 48 hours in the vast majority of cases, creating a reliable binary branch point. The CAS complexity of resistance ecology is precisely what makes parsimony important — unnecessary antibiotic days drive selection pressure at the population level.</p>
+      <div class="tripwire"><strong>Tripwire:</strong> Culture-negative infections, fungal disease, slow-growing organisms, and immunocompromised hosts where the 48-hour assumption fails.</div>
+    </div>
+
+    <h3 class="subsection">Structurally Grounded</h3>
+
+    <div class="example-card">
+      <span class="example-num">Example 07</span>
+      <h4>Market leader category development</h4>
+      <p>The heuristic — only invest in category development if you are the clear market leader — encodes a structural regularity of mature competitive markets rather than a direct mechanism. Category growth benefits all competitors, but disproportionately the best-distributed and most salient brand: the leader captures returns through availability advantages that challengers cannot match. Challenger investment subsidises the incumbent's growth. But it is a regularity, not a mechanism. In a nascent category, first-mover investment can create durable positioning that overrides the share-of-capture logic. In healthcare markets, the mechanism of return differs from consumer markets entirely.</p>
+      <div class="tripwire"><strong>Tripwire:</strong> Nascent categories, asymmetric challenger positioning, healthcare markets where the mechanism of return differs.</div>
+    </div>
+
+    <div class="example-card">
+      <span class="example-num">Example 08</span>
+      <h4>The Rule of Three</h4>
+      <p>Sheth and Sisodia's Rule of Three observes that stable mature industries converge on three dominant generalist competitors with a fringe of specialists. The rule encodes a genuine regularity: oligopoly dynamics, scale economies, and the limits of consumer attention do tend to produce triopolistic structures. It is a useful guide precisely because the structural regularity is real enough to be predictive. It fails immediately in platform markets where network effects produce winner-take-most rather than three-winner dynamics; in regulated industries where structural intervention overrides competitive selection.</p>
+      <div class="tripwire"><strong>Tripwire:</strong> Platform dynamics, network effects, regulatory intervention, disruptive technological entry.</div>
+    </div>
+
+    <h3 class="subsection">Normatively Grounded</h3>
+
+    <div class="example-card">
+      <span class="example-num">Example 09</span>
+      <h4>WHO surgical safety checklist</h4>
+      <p>The checklist is not derived from surgical pathophysiology. Completing ten items before incision has no direct causal connection to preventing the specific failure that will occur in any given operation. It works because surgical errors are predominantly failures of communication, omission, and assumption in teams under time pressure. The checklist creates a mandatory pause that surfaces tacit information, equalises voice across hierarchies, and interrupts the social dynamics that allow critical assumptions to go unchallenged. The mechanism is social and organisational. The checklist's value is greatest in 'routine' cases where the team's overconfidence is highest — precisely the cases where deviation is most tempting and most dangerous.</p>
+      <div class="tripwire"><strong>Tripwire:</strong> Ritual compliance without genuine engagement — the form completed but the social dynamic it is designed to interrupt left intact.</div>
+    </div>
+
+    <div class="example-card">
+      <span class="example-num">Example 10</span>
+      <h4>CPR 2-minute cycles (ACLS)</h4>
+      <p>There is no precise physiological reason why exactly two minutes of uninterrupted compressions is optimal for every cardiac arrest. The rule works because it addresses a systems-level coordination failure: premature rhythm checks by providers anxious about the rhythm, and the temporal coordination problem of when to pause across a team of variable skill and anxiety levels. The heuristic solves a social-temporal problem in a CAS of human behaviour under extreme stress, not a physiological optimisation problem. Two minutes is approximately right; the coordination it enforces is exactly right.</p>
+      <div class="tripwire"><strong>Tripwire:</strong> Shockable rhythms detected early; provider exhaustion in prolonged arrest where 2-minute cycles cannot be sustained.</div>
+    </div>
+
+    <h3 class="subsection">Adversarially Robust</h3>
+
+    <div class="example-card">
+      <span class="example-num">Example 11</span>
+      <h4>Basel III leverage ratio</h4>
+      <p>The Basel III framework attempted to model systemic financial risk with thousands of parameters. Banks employed quantitative teams to exploit those parameters, producing capital positions that satisfied the model while building fragility it could not see. A simple leverage ratio — total assets divided by equity — predicted bank failure during 2008 better than the complex risk-weighted models. The mechanism of its superiority is adversarial: the ratio is too coarse to be gamed without genuinely reducing leverage. Every dimension of sophistication became a degree of freedom for the adversary. The pharmaceutical market access analogy is direct: a single-threshold ICER rule is informationally crude but resistant to the gaming that multi-criteria frameworks invite.</p>
+      <div class="tripwire"><strong>Tripwire:</strong> Instruments that escape the heuristic's scope entirely — off-balance-sheet products for the leverage ratio; therapies outside the QALY framework.</div>
+    </div>
+
+  </div>
+
+  <div class="section-block">
+    <span class="section-number">04</span>
+    <h2 class="section-title">Synthesis: what the taxonomy tells us</h2>
+    <p>The four types of heuristic are not a hierarchy of quality. Normative heuristics are not inferior to mechanistic ones; they operate in different CAS conditions and succeed for different reasons. What the taxonomy provides is a framework for asking the right questions before deploying a heuristic — and for diagnosing failure when a heuristic stops working.</p>
+    <p>Three design principles follow from the taxonomy for practitioners building decision frameworks in complex systems:</p>
+    <ul>
+      <li><strong>Identify the type before the rule.</strong> Before adopting a heuristic, determine which category it belongs to. A structurally grounded heuristic borrowed into a context where the structural regularity does not hold will fail in ways that look like bad luck but are actually predictable.</li>
+      <li><strong>Match the tripwire to the type.</strong> Mechanistic heuristics need tripwires that monitor the causal pathway. Structural heuristics need tripwires that monitor the structural regularity. Normative heuristics need tripwires that monitor compliance quality. Adversarial heuristics need tripwires that monitor novel circumvention.</li>
+      <li><strong>Maintain calibration infrastructure.</strong> Heuristics degrade silently. The GP's gut feel, calibrated to one population, drifts as patient demographics shift. Ecological rationality requires ongoing feedback between heuristic and environment.</li>
+    </ul>
+    <p>The sophistication lies not in the decision rule but in knowing what kind of rule it is, and in knowing when to abandon it.</p>
   </div>
 
   <div class="callout">
     <span class="callout-label">Companion reading</span>
-    <p>For analysis of how heuristics decay and when to refresh them — especially in the age of AI — see <em>Knowing When to Let Go</em>.</p>
+    <p>For analysis of how heuristics decay and when to refresh them — especially in the age of AI — see <em>Knowing When to Let Go</em>. For seven concrete examples focused on healthcare and finance, see <em>When Simple Rules Beat Complex Models</em>.</p>
   </div>
 
 </div>
