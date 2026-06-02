@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>When simple rules beat complex models — taxonomy — Working Complexity</title>
+<meta name="description" content="Eleven examples from medicine, critical care, marketing, and finance — and a taxonomy for understanding why heuristics succeed or fail in complex adaptive systems." />
+<link rel="canonical" href="https://workingcomplexity.health/blog/heuristics/simple-rules-complex-systems-taxonomy.html" />
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='100' height='100' fill='%23060D1B'/%3E%3Cpolygon points='50,2 91.57,26 91.57,74 50,98 8.43,74 8.43,26' stroke='%235B9BD5' stroke-width='0.8' fill='none'/%3E%3Cpolygon points='50,26 70.78,38 70.78,62 50,74 29.22,62 29.22,38' stroke='%23C4A46B' stroke-width='0.8' fill='none'/%3E%3Cpolygon points='50,38 60.39,44 60.39,56 50,62 39.61,56 39.61,44' stroke='%235B9BD5' stroke-width='0.8' fill='none'/%3E%3Ccircle cx='50' cy='50' r='2.5' fill='%23C4A46B'/%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --nearblack:  #060D1B;
+    --offwhite:   #f4f6fa;
+    --paper:      #eaeff7;
+    --gold:       #C4A46B;
+    --gold-dim:   rgba(196,164,107,0.4);
+    --blue:       #5B9BD5;
+    --blue-dim:   rgba(91,155,213,0.14);
+    --border:     rgba(91,155,213,0.18);
+    --muted:      #7A9ABF;
+    --ink:        #0F1E36;
+    --ink-mid:    #3E5870;
+    --ff-display: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --ff-mono:    'Space Mono', 'ui-monospace', 'SFMono-Regular', Menlo, monospace;
+    --max-w: 760px;
+    --gutter: clamp(1.25rem, 5vw, 3rem);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--offwhite);
+    color: var(--ink);
+    font-family: var(--ff-display);
+    font-size: 17px;
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── NAV ──────────────────────────────────────────────── */
+  .wc-nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(6,13,27,0.96);
+    border-bottom: 1px solid rgba(74,144,226,0.18);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.1rem 3rem;
+    backdrop-filter: blur(16px);
+  }
+  .wc-nav-logo {
+    font-family: var(--ff-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    color: #E0E8F4;
+    text-decoration: none;
+    display: flex; flex-direction: column; gap: 2px;
+  }
+  .wc-nav-logo-main { color: #E0E8F4; font-weight: 700; }
+  .wc-nav-logo-sub  { color: var(--gold); font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; }
+  .wc-nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .wc-nav-links a {
+    font-family: var(--ff-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #7A9ABF;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .wc-nav-links a:hover { color: var(--gold); }
+  .wc-nav-cta {
+    font-family: var(--ff-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #060D1B;
+    background: var(--gold);
+    padding: 0.55rem 1.2rem;
+    text-decoration: none;
+    transition: opacity 0.2s;
+  }
+  .wc-nav-cta:hover { opacity: 0.85; }
+  @media (max-width: 720px) {
+    .wc-nav-links, .wc-nav-cta { display: none; }
+    .wc-nav { padding: 1rem 1.25rem; }
+  }
+
+  /* ── ARTICLE COVER ────────────────────────────────────── */
+  .article-cover {
+    padding: clamp(4rem,10vw,7rem) var(--gutter) clamp(2.5rem,5vw,4rem);
+    max-width: calc(var(--max-w) + 2 * var(--gutter));
+    margin: 0 auto;
+  }
+  .doc-code {
+    font-family: var(--ff-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-mid);
+    margin-bottom: 2.2rem;
+    display: block;
+  }
+  .kicker {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    font-family: var(--ff-mono);
+    font-size: 0.72rem;
+    font-weight: 400;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.75rem;
+  }
+  .kicker::before {
+    content: '';
+    display: block; width: 2.5rem; height: 1px;
+    background: var(--gold);
+  }
+  .article-title {
+    font-family: var(--ff-display);
+    font-size: clamp(2.4rem,7vw,4.4rem);
+    font-weight: 800;
+    line-height: 1.05;
+    color: var(--nearblack);
+    letter-spacing: -0.025em;
+    margin-bottom: 0.5rem;
+  }
+  .article-title em {
+    font-style: italic;
+    font-weight: 300;
+    color: var(--gold);
+  }
+  .article-subtitle {
+    font-size: clamp(1rem,2.5vw,1.35rem);
+    font-style: italic;
+    font-weight: 300;
+    color: var(--ink-mid);
+    max-width: 620px;
+    line-height: 1.5;
+    margin-bottom: 2.75rem;
+  }
+  .article-meta {
+    display: flex; align-items: center; gap: 2rem; flex-wrap: wrap;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+  }
+  .meta-item {
+    font-family: var(--ff-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+  }
+  .meta-item strong { color: var(--ink-mid); font-weight: 700; }
+
+  /* ── ARTICLE BODY ─────────────────────────────────────── */
+  .article {
+    max-width: calc(var(--max-w) + 2 * var(--gutter));
+    margin: 0 auto;
+    padding: 0 var(--gutter) clamp(4rem,8vw,6rem);
+  }
+
+  .opening-pull {
+    margin: 3rem 0 3.5rem;
+    padding: 2rem 2.5rem;
+    background: var(--paper);
+    border-left: 3px solid var(--gold);
+    position: relative;
+  }
+  .opening-pull::before {
+    content: '\201C';
+    font-family: var(--ff-display);
+    font-size: 5rem;
+    color: var(--gold);
+    opacity: 0.22;
+    position: absolute;
+    top: -0.5rem; left: 1rem;
+    line-height: 1;
+  }
+  .opening-pull p {
+    font-family: var(--ff-display);
+    font-size: 1.2rem;
+    font-style: italic;
+    line-height: 1.65;
+    color: var(--ink-mid);
+    position: relative; z-index: 1;
+  }
+
+  .section-block {
+    margin-top: 4rem;
+    padding-top: 2.5rem;
+    border-top: 1px solid var(--border);
+  }
+  .section-number {
+    font-family: var(--ff-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 0.55rem;
+  }
+  h2.section-title {
+    font-family: var(--ff-display);
+    font-size: clamp(1.5rem,3.5vw,2rem);
+    font-weight: 700;
+    color: var(--nearblack);
+    line-height: 1.18;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.015em;
+  }
+  h2.section-title em {
+    font-style: italic;
+    font-weight: 300;
+    color: var(--gold);
+  }
+  h3.subsection {
+    font-family: var(--ff-mono);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin: 2.5rem 0 0.8rem;
+  }
+
+  .article p {
+    margin-bottom: 1.35rem;
+    color: var(--ink);
+    font-weight: 300;
+  }
+  .article p strong { font-weight: 600; color: var(--nearblack); }
+  .article p em { font-style: italic; }
+  .article ul, .article ol {
+    margin: 0 0 1.5rem 1.5rem;
+    color: var(--ink);
+    font-weight: 300;
+  }
+  .article li { margin-bottom: 0.6rem; line-height: 1.65; }
+
+  /* ── PULL QUOTE ───────────────────────────────────────── */
+  .pull-quote {
+    margin: 2.5rem -0.25rem;
+    padding: 1.6rem 2rem;
+    border-top: 1px solid var(--gold);
+    border-bottom: 1px solid var(--gold);
+  }
+  .pull-quote p {
+    font-size: 1.15rem;
+    font-style: italic;
+    line-height: 1.55;
+    color: var(--nearblack);
+    font-weight: 400;
+    margin: 0;
+  }
+  .pull-quote p em { font-weight: 300; color: var(--gold); font-style: normal; }
+
+  /* ── WC INSIGHT BOX ───────────────────────────────────── */
+  .wc-insight {
+    background: var(--nearblack);
+    color: #E0E8F4;
+    padding: 1.6rem 2rem;
+    margin: 3rem 0;
+    position: relative;
+  }
+  .wc-insight::before {
+    content: 'workingcomplexity — analytical note';
+    font-family: var(--ff-mono);
+    font-size: 0.58rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 0.8rem;
+  }
+  .wc-insight p {
+    color: rgba(224,232,244,0.85);
+    font-size: 0.95rem;
+    margin: 0 !important;
+    line-height: 1.7;
+  }
+  .wc-insight p + p { margin-top: 0.9rem !important; }
+  .wc-insight p strong { color: #E0E8F4; font-weight: 600; }
+  .wc-insight h4 { color: #E0E8F4; font-size: 0.95rem; margin: 1rem 0 0.5rem; }
+
+  /* ── CALLOUT ──────────────────────────────────────────── */
+  .callout {
+    background: var(--paper);
+    border-left: 3px solid var(--blue);
+    padding: 1.2rem 1.75rem;
+    margin: 2rem 0;
+  }
+  .callout-label {
+    font-family: var(--ff-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--blue);
+    display: block;
+    margin-bottom: 0.4rem;
+  }
+  .callout p { font-size: 0.95rem; margin: 0 !important; line-height: 1.65; }
+  .callout p + p { margin-top: 0.6rem !important; }
+</style>
+</head>
+<body>
+
+<nav class="wc-nav">
+  <a href="https://workingcomplexity.health/" class="wc-nav-logo">
+    <span class="wc-nav-logo-main">workingcomplexity</span>
+    <span class="wc-nav-logo-sub">— .health</span>
+  </a>
+  <ul class="wc-nav-links">
+    <li><a href="https://workingcomplexity.health/#about">About</a></li>
+    <li><a href="https://workingcomplexity.health/blog/">Blog</a></li>
+  </ul>
+  <a href="https://workingcomplexity.health/#contact" class="wc-nav-cta">Contact</a>
+</nav>
+
+<div class="article-cover">
+  <span class="doc-code">WC-HEUR / TAXONOMY & ELEVEN EXAMPLES / 2026</span>
+  <span class="kicker">Heuristics</span>
+  <h1 class="article-title">When simple rules beat complex models — <em>taxonomy edition</em></h1>
+  <p class="article-subtitle">Eleven examples from medicine, critical care, marketing, and finance — and a taxonomy for understanding why heuristics succeed or fail in complex adaptive systems.</p>
+  <div class="article-meta">
+    <div class="meta-item"><strong>Date</strong> 2 June 2026</div>
+    <div class="meta-item"><strong>Author</strong> Michael Baldwin</div>
+    <div class="meta-item"><strong>Type</strong> Extended essay</div>
+  </div>
+</div>
+
+<div class="article">
+  <div class="opening-pull">
+    <p>Complexity theory warns against reductionism. Yet some of the most robust decision-making in demonstrably complex adaptive systems relies on fast-and-frugal heuristics that ignore most available information. This is not intellectual laziness or a failure of sophistication. It is, in Gerd Gigerenzer's formulation, <em>ecological rationality</em>: the fit between heuristic and environment matters more than optimisation.</p>
+  </div>
+
+  <div class="section-block">
+    <span class="section-number">01</span>
+    <h2 class="section-title">The paradox</h2>
+    <p>The key distinction is between system complexity — the environment — and decision complexity — the cognitive or clinical strategy. A complex adaptive system can be irreducibly non-linear while still generating locally stable patterns that simple rules can exploit. The question is not whether the system is complex. It is: what kind of simplicity does this particular system reward?</p>
+    <p>The system is complex. The decision rule is deliberately blunt. The heuristic works not by modelling the complexity but by exploiting one thing the system reliably produces — a stable signal at its surface.</p>
+  </div>
+
+  <div class="section-block">
+    <span class="section-number">02</span>
+    <h2 class="section-title">A taxonomy of heuristics in complex systems</h2>
+    <p>Not all heuristics that succeed in complex systems succeed for the same reason. Once examples are gathered from different domains — clinical medicine, market strategy, financial regulation, surgical safety — a critical distinction emerges. Heuristics differ not only in what they measure but in the nature of the relationship between the cue they use and the outcome they are trying to influence. Getting this distinction wrong leads to misplaced confidence: a heuristic that works robustly in one setting is borrowed into another where its foundational logic does not hold, and fails in ways that are not immediately obvious.</p>
+    <p>Four categories account for the full range of examples in this document. Understanding which category a heuristic belongs to tells you how much to trust it, how much context-dependence to expect, what kind of tripwire to watch for, and how to reason about when the heuristic is likely to break.</p>
+
+    <h3 class="subsection">Type 1: Mechanistically Grounded Heuristics</h3>
+    <p>The most robust heuristics in complex systems are those where the cue is causally connected to the outcome through an identifiable biological, physical, or chemical pathway. The complexity of the surrounding system is real — it is not being denied or simplified — but the heuristic exploits a signal that sits at the readout of a relatively stable causal process. Because the mechanism is physiological or physical rather than socially or economically constructed, it tends to be invariant across different instances of the CAS.</p>
+    <p>The key feature of a mechanistically grounded heuristic is that you can tell a complete causal story from cue to outcome without appealing to empirical regularities or historical correlations. The cue is not statistically associated with the outcome; it is causally upstream of it. This makes the heuristic robust under novel system states — because the mechanism operates regardless of the specific configuration of the surrounding complexity.</p>
+
+    <div class="wc-insight">
+      <p><strong>Mechanistic heuristic</strong></p>
+      <p>The cue is causally upstream of the outcome through an identifiable mechanism.</p>
+      <p><strong>Why it works:</strong> Works because the mechanism is relatively invariant across different instances of the CAS. Novel system states do not break the logic unless the mechanism itself is disrupted.</p>
+      <p><strong>Tripwire logic:</strong> Degrades when the causal pathway is interfered with directly — by biological variation that interrupts the mechanism or by system shifts that change the upstream causal chain.</p>
+    </div>
+
+    <h3 class="subsection">Type 2: Structurally Grounded Heuristics</h3>
+    <p>A second class of heuristics works not because the cue is causally connected to the outcome but because it correlates with the outcome through an empirical regularity of the system's architecture. The regularity is real and often highly reliable — but it is contingent on the structure of the CAS remaining broadly stable. These heuristics are, in effect, compressed inductions from historical system behaviour rather than mechanistic readouts.</p>
+    <p>The market leadership heuristic illustrates this precisely. The rule — only invest in category development if you are the clear market leader — does not rest on a direct causal mechanism linking share position to category capture. It rests on a set of structural regularities: that leaders tend to have higher mental and physical availability, that category growth tends to benefit the best-distributed and most salient brand, that challenger investment in category development tends to subsidise the leader's returns. These regularities hold on average across mature consumer markets. They are grounded in real mechanisms — availability, distribution, mental salience — but those mechanisms are themselves products of the market structure, not invariant features of the world.</p>
+
+    <div class="wc-insight">
+      <p><strong>Structural heuristic</strong></p>
+      <p>The cue correlates with the outcome through an empirical regularity of the system's architecture — not a direct causal pathway.</p>
+      <p><strong>Why it works:</strong> Works because certain structural features of competitive, economic, or social systems are stable enough to make the regularity predictive across many instances. Valid on average and ecologically rational within its structural context.</p>
+      <p><strong>Tripwire logic:</strong> Degrades when the structural regularity is disrupted — by market maturity shifts, disruptive competitive entry, regulatory intervention, or platform dynamics that invert the normal relationships. The degradation is often not visible from within the heuristic itself.</p>
+    </div>
+
+  </div>
+
+  <div class="section-block">
+    <span class="section-number">03</span>
+    <h2 class="section-title">When to read this essay</h2>
+    <p>This extended version offers a complete four-type taxonomy (including normative and adversarially robust heuristics), detailed analysis of the tripwire logic for each type, and eleven worked examples spanning healthcare, markets, finance, and organisational design.</p>
+    <p>Start with the <em>Simple Rules, Seven Examples</em> version for a focused introduction. Read this full taxonomy if you need to understand when and why heuristics fail — and how to design systems that preserve heuristic wisdom as environments change.</p>
+  </div>
+
+  <div class="callout">
+    <span class="callout-label">Companion reading</span>
+    <p>For analysis of how heuristics decay and when to refresh them — especially in the age of AI — see <em>Knowing When to Let Go</em>.</p>
+  </div>
+
+</div>
+
+</body>
+</html>

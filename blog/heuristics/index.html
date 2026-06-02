@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Heuristics — Working Complexity</title>
+<meta name="description" content="An exploration of how simple rules beat complex models in genuinely complex adaptive systems. Three essays on heuristic design, decay, and the implications of artificial intelligence." />
+<link rel="canonical" href="https://workingcomplexity.health/blog/heuristics/" />
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='100' height='100' fill='%23060D1B'/%3E%3Cpolygon points='50,2 91.57,26 91.57,74 50,98 8.43,74 8.43,26' stroke='%235B9BD5' stroke-width='0.8' fill='none'/%3E%3Cpolygon points='50,26 70.78,38 70.78,62 50,74 29.22,62 29.22,38' stroke='%23C4A46B' stroke-width='0.8' fill='none'/%3E%3Cpolygon points='50,38 60.39,44 60.39,56 50,62 39.61,56 39.61,44' stroke='%235B9BD5' stroke-width='0.8' fill='none'/%3E%3Ccircle cx='50' cy='50' r='2.5' fill='%23C4A46B'/%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --nearblack:  #060D1B;
+    --offwhite:   #f4f6fa;
+    --paper:      #eaeff7;
+    --gold:       #C4A46B;
+    --gold-dim:   rgba(196,164,107,0.4);
+    --blue:       #5B9BD5;
+    --blue-dim:   rgba(91,155,213,0.14);
+    --border:     rgba(91,155,213,0.18);
+    --muted:      #7A9ABF;
+    --ink:        #0F1E36;
+    --ink-mid:    #3E5870;
+    --ff-display: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --ff-mono:    'Space Mono', 'ui-monospace', 'SFMono-Regular', Menlo, monospace;
+    --max-w: 760px;
+    --gutter: clamp(1.25rem, 5vw, 3rem);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--offwhite);
+    color: var(--ink);
+    font-family: var(--ff-display);
+    font-size: 17px;
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── NAV ──────────────────────────────────────────────── */
+  .wc-nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(6,13,27,0.96);
+    border-bottom: 1px solid rgba(74,144,226,0.18);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.1rem 3rem;
+    backdrop-filter: blur(16px);
+  }
+  .wc-nav-logo {
+    font-family: var(--ff-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    color: #E0E8F4;
+    text-decoration: none;
+    display: flex; flex-direction: column; gap: 2px;
+  }
+  .wc-nav-logo-main { color: #E0E8F4; font-weight: 700; }
+  .wc-nav-logo-sub  { color: var(--gold); font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; }
+  .wc-nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .wc-nav-links a {
+    font-family: var(--ff-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #7A9ABF;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .wc-nav-links a:hover, .wc-nav-links a.active { color: var(--gold); }
+  .wc-nav-cta {
+    font-family: var(--ff-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #060D1B;
+    background: var(--gold);
+    padding: 0.55rem 1.2rem;
+    text-decoration: none;
+    transition: opacity 0.2s;
+  }
+  .wc-nav-cta:hover { opacity: 0.85; }
+  @media (max-width: 720px) {
+    .wc-nav-links, .wc-nav-cta { display: none; }
+    .wc-nav { padding: 1rem 1.25rem; }
+  }
+
+  /* ── SECTION HEADER ───────────────────────────────────── */
+  .section-header {
+    padding: clamp(4rem,10vw,7rem) var(--gutter) clamp(2.5rem,5vw,4rem);
+    max-width: calc(var(--max-w) + 2 * var(--gutter));
+    margin: 0 auto;
+  }
+  .section-eyebrow {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    font-family: var(--ff-mono);
+    font-size: 0.72rem;
+    font-weight: 400;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.75rem;
+  }
+  .section-eyebrow::before {
+    content: '';
+    display: block; width: 2.5rem; height: 1px;
+    background: var(--gold);
+  }
+  .section-title {
+    font-family: var(--ff-display);
+    font-size: clamp(2.4rem,7vw,4.4rem);
+    font-weight: 800;
+    line-height: 1.05;
+    color: var(--nearblack);
+    letter-spacing: -0.025em;
+    margin-bottom: 1.5rem;
+  }
+  .section-title em {
+    font-style: italic;
+    font-weight: 300;
+    color: var(--gold);
+  }
+  .section-intro {
+    font-size: clamp(1rem,2.5vw,1.35rem);
+    font-weight: 300;
+    color: var(--ink-mid);
+    max-width: 620px;
+    line-height: 1.6;
+  }
+
+  /* ── CONTENT ──────────────────────────────────────────── */
+  .content {
+    max-width: calc(var(--max-w) + 2 * var(--gutter));
+    margin: 0 auto;
+    padding: 0 var(--gutter) clamp(4rem,8vw,6rem);
+  }
+
+  .editorial {
+    margin: 3rem 0 4rem;
+    padding: 2rem 2.5rem;
+    background: var(--paper);
+    border-left: 3px solid var(--gold);
+  }
+  .editorial p {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--ink-mid);
+    margin-bottom: 1.2rem;
+  }
+  .editorial p:last-child { margin-bottom: 0; }
+  .editorial em { font-style: italic; }
+  .editorial strong { font-weight: 600; color: var(--nearblack); }
+
+  /* ── ESSAY LIST ───────────────────────────────────────── */
+  .essays {
+    margin: 3rem 0;
+  }
+  .essay-block {
+    margin-bottom: 3rem;
+    padding: 2rem 2.5rem;
+    background: var(--paper);
+    border-left: 3px solid var(--blue);
+    transition: background 0.2s;
+  }
+  .essay-block:hover {
+    background: #f0f3fa;
+  }
+  .essay-block a {
+    text-decoration: none;
+    color: inherit;
+  }
+  .essay-label {
+    font-family: var(--ff-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+  .essay-title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--nearblack);
+    margin-bottom: 0.5rem;
+    line-height: 1.3;
+  }
+  .essay-block a:hover .essay-title {
+    color: var(--blue);
+  }
+  .essay-description {
+    font-size: 0.95rem;
+    color: var(--ink-mid);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+  }
+  .essay-meta {
+    display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap;
+    font-family: var(--ff-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+  }
+  .essay-meta span { display: inline-block; }
+
+  /* ── FOOTER NOTE ──────────────────────────────────────── */
+  .note {
+    margin-top: 4rem;
+    padding: 1.6rem 2rem;
+    background: var(--nearblack);
+    color: #E0E8F4;
+    border-left: 3px solid var(--gold);
+  }
+  .note-label {
+    font-family: var(--ff-mono);
+    font-size: 0.58rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 0.6rem;
+  }
+  .note p {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    margin: 0 !important;
+  }
+  .note p + p { margin-top: 0.8rem !important; }
+  .note strong { color: #E0E8F4; font-weight: 600; }
+  .note em { font-style: italic; }
+</style>
+</head>
+<body>
+
+<nav class="wc-nav">
+  <a href="https://workingcomplexity.health/" class="wc-nav-logo">
+    <span class="wc-nav-logo-main">workingcomplexity</span>
+    <span class="wc-nav-logo-sub">— .health</span>
+  </a>
+  <ul class="wc-nav-links">
+    <li><a href="https://workingcomplexity.health/#about">About</a></li>
+    <li><a href="https://workingcomplexity.health/blog/">Blog</a></li>
+  </ul>
+  <a href="https://workingcomplexity.health/#contact" class="wc-nav-cta">Contact</a>
+</nav>
+
+<div class="section-header">
+  <span class="section-eyebrow">Heuristics</span>
+  <h1 class="section-title">Exploration: heuristics in <em>complex systems</em></h1>
+  <p class="section-intro">When simple rules outperform sophisticated models. A journey through how humans and organisations make robust decisions in environments too complex to fully understand.</p>
+</div>
+
+<div class="content">
+
+  <div class="editorial">
+    <p>We publish these three essays because the question of how to think about heuristics — fast-and-frugal rules that work in genuinely complex systems — has become urgent. Every organisation is under pressure to formalise, instrument, and optimise. Simultaneously, artificial intelligence promises to absorb more and more of the cognitive work that humans have traditionally done by intuition, pattern recognition, and compressed experience. Neither impulse is wrong. But applying them blindly produces systematic failures that could be prevented with clearer thinking.</p>
+    <p>The work here draws on Gerd Gigerenzer's concept of <em>ecological rationality</em>: the fit between decision rule and environment matters more than absolute optimisation. We extend that observation into clinical medicine, market strategy, financial regulation, and organisational design, asking: what makes a heuristic robust? When does it decay? How does AI change what can be safely automated and what must remain human?</p>
+    <p>These are not rhetorical questions. They have architectural implications. Start with the seven examples if you want a practical sense of how heuristics outperform models. Read the full taxonomy if you need to understand <em>why</em>, or the companion piece if you want to know what to do when a once-reliable rule stops working.</p>
+  </div>
+
+  <div class="essays">
+
+    <div class="essay-block">
+      <a href="simple-rules-complex-systems.html">
+        <span class="essay-label">Essay 01 / Seven examples</span>
+        <h2 class="essay-title">When simple rules beat complex models</h2>
+        <p class="essay-description">Seven worked examples from intensive care, primary care, and finance where fast-and-frugal heuristics outperform sophisticated models in genuinely complex adaptive systems. Begin here for a practical foundation.</p>
+        <div class="essay-meta">
+          <span>2 June 2026</span>
+          <span>·</span>
+          <span>Michael Baldwin</span>
+          <span>·</span>
+          <span>Long-form essay</span>
+        </div>
+      </a>
+    </div>
+
+    <div class="essay-block">
+      <a href="simple-rules-complex-systems-taxonomy.html">
+        <span class="essay-label">Essay 02 / Full taxonomy</span>
+        <h2 class="essay-title">When simple rules beat complex models — taxonomy edition</h2>
+        <p class="essay-description">A complete four-type taxonomy of heuristics: mechanistic, structural, normative, and adversarially robust. Eleven examples spanning healthcare, markets, finance, and organisational design. This version explains <em>why</em> heuristics work and when they fail.</p>
+        <div class="essay-meta">
+          <span>2 June 2026</span>
+          <span>·</span>
+          <span>Michael Baldwin</span>
+          <span>·</span>
+          <span>Extended essay</span>
+        </div>
+      </a>
+    </div>
+
+    <div class="essay-block">
+      <a href="knowing-when-to-let-go.html">
+        <span class="essay-label">Essay 03 / Companion piece</span>
+        <h2 class="essay-title">Knowing when to let go</h2>
+        <p class="essay-description">How individuals and organisations detect when a once-reliable heuristic has become unfitted to its environment — and why AI changes some heuristics but not others. On the cognitive economy of expertise and the risk of confident automation.</p>
+        <div class="essay-meta">
+          <span>2 June 2026</span>
+          <span>·</span>
+          <span>Michael Baldwin</span>
+          <span>·</span>
+          <span>Companion piece</span>
+        </div>
+      </a>
+    </div>
+
+  </div>
+
+  <div class="note">
+    <span class="note-label">How to navigate this section</span>
+    <p><strong>For a first reading:</strong> Start with <em>When Simple Rules Beat Complex Models</em> (seven examples). It gives you the intuition without requiring the taxonomy.</p>
+    <p><strong>To understand the architecture:</strong> Move to <em>When Simple Rules Beat Complex Models — Taxonomy Edition</em>. It explains the four types of heuristics and their failure modes.</p>
+    <p><strong>To act on this thinking:</strong> Read <em>Knowing When to Let Go</em> alongside your own organisational context. It addresses how to preserve heuristic wisdom as environments change, and why automation isn't always the answer.</p>
+  </div>
+
+</div>
+
+</body>
+</html>

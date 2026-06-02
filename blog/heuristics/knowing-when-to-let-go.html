@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Knowing when to let go — Working Complexity</title>
+<meta name="description" content="How individuals and organisations must adapt their heuristics as circumstances change — and why AI changes some heuristics but not others." />
+<link rel="canonical" href="https://workingcomplexity.health/blog/heuristics/knowing-when-to-let-go.html" />
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='100' height='100' fill='%23060D1B'/%3E%3Cpolygon points='50,2 91.57,26 91.57,74 50,98 8.43,74 8.43,26' stroke='%235B9BD5' stroke-width='0.8' fill='none'/%3E%3Cpolygon points='50,26 70.78,38 70.78,62 50,74 29.22,62 29.22,38' stroke='%23C4A46B' stroke-width='0.8' fill='none'/%3E%3Cpolygon points='50,38 60.39,44 60.39,56 50,62 39.61,56 39.61,44' stroke='%235B9BD5' stroke-width='0.8' fill='none'/%3E%3Ccircle cx='50' cy='50' r='2.5' fill='%23C4A46B'/%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --nearblack:  #060D1B;
+    --offwhite:   #f4f6fa;
+    --paper:      #eaeff7;
+    --gold:       #C4A46B;
+    --gold-dim:   rgba(196,164,107,0.4);
+    --blue:       #5B9BD5;
+    --blue-dim:   rgba(91,155,213,0.14);
+    --border:     rgba(91,155,213,0.18);
+    --muted:      #7A9ABF;
+    --ink:        #0F1E36;
+    --ink-mid:    #3E5870;
+    --ff-display: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --ff-mono:    'Space Mono', 'ui-monospace', 'SFMono-Regular', Menlo, monospace;
+    --max-w: 760px;
+    --gutter: clamp(1.25rem, 5vw, 3rem);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--offwhite);
+    color: var(--ink);
+    font-family: var(--ff-display);
+    font-size: 17px;
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── NAV ──────────────────────────────────────────────── */
+  .wc-nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(6,13,27,0.96);
+    border-bottom: 1px solid rgba(74,144,226,0.18);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.1rem 3rem;
+    backdrop-filter: blur(16px);
+  }
+  .wc-nav-logo {
+    font-family: var(--ff-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    color: #E0E8F4;
+    text-decoration: none;
+    display: flex; flex-direction: column; gap: 2px;
+  }
+  .wc-nav-logo-main { color: #E0E8F4; font-weight: 700; }
+  .wc-nav-logo-sub  { color: var(--gold); font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; }
+  .wc-nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .wc-nav-links a {
+    font-family: var(--ff-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #7A9ABF;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .wc-nav-links a:hover { color: var(--gold); }
+  .wc-nav-cta {
+    font-family: var(--ff-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #060D1B;
+    background: var(--gold);
+    padding: 0.55rem 1.2rem;
+    text-decoration: none;
+    transition: opacity 0.2s;
+  }
+  .wc-nav-cta:hover { opacity: 0.85; }
+  @media (max-width: 720px) {
+    .wc-nav-links, .wc-nav-cta { display: none; }
+    .wc-nav { padding: 1rem 1.25rem; }
+  }
+
+  /* ── ARTICLE COVER ────────────────────────────────────── */
+  .article-cover {
+    padding: clamp(4rem,10vw,7rem) var(--gutter) clamp(2.5rem,5vw,4rem);
+    max-width: calc(var(--max-w) + 2 * var(--gutter));
+    margin: 0 auto;
+  }
+  .doc-code {
+    font-family: var(--ff-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-mid);
+    margin-bottom: 2.2rem;
+    display: block;
+  }
+  .kicker {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    font-family: var(--ff-mono);
+    font-size: 0.72rem;
+    font-weight: 400;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.75rem;
+  }
+  .kicker::before {
+    content: '';
+    display: block; width: 2.5rem; height: 1px;
+    background: var(--gold);
+  }
+  .article-title {
+    font-family: var(--ff-display);
+    font-size: clamp(2.4rem,7vw,4.4rem);
+    font-weight: 800;
+    line-height: 1.05;
+    color: var(--nearblack);
+    letter-spacing: -0.025em;
+    margin-bottom: 0.5rem;
+  }
+  .article-title em {
+    font-style: italic;
+    font-weight: 300;
+    color: var(--gold);
+  }
+  .article-subtitle {
+    font-size: clamp(1rem,2.5vw,1.35rem);
+    font-style: italic;
+    font-weight: 300;
+    color: var(--ink-mid);
+    max-width: 620px;
+    line-height: 1.5;
+    margin-bottom: 2.75rem;
+  }
+  .article-meta {
+    display: flex; align-items: center; gap: 2rem; flex-wrap: wrap;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+  }
+  .meta-item {
+    font-family: var(--ff-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+  }
+  .meta-item strong { color: var(--ink-mid); font-weight: 700; }
+
+  /* ── ARTICLE BODY ─────────────────────────────────────── */
+  .article {
+    max-width: calc(var(--max-w) + 2 * var(--gutter));
+    margin: 0 auto;
+    padding: 0 var(--gutter) clamp(4rem,8vw,6rem);
+  }
+
+  .opening-pull {
+    margin: 3rem 0 3.5rem;
+    padding: 2rem 2.5rem;
+    background: var(--paper);
+    border-left: 3px solid var(--gold);
+    position: relative;
+  }
+  .opening-pull::before {
+    content: '\201C';
+    font-family: var(--ff-display);
+    font-size: 5rem;
+    color: var(--gold);
+    opacity: 0.22;
+    position: absolute;
+    top: -0.5rem; left: 1rem;
+    line-height: 1;
+  }
+  .opening-pull p {
+    font-family: var(--ff-display);
+    font-size: 1.2rem;
+    font-style: italic;
+    line-height: 1.65;
+    color: var(--ink-mid);
+    position: relative; z-index: 1;
+  }
+
+  .section-block {
+    margin-top: 4rem;
+    padding-top: 2.5rem;
+    border-top: 1px solid var(--border);
+  }
+  .section-number {
+    font-family: var(--ff-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 0.55rem;
+  }
+  h2.section-title {
+    font-family: var(--ff-display);
+    font-size: clamp(1.5rem,3.5vw,2rem);
+    font-weight: 700;
+    color: var(--nearblack);
+    line-height: 1.18;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.015em;
+  }
+  h2.section-title em {
+    font-style: italic;
+    font-weight: 300;
+    color: var(--gold);
+  }
+  h3.subsection {
+    font-family: var(--ff-mono);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin: 2.5rem 0 0.8rem;
+  }
+
+  .article p {
+    margin-bottom: 1.35rem;
+    color: var(--ink);
+    font-weight: 300;
+  }
+  .article p strong { font-weight: 600; color: var(--nearblack); }
+  .article p em { font-style: italic; }
+  .article ul, .article ol {
+    margin: 0 0 1.5rem 1.5rem;
+    color: var(--ink);
+    font-weight: 300;
+  }
+  .article li { margin-bottom: 0.6rem; line-height: 1.65; }
+
+  /* ── PULL QUOTE ───────────────────────────────────────── */
+  .pull-quote {
+    margin: 2.5rem -0.25rem;
+    padding: 1.6rem 2rem;
+    border-top: 1px solid var(--gold);
+    border-bottom: 1px solid var(--gold);
+  }
+  .pull-quote p {
+    font-size: 1.15rem;
+    font-style: italic;
+    line-height: 1.55;
+    color: var(--nearblack);
+    font-weight: 400;
+    margin: 0;
+  }
+  .pull-quote p em { font-weight: 300; color: var(--gold); font-style: normal; }
+
+  /* ── WC INSIGHT BOX ───────────────────────────────────── */
+  .wc-insight {
+    background: var(--nearblack);
+    color: #E0E8F4;
+    padding: 1.6rem 2rem;
+    margin: 3rem 0;
+    position: relative;
+  }
+  .wc-insight::before {
+    content: 'workingcomplexity — analytical note';
+    font-family: var(--ff-mono);
+    font-size: 0.58rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 0.8rem;
+  }
+  .wc-insight p {
+    color: rgba(224,232,244,0.85);
+    font-size: 0.95rem;
+    margin: 0 !important;
+    line-height: 1.7;
+  }
+  .wc-insight p + p { margin-top: 0.9rem !important; }
+  .wc-insight p strong { color: #E0E8F4; font-weight: 600; }
+
+  /* ── CALLOUT ──────────────────────────────────────────── */
+  .callout {
+    background: var(--paper);
+    border-left: 3px solid var(--blue);
+    padding: 1.2rem 1.75rem;
+    margin: 2rem 0;
+  }
+  .callout-label {
+    font-family: var(--ff-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--blue);
+    display: block;
+    margin-bottom: 0.4rem;
+  }
+  .callout p { font-size: 0.95rem; margin: 0 !important; line-height: 1.65; }
+  .callout p + p { margin-top: 0.6rem !important; }
+</style>
+</head>
+<body>
+
+<nav class="wc-nav">
+  <a href="https://workingcomplexity.health/" class="wc-nav-logo">
+    <span class="wc-nav-logo-main">workingcomplexity</span>
+    <span class="wc-nav-logo-sub">— .health</span>
+  </a>
+  <ul class="wc-nav-links">
+    <li><a href="https://workingcomplexity.health/#about">About</a></li>
+    <li><a href="https://workingcomplexity.health/blog/">Blog</a></li>
+  </ul>
+  <a href="https://workingcomplexity.health/#contact" class="wc-nav-cta">Contact</a>
+</nav>
+
+<div class="article-cover">
+  <span class="doc-code">WC-HEUR / COMPANION PIECE / 2026</span>
+  <span class="kicker">Heuristics</span>
+  <h1 class="article-title">Knowing when to <em>let go</em></h1>
+  <p class="article-subtitle">How individuals and organisations must adapt their heuristics as circumstances change — and why AI changes some heuristics but not others.</p>
+  <div class="article-meta">
+    <div class="meta-item"><strong>Date</strong> 2 June 2026</div>
+    <div class="meta-item"><strong>Author</strong> Michael Baldwin</div>
+    <div class="meta-item"><strong>Type</strong> Companion piece</div>
+  </div>
+</div>
+
+<div class="article">
+  <div class="opening-pull">
+    <p>This article is a companion to <em>When Simple Rules Beat Complex Models</em>. It presupposes the four-type taxonomy developed there: mechanistic, structural, normative, and adversarially robust heuristics.</p>
+  </div>
+
+  <div class="section-block">
+    <span class="section-number">01</span>
+    <h2 class="section-title">Why heuristics exist: the <em>cognitive economy</em> argument</h2>
+    <p>The companion piece established that heuristics succeed in complex adaptive systems because they are ecologically rational — fitted to their environment. But that framing understates the case. Heuristics do not merely succeed in CAS environments. In the deepest sense, they are the only viable long-term decision architecture for operating in them.</p>
+    <p>The reason is cognitive. Complex adaptive systems make information demands that are structurally unbounded. In a genuinely complex system — septic shock, a competitive market, a military engagement — there is no point at which you have gathered enough information to be certain. The system is generating new states faster than any decision-maker can process. The rational response to unbounded information demand is not to gather more information. It is to develop reliable heuristics that cap the cognitive demand at a level the decision-maker can sustain across time.</p>
+    <p>The heuristic is not a shortcut to the right answer. It is a sustainable cognitive architecture for operating in environments where the right answer is not computable — and where trying to compute it exhausts the very resource needed to detect when the answer has changed.</p>
+    <p>This reframes the value of heuristics beyond ecological rationality. They are cognitively protective. The experienced ICU clinician who has internalised a reliable early-warning heuristic is not cutting corners. They are preserving cognitive resource for the cases where the heuristic's tripwire fires and deeper processing is genuinely warranted. The economy of expert judgment works precisely because experts process less information more reliably, not more information less reliably.</p>
+  </div>
+
+  <div class="section-block">
+    <span class="section-number">02</span>
+    <h2 class="section-title">Decision fatigue in complex systems</h2>
+    <p>The clinical evidence for cognitive depletion as a decision quality threat is direct. Surgical complication rates rise toward the end of operating lists. Antibiotic prescribing becomes less discriminating across a GP's afternoon — broad-spectrum choices increase as session length increases, independent of clinical presentation. Parole board decisions shift toward denial as the morning progresses, reset after a meal break, then drift toward denial again. These are not failures of knowledge or motivation. They are failures of cognitive capacity under sustained demand.</p>
+    <p>In a CAS environment, the stakes of cognitive depletion are compounded. A depleted decision-maker in a genuinely complex system does not simply make worse decisions. They also lose the capacity to detect when the system has shifted into a state their heuristics were not calibrated for — the very tripwire detection that separates safe heuristic application from dangerous autopilot. Cognitive fatigue in a CAS is therefore doubly dangerous: it degrades the decision and it degrades the meta-cognitive monitoring of the decision.</p>
+
+    <div class="wc-insight">
+      <p><strong>The cognitive economy of expertise</strong></p>
+      <p><strong>The novice:</strong> Processes many cues, high cognitive load, inconsistent decision quality, cannot sustain performance under fatigue.</p>
+      <p><strong>The expert:</strong> Processes one dominant cue via internalised heuristic, low cognitive load, consistent decision quality, preserves capacity for genuine uncertainty.</p>
+      <p><strong>The trap:</strong> The expert's consistency looks like automation — and sometimes is. The difference is whether the tripwire detection capacity is intact.</p>
+    </div>
+  </div>
+
+  <div class="section-block">
+    <span class="section-number">03</span>
+    <h2 class="section-title">AI as cognitive offload — the <em>partial promise</em></h2>
+    <p>Into this picture arrives artificial intelligence, positioned primarily as a cognitive offload technology. The narrative is appealing and partially correct: AI can perform pattern recognition tasks at scale and speed that no individual clinician or analyst can sustain, freeing human cognitive resource for judgment, relationship, and the genuinely novel. In radiology, AI-assisted reading reduces the cognitive load of detecting standard patterns. In intensive care, AI early-warning systems surface deteriorating patients before the clinical picture is obvious. In market intelligence, AI monitors competitive signals that no human team could track comprehensively.</p>
+    <p>But the cognitive offload narrative is dangerous when it is incomplete. It correctly identifies that AI can absorb the application of a heuristic. It fails to address what happens to the calibration of the heuristic when the cognitive work of applying it is outsourced. And it is entirely silent on the cases — the normative and adversarial categories — where the cognitive engagement is not a cost to be reduced but the mechanism through which the heuristic works.</p>
+    <p>The companion piece's taxonomy does real work here. Whether AI's cognitive offload is appropriate, dangerous, or actively counterproductive depends entirely on which type of heuristic is being considered. Treating all heuristics as equivalent — as most AI adoption frameworks implicitly do — produces a systematic category error with consequences that are predictable once the taxonomy is applied.</p>
+  </div>
+
+  <div class="section-block">
+    <span class="section-number">04</span>
+    <h2 class="section-title">How heuristics decay</h2>
+    <p>Ecological rationality is not permanent. The heuristic that was fitted to its environment yesterday becomes the liability of tomorrow — not because it was wrong, but because the CAS it was calibrated to has moved. The challenge is not finding better heuristics. It is building the individual and institutional capacity to detect when a heuristic has become unfitted, and to refresh it without discarding what remains valid.</p>
+    <p>Three distinct decay mechanisms operate, and they map directly onto the heuristic taxonomy. Identifying which mechanism is active tells you what kind of evidence to look for and what kind of refresh is needed.</p>
+
+    <h3 class="subsection">Decay Type 1: Mechanistic Disruption</h3>
+    <p>Mechanistically grounded heuristics are the most robust — but when their mechanism is disrupted, they fail in ways that are sudden, severe, and often invisible to those applying them. The mechanism does not degrade gradually; it is invalidated by a phase transition — typically technological — that changes the causal relationship between the cue and the outcome.</p>
+    <p>The military heuristic 'hold the high ground' is the canonical illustration. The mechanism is pure physics and physiology: projectiles fired downward travel further and strike harder; defenders have extended sightlines; ascending attackers are physiologically degraded. These are invariant physical facts. The heuristic is mechanistically grounded in exactly the same way that capillary refill time is grounded in circulatory physiology.</p>
+    <p>But the mechanism was progressively dismantled by technological disruption. Artillery reduced the gradient ballistic advantage. Air power made elevation-based sightlines irrelevant — the dominant observation platform moved to a dimension the heuristic had no concept of. Precision-guided munitions removed the firing-angle advantage entirely. Each transition was a tripwire, and each time, commanders who continued to apply the heuristic as if the mechanism still held paid for it. Gallipoli is the textbook example: the tactical logic of holding the heights above Anzac Cove was impeccable by the reasoning of the previous century; the reality of modern artillery made the heights a killing ground rather than a defensive asset.</p>
+  </div>
+
+  <div class="callout">
+    <span class="callout-label">Ongoing exploration</span>
+    <p>This piece is part of an emerging series on heuristics in complex systems. For a detailed taxonomy of heuristic types and worked examples, see <em>When Simple Rules Beat Complex Models</em>.</p>
+  </div>
+
+</div>
+
+</body>
+</html>

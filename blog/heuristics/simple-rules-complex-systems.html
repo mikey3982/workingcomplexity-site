@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>When simple rules beat complex models — Working Complexity</title>
+<meta name="description" content="Seven examples from medicine, critical care, and finance where fast-and-frugal heuristics outperform sophisticated models in genuinely complex adaptive systems." />
+<link rel="canonical" href="https://workingcomplexity.health/blog/heuristics/simple-rules-complex-systems.html" />
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='100' height='100' fill='%23060D1B'/%3E%3Cpolygon points='50,2 91.57,26 91.57,74 50,98 8.43,74 8.43,26' stroke='%235B9BD5' stroke-width='0.8' fill='none'/%3E%3Cpolygon points='50,26 70.78,38 70.78,62 50,74 29.22,62 29.22,38' stroke='%23C4A46B' stroke-width='0.8' fill='none'/%3E%3Cpolygon points='50,38 60.39,44 60.39,56 50,62 39.61,56 39.61,44' stroke='%235B9BD5' stroke-width='0.8' fill='none'/%3E%3Ccircle cx='50' cy='50' r='2.5' fill='%23C4A46B'/%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --nearblack:  #060D1B;
+    --offwhite:   #f4f6fa;
+    --paper:      #eaeff7;
+    --gold:       #C4A46B;
+    --gold-dim:   rgba(196,164,107,0.4);
+    --blue:       #5B9BD5;
+    --blue-dim:   rgba(91,155,213,0.14);
+    --border:     rgba(91,155,213,0.18);
+    --muted:      #7A9ABF;
+    --ink:        #0F1E36;
+    --ink-mid:    #3E5870;
+    --ff-display: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --ff-mono:    'Space Mono', 'ui-monospace', 'SFMono-Regular', Menlo, monospace;
+    --max-w: 760px;
+    --gutter: clamp(1.25rem, 5vw, 3rem);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--offwhite);
+    color: var(--ink);
+    font-family: var(--ff-display);
+    font-size: 17px;
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── NAV ──────────────────────────────────────────────── */
+  .wc-nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(6,13,27,0.96);
+    border-bottom: 1px solid rgba(74,144,226,0.18);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.1rem 3rem;
+    backdrop-filter: blur(16px);
+  }
+  .wc-nav-logo {
+    font-family: var(--ff-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    color: #E0E8F4;
+    text-decoration: none;
+    display: flex; flex-direction: column; gap: 2px;
+  }
+  .wc-nav-logo-main { color: #E0E8F4; font-weight: 700; }
+  .wc-nav-logo-sub  { color: var(--gold); font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; }
+  .wc-nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .wc-nav-links a {
+    font-family: var(--ff-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #7A9ABF;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .wc-nav-links a:hover { color: var(--gold); }
+  .wc-nav-cta {
+    font-family: var(--ff-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #060D1B;
+    background: var(--gold);
+    padding: 0.55rem 1.2rem;
+    text-decoration: none;
+    transition: opacity 0.2s;
+  }
+  .wc-nav-cta:hover { opacity: 0.85; }
+  @media (max-width: 720px) {
+    .wc-nav-links, .wc-nav-cta { display: none; }
+    .wc-nav { padding: 1rem 1.25rem; }
+  }
+
+  /* ── ARTICLE COVER ────────────────────────────────────── */
+  .article-cover {
+    padding: clamp(4rem,10vw,7rem) var(--gutter) clamp(2.5rem,5vw,4rem);
+    max-width: calc(var(--max-w) + 2 * var(--gutter));
+    margin: 0 auto;
+  }
+  .doc-code {
+    font-family: var(--ff-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-mid);
+    margin-bottom: 2.2rem;
+    display: block;
+  }
+  .kicker {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    font-family: var(--ff-mono);
+    font-size: 0.72rem;
+    font-weight: 400;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.75rem;
+  }
+  .kicker::before {
+    content: '';
+    display: block; width: 2.5rem; height: 1px;
+    background: var(--gold);
+  }
+  .article-title {
+    font-family: var(--ff-display);
+    font-size: clamp(2.4rem,7vw,4.4rem);
+    font-weight: 800;
+    line-height: 1.05;
+    color: var(--nearblack);
+    letter-spacing: -0.025em;
+    margin-bottom: 0.5rem;
+  }
+  .article-title em {
+    font-style: italic;
+    font-weight: 300;
+    color: var(--gold);
+  }
+  .article-subtitle {
+    font-size: clamp(1rem,2.5vw,1.35rem);
+    font-style: italic;
+    font-weight: 300;
+    color: var(--ink-mid);
+    max-width: 620px;
+    line-height: 1.5;
+    margin-bottom: 2.75rem;
+  }
+  .article-meta {
+    display: flex; align-items: center; gap: 2rem; flex-wrap: wrap;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+  }
+  .meta-item {
+    font-family: var(--ff-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+  }
+  .meta-item strong { color: var(--ink-mid); font-weight: 700; }
+
+  /* ── ARTICLE BODY ─────────────────────────────────────── */
+  .article {
+    max-width: calc(var(--max-w) + 2 * var(--gutter));
+    margin: 0 auto;
+    padding: 0 var(--gutter) clamp(4rem,8vw,6rem);
+  }
+
+  .opening-pull {
+    margin: 3rem 0 3.5rem;
+    padding: 2rem 2.5rem;
+    background: var(--paper);
+    border-left: 3px solid var(--gold);
+    position: relative;
+  }
+  .opening-pull::before {
+    content: '\201C';
+    font-family: var(--ff-display);
+    font-size: 5rem;
+    color: var(--gold);
+    opacity: 0.22;
+    position: absolute;
+    top: -0.5rem; left: 1rem;
+    line-height: 1;
+  }
+  .opening-pull p {
+    font-family: var(--ff-display);
+    font-size: 1.2rem;
+    font-style: italic;
+    line-height: 1.65;
+    color: var(--ink-mid);
+    position: relative; z-index: 1;
+  }
+
+  .section-block {
+    margin-top: 4rem;
+    padding-top: 2.5rem;
+    border-top: 1px solid var(--border);
+  }
+  .section-number {
+    font-family: var(--ff-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 0.55rem;
+  }
+  h2.section-title {
+    font-family: var(--ff-display);
+    font-size: clamp(1.5rem,3.5vw,2rem);
+    font-weight: 700;
+    color: var(--nearblack);
+    line-height: 1.18;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.015em;
+  }
+  h2.section-title em {
+    font-style: italic;
+    font-weight: 300;
+    color: var(--gold);
+  }
+  h3.subsection {
+    font-family: var(--ff-mono);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin: 2.5rem 0 0.8rem;
+  }
+
+  .article p {
+    margin-bottom: 1.35rem;
+    color: var(--ink);
+    font-weight: 300;
+  }
+  .article p strong { font-weight: 600; color: var(--nearblack); }
+  .article p em { font-style: italic; }
+  .article ul, .article ol {
+    margin: 0 0 1.5rem 1.5rem;
+    color: var(--ink);
+    font-weight: 300;
+  }
+  .article li { margin-bottom: 0.6rem; line-height: 1.65; }
+
+  /* ── PULL QUOTE ───────────────────────────────────────── */
+  .pull-quote {
+    margin: 2.5rem -0.25rem;
+    padding: 1.6rem 2rem;
+    border-top: 1px solid var(--gold);
+    border-bottom: 1px solid var(--gold);
+  }
+  .pull-quote p {
+    font-size: 1.15rem;
+    font-style: italic;
+    line-height: 1.55;
+    color: var(--nearblack);
+    font-weight: 400;
+    margin: 0;
+  }
+  .pull-quote p em { font-weight: 300; color: var(--gold); font-style: normal; }
+
+  /* ── WC INSIGHT BOX ───────────────────────────────────── */
+  .wc-insight {
+    background: var(--nearblack);
+    color: #E0E8F4;
+    padding: 1.6rem 2rem;
+    margin: 3rem 0;
+    position: relative;
+  }
+  .wc-insight::before {
+    content: 'workingcomplexity — analytical note';
+    font-family: var(--ff-mono);
+    font-size: 0.58rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 0.8rem;
+  }
+  .wc-insight p {
+    color: rgba(224,232,244,0.85);
+    font-size: 0.95rem;
+    margin: 0 !important;
+    line-height: 1.7;
+  }
+  .wc-insight p + p { margin-top: 0.9rem !important; }
+  .wc-insight p strong { color: #E0E8F4; font-weight: 600; }
+
+  /* ── CALLOUT ──────────────────────────────────────────── */
+  .callout {
+    background: var(--paper);
+    border-left: 3px solid var(--blue);
+    padding: 1.2rem 1.75rem;
+    margin: 2rem 0;
+  }
+  .callout-label {
+    font-family: var(--ff-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--blue);
+    display: block;
+    margin-bottom: 0.4rem;
+  }
+  .callout p { font-size: 0.95rem; margin: 0 !important; line-height: 1.65; }
+  .callout p + p { margin-top: 0.6rem !important; }
+
+  /* ── EXAMPLE ──────────────────────────────────────────── */
+  .example {
+    background: var(--paper);
+    border-left: 3px solid var(--gold);
+    padding: 1.2rem 1.75rem;
+    margin: 2rem 0;
+  }
+  .example-num {
+    font-family: var(--ff-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 0.4rem;
+    font-weight: 700;
+  }
+  .example h4 { font-size: 1rem; font-weight: 600; color: var(--nearblack); margin: 0.5rem 0; }
+  .example p { font-size: 0.95rem; margin: 0.5rem 0 !important; line-height: 1.65; }
+</style>
+</head>
+<body>
+
+<nav class="wc-nav">
+  <a href="https://workingcomplexity.health/" class="wc-nav-logo">
+    <span class="wc-nav-logo-main">workingcomplexity</span>
+    <span class="wc-nav-logo-sub">— .health</span>
+  </a>
+  <ul class="wc-nav-links">
+    <li><a href="https://workingcomplexity.health/#about">About</a></li>
+    <li><a href="https://workingcomplexity.health/blog/">Blog</a></li>
+  </ul>
+  <a href="https://workingcomplexity.health/#contact" class="wc-nav-cta">Contact</a>
+</nav>
+
+<div class="article-cover">
+  <span class="doc-code">WC-HEUR / SEVEN EXAMPLES / 2026</span>
+  <span class="kicker">Heuristics</span>
+  <h1 class="article-title">When simple rules beat <em>complex models</em></h1>
+  <p class="article-subtitle">Seven examples from medicine, critical care, and finance where fast-and-frugal heuristics outperform sophisticated models in genuinely complex adaptive systems.</p>
+  <div class="article-meta">
+    <div class="meta-item"><strong>Date</strong> 2 June 2026</div>
+    <div class="meta-item"><strong>Author</strong> Michael Baldwin</div>
+    <div class="meta-item"><strong>Type</strong> Long-form essay</div>
+  </div>
+</div>
+
+<div class="article">
+  <div class="opening-pull">
+    <p>Complexity theory warns against reductionism. Yet some of the most robust decision-making in demonstrably complex adaptive systems relies on fast-and-frugal heuristics that ignore most available information. This is not a failure of sophistication. It is, in Gerd Gigerenzer's formulation, <em>ecological rationality</em>: the fit between heuristic and environment matters more than optimisation.</p>
+  </div>
+
+  <div class="section-block">
+    <span class="section-number">01</span>
+    <h2 class="section-title">The paradox</h2>
+    <p>The key distinction is between system complexity (the environment) and decision complexity (the cognitive or clinical strategy). A complex adaptive system can be irreducibly non-linear while still generating locally stable patterns that simple rules can exploit.</p>
+    <p>The system is complex. The decision rule is deliberately blunt. The heuristic works not by modelling the complexity but by exploiting the one thing that is invariant.</p>
+    <p>Three conditions recur across the examples below where simple heuristics dominate in CAS environments:</p>
+    <ul>
+      <li><strong>One cue dominates</strong> — a single variable explains most of the variance that matters for decision quality.</li>
+      <li><strong>Uncertainty swamps optimisation</strong> — the system is sufficiently non-stationary that model parameters cannot be reliably estimated; additional complexity in the decision rule adds noise, not signal.</li>
+      <li><strong>The heuristic is ecologically calibrated</strong> — it has been tuned by feedback in that specific CAS context, not imported from elsewhere.</li>
+    </ul>
+  </div>
+
+  <div class="section-block">
+    <span class="section-number">02</span>
+    <h2 class="section-title">Seven examples</h2>
+
+    <div class="example">
+      <span class="example-num">Example 01</span>
+      <h4>The sepsis 1-hour bundle</h4>
+      <p>Sepsis is a textbook complex adaptive system: immune cascades, microbial adaptation, organ crosstalk, individual variation. The haemodynamic trajectory of any individual patient is genuinely unpredictable. Yet the Surviving Sepsis Campaign's 1-hour bundle is essentially a heuristic: if suspected sepsis, obtain blood cultures, commence broad-spectrum antibiotics, and initiate IV fluids, within 60 minutes.</p>
+      <p>The system is complex; the decision rule is deliberately blunt. It works because one variable — time to treatment — dominates all others across virtually all presentations. This is what Gigerenzer calls a one-reason decision: one cue does the work. The CAS complexity of immune-pathogen dynamics has not diminished. The heuristic sidesteps it rather than models it.</p>
+      <p><strong>Tripwire:</strong> the rule degrades in viral sepsis mimics, culture-negative presentations, and environments where antibiotic resistance prevalence shifts the risk calculus of broad-spectrum empirical therapy.</p>
+    </div>
+
+    <div class="example">
+      <span class="example-num">Example 02</span>
+      <h4>Capillary refill time in septic shock</h4>
+      <p>Septic shock is one of the most complex adaptive states in medicine: dysregulated immune cascades, microvascular collapse, mitochondrial dysfunction, microbial-host co-adaptation, and multi-organ crosstalk operating simultaneously across timescales from seconds to days. And yet one of the most robustly validated guides to resuscitation decisions is pressing a glass slide to a fingernail and counting seconds.</p>
+      <p>Capillary refill time (CRT) — first introduced in 1947 to evaluate circulatory status in critically injured soldiers — requires no laboratory, no device, no cost. The threshold is behaviourally simple: pressure applied to the distal phalanx for 10 seconds, then released; return to normal colour in under 3 seconds is normal. The critical test came with the ANDROMEDA-SHOCK randomised controlled trial (JAMA, 2019), which compared CRT-targeted resuscitation against the then-standard lactate-targeted approach. The CRT group exhibited lower mortality (34.9% vs 43.4%), required less fluid resuscitation, and presented less organ dysfunction at 72 hours.</p>
+      <p>The post-hoc analysis is instructive. Patients with normal CRT at 2 hours who were randomised to the lactate arm had significantly higher mortality than those in the CRT arm (40% vs 23%). The lactate arm received more fluid boluses, more vasopressor tests, and more inodilators — the more sophisticated biochemical target was driving overtreatment of patients whose peripheral perfusion had already normalised. The complex biomarker generated noise; the simple heuristic generated signal.</p>
+      <p><strong>Tripwire:</strong> CRT validity is degraded by ambient temperature, patient age, skin pigmentation, nail polish, and inter-observer variability. Conditions under which the CAS has shifted in ways the heuristic cannot detect. The stability is contingent and the clinician needs to know that.</p>
+    </div>
+
+    <div class="example">
+      <span class="example-num">Example 03</span>
+      <h4>NHS GP referral intuition</h4>
+      <p>Primary care operates within an enormously complex system — patient heterogeneity, multimorbidity, socioeconomic confounders, pathway variation. Yet experienced GPs frequently use gut-feel heuristics ('I am worried about this patient') that outperform formal risk scoring tools in some studies. This is not irrationality. It is the compression of years of pattern recognition about how the complex system actually behaves locally.</p>
+      <p>In Cynefin terms, this is operating at the probe-sense boundary. The heuristic is legitimate precisely because it has been calibrated to the specific CAS context, not imported from a guideline developed in a different system. Export it — to a different population, a different clinical setting, a different prevalence environment — and it degrades.</p>
+    </div>
+
+  </div>
+
+  <div class="callout">
+    <span class="callout-label">Extended version available</span>
+    <p>For a complete taxonomy of heuristic types and eleven worked examples (including structural, normative, and adversarially robust heuristics), see the extended version: <em>When Simple Rules Beat Complex Models: Eleven Examples and a Taxonomy</em>.</p>
+  </div>
+
+</div>
+
+</body>
+</html>
