@@ -41,7 +41,6 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  /* ── NAV ──────────────────────────────────────────────── */
   .wc-nav {
     position: sticky; top: 0; z-index: 100;
     background: rgba(6,13,27,0.96);
@@ -88,7 +87,6 @@
     .wc-nav { padding: 1rem 1.25rem; }
   }
 
-  /* ── ARTICLE COVER ────────────────────────────────────── */
   .article-cover {
     padding: clamp(4rem,10vw,7rem) var(--gutter) clamp(2.5rem,5vw,4rem);
     max-width: calc(var(--max-w) + 2 * var(--gutter));
@@ -154,7 +152,6 @@
   }
   .meta-item strong { color: var(--ink-mid); font-weight: 700; }
 
-  /* ── ARTICLE BODY ─────────────────────────────────────── */
   .article {
     max-width: calc(var(--max-w) + 2 * var(--gutter));
     margin: 0 auto;
@@ -239,7 +236,6 @@
   }
   .article li { margin-bottom: 0.6rem; line-height: 1.65; }
 
-  /* ── PULL QUOTE ───────────────────────────────────────── */
   .pull-quote {
     margin: 2.5rem -0.25rem;
     padding: 1.6rem 2rem;
@@ -254,9 +250,7 @@
     font-weight: 400;
     margin: 0;
   }
-  .pull-quote p em { font-weight: 300; color: var(--gold); font-style: normal; }
 
-  /* ── WC INSIGHT BOX ───────────────────────────────────── */
   .wc-insight {
     background: var(--nearblack);
     color: #E0E8F4;
@@ -282,8 +276,8 @@
   }
   .wc-insight p + p { margin-top: 0.9rem !important; }
   .wc-insight p strong { color: #E0E8F4; font-weight: 600; }
+  .wc-insight h4 { color: #E0E8F4; font-size: 0.95rem; margin: 1rem 0 0.5rem; }
 
-  /* ── CALLOUT ──────────────────────────────────────────── */
   .callout {
     background: var(--paper);
     border-left: 3px solid var(--blue);
@@ -301,6 +295,47 @@
   }
   .callout p { font-size: 0.95rem; margin: 0 !important; line-height: 1.65; }
   .callout p + p { margin-top: 0.6rem !important; }
+
+  .watch-out {
+    background: var(--paper);
+    border-left: 3px solid #C47A6B;
+    padding: 1.2rem 1.75rem;
+    margin: 2rem 0;
+  }
+  .watch-out-label {
+    font-family: var(--ff-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #C47A6B;
+    display: block;
+    margin-bottom: 0.4rem;
+  }
+  .watch-out p { font-size: 0.95rem; margin: 0 !important; line-height: 1.65; }
+
+  .table-wrapper {
+    margin: 2.5rem 0;
+    overflow-x: auto;
+  }
+  .table-wrapper table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+  }
+  .table-wrapper th {
+    background: var(--ink);
+    color: #E0E8F4;
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.85rem;
+  }
+  .table-wrapper td {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--border);
+    color: var(--ink);
+  }
+  .table-wrapper tr:nth-child(even) { background: var(--paper); }
 </style>
 </head>
 <body>
@@ -350,7 +385,7 @@
     <p>In a CAS environment, the stakes of cognitive depletion are compounded. A depleted decision-maker in a genuinely complex system does not simply make worse decisions. They also lose the capacity to detect when the system has shifted into a state their heuristics were not calibrated for — the very tripwire detection that separates safe heuristic application from dangerous autopilot. Cognitive fatigue in a CAS is therefore doubly dangerous: it degrades the decision and it degrades the meta-cognitive monitoring of the decision.</p>
 
     <div class="wc-insight">
-      <p><strong>The cognitive economy of expertise</strong></p>
+      <h4>The cognitive economy of expertise</h4>
       <p><strong>The novice:</strong> Processes many cues, high cognitive load, inconsistent decision quality, cannot sustain performance under fatigue.</p>
       <p><strong>The expert:</strong> Processes one dominant cue via internalised heuristic, low cognitive load, consistent decision quality, preserves capacity for genuine uncertainty.</p>
       <p><strong>The trap:</strong> The expert's consistency looks like automation — and sometimes is. The difference is whether the tripwire detection capacity is intact.</p>
@@ -375,11 +410,212 @@
     <p>Mechanistically grounded heuristics are the most robust — but when their mechanism is disrupted, they fail in ways that are sudden, severe, and often invisible to those applying them. The mechanism does not degrade gradually; it is invalidated by a phase transition — typically technological — that changes the causal relationship between the cue and the outcome.</p>
     <p>The military heuristic 'hold the high ground' is the canonical illustration. The mechanism is pure physics and physiology: projectiles fired downward travel further and strike harder; defenders have extended sightlines; ascending attackers are physiologically degraded. These are invariant physical facts. The heuristic is mechanistically grounded in exactly the same way that capillary refill time is grounded in circulatory physiology.</p>
     <p>But the mechanism was progressively dismantled by technological disruption. Artillery reduced the gradient ballistic advantage. Air power made elevation-based sightlines irrelevant — the dominant observation platform moved to a dimension the heuristic had no concept of. Precision-guided munitions removed the firing-angle advantage entirely. Each transition was a tripwire, and each time, commanders who continued to apply the heuristic as if the mechanism still held paid for it. Gallipoli is the textbook example: the tactical logic of holding the heights above Anzac Cove was impeccable by the reasoning of the previous century; the reality of modern artillery made the heights a killing ground rather than a defensive asset.</p>
+    <p>The high ground heuristic retains residual mechanistic validity in specific contexts — special forces operations in mountainous terrain, drone operations where line-of-sight advantage persists, signals intelligence where elevation correlates with coverage. But the wholesale application of a pre-aviation military doctrine to a combined-arms environment is mechanistic decay in action.</p>
+
+    <div class="wc-insight">
+      <h4>Mechanistic decay — signature and detection</h4>
+      <p><strong>Signature:</strong> Performance of the heuristic drops sharply in specific contexts, not gradually across all cases. The mechanism is intact in some situations and broken in others, reflecting the uneven penetration of the disrupting technology or biology.</p>
+      <p><strong>Detection:</strong> Monitor the causal chain, not just outcomes. Ask: is the mechanism through which the cue connects to the outcome still intact? Has technology, biology, or physics changed the upstream relationship?</p>
+      <p><strong>Refresh strategy:</strong> Identify whether the mechanism is disrupted everywhere or only in specific system states. Retain the heuristic where the mechanism holds; replace or augment it where the mechanism has been broken.</p>
+    </div>
+
+    <h3 class="subsection">Decay Type 2: Structural Drift</h3>
+    <p>Structurally grounded heuristics encode empirical regularities of system architecture rather than direct causal mechanisms. They decay when the structural regularity they encode shifts — which happens gradually, without a clear phase transition, and is therefore harder to detect.</p>
+    <p>The market leader category development heuristic — only invest in category development if you are the clear market leader — encodes a structural regularity of mature competitive markets: leaders have superior distribution and mental availability, so they capture disproportionate returns from category growth. This regularity holds across a wide range of mature consumer markets and is reliable enough to constitute a genuine strategic heuristic.</p>
+    <p>But it is a regularity, not a mechanism. Boehringer Ingelheim's decade of ILD category development investment — diagnostic awareness campaigns, MDT education, misdiagnosis initiatives — was structurally rational when it dominated the IPF treatment landscape. As new agents enter the space, the structural regularity the heuristic encoded is shifting: the category development infrastructure BI built is increasingly accessible to challengers who can free-ride on established HCP awareness. The heuristic has not been mechanistically invalidated; the structure it encodes has drifted. The drift is gradual, context-specific, and invisible from within the heuristic itself.</p>
+    <p>The Rule of Three provides a cleaner illustration of sudden structural invalidation. The empirical regularity that mature industries converge on three dominant generalist competitors held reliably across decades of industrial analysis. Platform economics — network effects, zero marginal cost scaling, data flywheel dynamics — broke the structural regularity entirely. Winner-take-most rather than oligopolistic equilibrium became the dominant end-state in platform markets.</p>
+
+    <div class="wc-insight">
+      <h4>Structural decay — signature and detection</h4>
+      <p><strong>Signature:</strong> The heuristic continues to perform well in some market or system contexts while degrading silently in others. No single dramatic failure; rather, a pattern of outcomes that are slightly worse than expected, in cases that share a structural feature the heuristic was not designed for.</p>
+      <p><strong>Detection:</strong> Monitor the structural regularity itself, not just the heuristic's performance. Ask: are the conditions that made this regularity hold — market maturity, technology regime, competitive structure — still present?</p>
+      <p><strong>Refresh strategy:</strong> Identify which structural features the heuristic depends on. Build explicit tripwires around those features. When the features shift, revise the heuristic before the performance data compels it — by which point the cost of late adaptation has already been paid.</p>
+    </div>
+
+    <h3 class="subsection">Decay Type 3: Normative Erosion</h3>
+    <p>Normatively grounded heuristics work through social and organisational coordination dynamics. Their decay mechanism is different from both mechanistic disruption and structural drift: they erode through compliance fatigue, cultural drift, and the gradual decoupling of the form of the heuristic from its function.</p>
+    <p>The WHO Surgical Safety Checklist is the paradigm case. Its mechanism is social: the checklist creates a mandatory pause that surfaces tacit information, equalises voice across professional hierarchies, and interrupts the dynamics of overconfidence and assumption that produce surgical errors. The mechanism is intact as long as the checklist is completed with genuine engagement — as long as the pause is real, the questions are live, and the team is genuinely attending.</p>
+    <p>Normative erosion occurs when the form of compliance becomes decoupled from the function. Teams that complete the checklist in thirty seconds, with the same person answering their own questions while the rest of the team attends to other tasks, are performing the heuristic without executing it. The coordination mechanism — the mandatory social pause — has been hollowed out. The paperwork trail shows compliance; the patient safety benefit has evaporated.</p>
+    <p>This decay mode is particularly insidious because it is invisible in routine monitoring. Checklist completion rates remain high. Adverse event rates may not spike immediately, because the checklist was one of many safety mechanisms and its erosion takes time to propagate through outcomes data. The heuristic has decayed into a ritual, and the organisation cannot see it from the outside.</p>
+
+    <div class="wc-insight">
+      <h4>Normative decay — signature and detection</h4>
+      <p><strong>Signature:</strong> Compliance metrics remain high while outcome benefits plateau or decline. The form is intact; the function is not. Often accompanied by a cultural shift in which the heuristic is described as a 'box-ticking exercise' by those applying it.</p>
+      <p><strong>Detection:</strong> Observe the quality of engagement, not the rate of completion. Structured observation of checklist execution, team debrief data, and staff attitudes toward the heuristic reveal erosion that outcome metrics cannot.</p>
+      <p><strong>Refresh strategy:</strong> Restore the social mechanism, not just the compliance rate. This typically requires cultural intervention — reconnecting teams to the purpose of the coordination the heuristic was designed to enforce — rather than process redesign.</p>
+    </div>
   </div>
 
-  <div class="callout">
-    <span class="callout-label">Ongoing exploration</span>
-    <p>This piece is part of an emerging series on heuristics in complex systems. For a detailed taxonomy of heuristic types and worked examples, see <em>When Simple Rules Beat Complex Models</em>.</p>
+  <div class="section-block">
+    <span class="section-number">05</span>
+    <h2 class="section-title">Why organisations fail to refresh: the <em>lock-in</em> problem</h2>
+    <p>Understanding how heuristics decay is necessary but not sufficient. The harder problem is why organisations fail to refresh them even when the evidence of decay is available. Heuristics that have crossed their tripwire continue to be applied — sometimes for decades — because they are embedded in structures that resist revision.</p>
+
+    <h3 class="subsection">Heuristics become identity</h3>
+    <p>A heuristic that has been reliable for a long time does not remain a decision tool. It becomes an organisational identity. The cavalry tradition in pre-war European armies was not merely a tactical doctrine; it was a professional culture, a social class, a set of career pathways and institutional relationships. Revising the tactical doctrine required dismantling a social structure, not updating a field manual. The machine gun did not simply make cavalry charges less effective. It created an identity crisis for an institution whose self-conception was built around the validity of the cavalry charge.</p>
+    <p>The pharmaceutical industry equivalent is the market access heuristic calibrated to a pre-real-world-evidence HTA environment. For two decades, the dominant heuristic for demonstrating value was: conduct a Phase 3 RCT, generate a cost per QALY, compare to the threshold. This was a structurally grounded heuristic that worked reliably in the institutional context of NICE, G-BA, and similar bodies. It is now being applied to an environment where payers are asking different questions — comparative effectiveness against the real-world standard of care, patient-level heterogeneity, longitudinal outcomes beyond trial duration — and where the structural regularity the heuristic encoded is actively breaking down. The refresh is resisted not because the evidence for decay is absent but because the heuristic is embedded in the training, the hiring criteria, the consulting frameworks, and the self-image of an entire professional discipline.</p>
+
+    <h3 class="subsection">The training-practice gap</h3>
+    <p>Heuristics are transmitted through training before they can be revised through practice. A clinician who trained in an era when broad-spectrum antibiotics were the dominant safety heuristic carries that calibration into a world where antimicrobial stewardship requires a different decision architecture. The training establishes the heuristic as the correct response to a class of situations; subsequent practice provides feedback that should update the heuristic, but only if the institution has designed feedback mechanisms that connect outcome data to individual decision calibration.</p>
+    <p>Most institutions have not. Clinical outcome data is aggregated at the population level for quality improvement purposes, not disaggregated to the individual clinician's decision pattern for heuristic recalibration. The clinician whose antibiotic de-escalation heuristic is miscalibrated for their patient population receives no systematic signal to that effect. The heuristic persists — not from stubbornness but from the absence of the feedback infrastructure that would enable revision.</p>
+
+    <h3 class="subsection">The competence paradox</h3>
+    <p>There is a deeper problem. The more competent the expert, the more resistant the heuristic to revision. This is not paradoxical on reflection: the expert's competence is partly constituted by the heuristic. A highly experienced intensivist whose clinical judgment has been calibrated over twenty years against a particular set of early-warning patterns does not have the option of simply deciding to update their heuristic. Their expertise and their heuristic are not separable. Revising the heuristic means revising the expertise — which requires acknowledging that the source of their competence is also the source of their miscalibration. This is cognitively and professionally threatening in ways that produce motivated resistance rather than rational updating.</p>
+    <p>The expert's heuristic and the expert's identity are not separable. This is why heuristic refresh cannot be managed as an information problem. It must be managed as a change management problem — which is to say, a problem of identity, culture, and institutional design.</p>
+  </div>
+
+  <div class="section-block">
+    <span class="section-number">06</span>
+    <h2 class="section-title">AI as disruptor and preserver: applying the <em>taxonomy</em></h2>
+    <p>The taxonomy from the companion piece does its most important work here. Whether AI's cognitive offload is appropriate, genuinely augmenting, or actively destructive depends entirely on which type of heuristic is being considered. The four categories require four fundamentally different responses to AI capability.</p>
+
+    <h3 class="subsection">Mechanistic Heuristics: Offload the Application, Preserve the Mechanism</h3>
+    <p>Where the mechanism underlying a heuristic remains valid, AI can appropriately offload the cognitive work of applying the cue — making the heuristic faster, more consistent, and applicable in contexts where human cognitive resource is strained. This is appropriate cognitive offload, and it is where most of the genuine clinical AI value currently sits.</p>
+    <p>AI-assisted HRCT reading in ILD is the clearest example. The UIP pattern heuristic — typical HRCT pattern equals probable IPF — remains mechanistically valid. The causal relationship between radiological pattern and underlying fibrogenic biology has not changed. But AI can detect subtle early patterns, quantify fibrosis extent, and flag progression with a consistency and precision that reduces the cognitive load on the reporting radiologist. The mechanism is preserved; the application is offloaded. The heuristic becomes more reliable, not redundant.</p>
+    <p>However, mechanistic offload creates a calibration risk that is rarely acknowledged. The clinician who has outsourced pattern recognition to an AI tool is also — gradually, silently — outsourcing the feedback mechanism that maintains their own calibration. The radiologist who has read ten thousand HRCTs has a calibrated intuition about the boundary conditions of the UIP pattern heuristic — the atypical cases where the pattern recognition breaks down and deeper diagnostic workup is warranted. The radiologist who has read one thousand HRCTs and reviewed ten thousand AI-flagged outputs does not have the same calibration, even if their flagging accuracy is equivalent. When the AI's training distribution drifts from the current patient population — as it will — the radiologist with deeper calibration will detect the drift. The radiologist whose calibration was built on AI-mediated experience may not.</p>
+
+    <div class="watch-out">
+      <span class="watch-out-label">⚠  Watch-out</span>
+      <p>Cognitive offload of heuristic application is appropriate for mechanistic heuristics where the mechanism is intact. But it must be paired with deliberate calibration maintenance — structured exposure to cases that test the boundaries of the heuristic, including cases where the AI and the clinician disagree. Without this, cognitive offload erodes the tripwire detection capacity that makes safe heuristic application possible.</p>
+    </div>
+
+    <h3 class="subsection">Structural Heuristics: AI Can Detect Drift Earlier</h3>
+    <p>Structurally grounded heuristics decay when the empirical regularity they encode shifts. AI's genuine contribution here is not to replace the heuristic but to monitor the structural conditions that validate it — detecting drift earlier than human observation could, and triggering revision before performance degradation compels it.</p>
+    <p>AI competitive intelligence tools that monitor market share dynamics, prescribing pattern shifts, payer decision trends, and HCP sentiment across large datasets can detect the early signals of structural drift that a market leader heuristic depends on. In pharmaceutical market access, AI analysis of HTA body decision patterns, payer formulary evolution, and real-world outcomes datasets can detect the structural drift in what constitutes a compelling evidence package — providing earlier warning that the heuristics calibrated to yesterday's HTA environment are becoming unfitted.</p>
+
+    <h3 class="subsection">Normative Heuristics: AI Cannot Replace the Mechanism</h3>
+    <p>This is the category where the cognitive offload narrative is most dangerous. Normative heuristics work through social and organisational coordination dynamics. The cognitive engagement they require is not a cost to be reduced — it is the mechanism through which they produce their effect. AI that automates a normative heuristic destroys the mechanism while appearing to deliver the output.</p>
+    <p>An AI system that completes the WHO Surgical Safety Checklist — confirming each item based on electronic health record data, equipment sensors, and team scheduling information — without requiring a team pause and verbal confirmation achieves checklist completion without executing the checklist. The data will show 100% compliance. The surgical error rate will not improve, because the mechanism the checklist was designed to engage — the mandatory social pause that surfaces tacit information and equalises voice — has been bypassed.</p>
+
+    <div class="watch-out">
+      <span class="watch-out-label">⚠  Watch-out</span>
+      <p>For normative heuristics, the question is never 'can AI do this faster?' The question is 'does the mechanism require human cognitive engagement to work?' If yes, AI automation destroys the heuristic while appearing to preserve it. AI can monitor, support, and protect the mechanism — it cannot substitute for it.</p>
+    </div>
+
+    <h3 class="subsection">Adversarial Heuristics: AI is Actively Dangerous</h3>
+    <p>Adversarially robust heuristics succeed because their simplicity cannot be gamed. Every dimension of sophistication added to the decision framework is an additional degree of freedom for the adversary. AI in adversarial heuristic contexts is therefore not neutral — it is actively corrosive of the heuristic's core property.</p>
+    <p>Consider the HTA context. The ICER threshold heuristic — below £30,000 per QALY, approve; above, reject — is adversarially robust because pharmaceutical companies cannot engineer their model to hit £29,500 without genuinely achieving that level of cost-effectiveness. If AI enables pharmaceutical companies to construct more sophisticated, multi-dimensional value arguments, and simultaneously enables HTA bodies to build more sophisticated multi-criteria assessment frameworks, the arms race accelerates. Both sides invest more cognitive and financial resource; the quality of decisions does not improve proportionally because the underlying uncertainty about real-world value has not been reduced by the sophistication of the frameworks.</p>
+
+    <div class="watch-out">
+      <span class="watch-out-label">⚠  Watch-out</span>
+      <p>In adversarial heuristic contexts, AI capability offered to the decision-maker must be evaluated in the context of the same capability being available to the adversary. If AI enables more sophisticated frameworks on both sides, the adversarial robustness of the simple rule has been destroyed and neither party has gained a decision quality advantage — only a resource expenditure increase.</p>
+    </div>
+  </div>
+
+  <div class="section-block">
+    <span class="section-number">07</span>
+    <h2 class="section-title">The bathwater problem: what to <em>preserve, what to replace</em></h2>
+    <p>The AI moment in healthcare and strategic decision-making is generating enormous pressure to replace existing heuristics with model-based approaches. Some of that pressure is well-founded. Some of it is the institutional equivalent of the soldier who discarded the high ground heuristic — not because the mechanism was broken but because a more sophisticated-looking alternative was available.</p>
+    <p>The bathwater problem has a precise formulation in the terms of this analysis. The baby is the ecological rationality of the heuristic — the fit between cue and outcome that was hard won through calibration, feedback, and the lived experience of operating in a specific CAS. The bathwater is the specific cognitive and procedural form the heuristic took in a particular technological moment. AI changes the bathwater. It rarely changes the baby. The challenge is telling them apart — and the taxonomy provides the tool for doing so.</p>
+
+    <div class="table-wrapper">
+      <table>
+        <tr>
+          <th>Heuristic Type</th>
+          <th>What AI Changes</th>
+          <th>What AI Does Not Change</th>
+          <th>Bathwater vs Baby?</th>
+        </tr>
+        <tr>
+          <td><strong>Mechanistic</strong></td>
+          <td>Speed and consistency of cue detection; applicability in low-resource contexts</td>
+          <td>The causal mechanism; boundary conditions; the need for calibration maintenance</td>
+          <td>Bathwater. The form of application changes; the underlying causal logic persists.</td>
+        </tr>
+        <tr>
+          <td><strong>Structural</strong></td>
+          <td>Speed of detecting structural drift; breadth of evidence examined; forecast accuracy</td>
+          <td>The empirical regularity itself; the need for vigilance about shifting conditions</td>
+          <td>Bathwater. AI can enhance the heuristic's supporting information without replacing the core logic.</td>
+        </tr>
+        <tr>
+          <td><strong>Normative</strong></td>
+          <td>Compliance measurement; process monitoring; scheduling and coordination</td>
+          <td>The social mechanism that generates the benefit; the requirement for human engagement</td>
+          <td>Baby (danger). Automating application destroys the mechanism. Do not replace it.</td>
+        </tr>
+        <tr>
+          <td><strong>Adversarial</strong></td>
+          <td>Sophistication of counter-arguments; multi-dimensional modelling</td>
+          <td>The simplicity that provides robustness; the arms-race dynamics of sophisticated frameworks</td>
+          <td>Baby (danger). More sophistication creates worse decisions in adversarial contexts. Preserve simplicity.</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="section-block">
+    <span class="section-number">08</span>
+    <h2 class="section-title">A framework for heuristic <em>refresh</em></h2>
+    <p>The challenge is not identifying when heuristics have decayed. With the taxonomy and the decay mechanisms, that becomes straightforward. The challenge is building the individual and institutional capacity to act on that identification — to refresh the heuristic before performance degradation makes the cost unmistakable and the stakes of revision become genuinely threatening.</p>
+    <p>Three capabilities distinguish organisations that manage heuristic refresh well from those that allow decay to accumulate into crisis.</p>
+
+    <h3 class="subsection">Capability 1: Mechanism Monitoring</h3>
+    <p>Build explicit monitoring of the causal chains, structural regularities, and social mechanisms that underpin each category of heuristic. This is not outcome monitoring — which only shows you the damage after it has accumulated. It is monitoring the upstream conditions that determine whether the heuristic is still appropriately calibrated.</p>
+    <p>In clinical settings, this means monitoring the mechanism of sepsis identification — not just sepsis outcome rates but the ongoing validity of the physiological signals the sepsis heuristic depends on. In market access, it means monitoring the structural conditions of HTA decision-making — not just payer approval rates but the actual criteria they are using and whether those criteria match the evidence frameworks that populated your heuristic. In manufacturing, it means monitoring the physical properties of the production process — not just quality outcomes but whether the causal relationships that underpin your process control heuristics remain intact.</p>
+
+    <h3 class="subsection">Capability 2: Boundary Testing</h3>
+    <p>For mechanistic and structural heuristics, maintain deliberate exposure to boundary cases — situations where the heuristic is expected to work, but where the underlying conditions are slightly unusual or the outcome slightly counterintuitive. This is the mechanism through which experts maintain their own calibration, and it is also how organisations early-detect heuristic decay.</p>
+    <p>In clinical practice, this means maintaining case discussions around atypical presentations — the early signs that an experienced clinician's diagnostic heuristic is beginning to drift. In pharmaceutical market access, it means maintaining vigilance about the payer conversations that do not fit the standard model — the questions that suggest a shift in what constitutes a compelling value case. In competitive intelligence, it means systematic attention to the examples that break the strategic heuristic, rather than dismissing them as exceptions.</p>
+
+    <h3 class="subsection">Capability 3: Decay Mechanism Response</h3>
+    <p>Once decay is detected, respond proportionally to which decay mechanism is active. A mechanistic disruption requires technical intervention — often technological. A structural drift requires strategic decision-making about whether to revise the heuristic or exit the environment where the heuristic is becoming unfitted. A normative erosion requires cultural intervention and reconnection to purpose.</p>
+
+    <div class="table-wrapper">
+      <table>
+        <tr>
+          <th>Decay Type</th>
+          <th>Detection Signal</th>
+          <th>Response Type</th>
+          <th>Timeline</th>
+        </tr>
+        <tr>
+          <td><strong>Mechanistic Disruption</strong></td>
+          <td>Sharp performance drop in specific contexts; the mechanism is broken in some situations but not others</td>
+          <td>Technical / technological intervention; revise the cue or the threshold or the interpretation of the signal</td>
+          <td>Urgent. Once detected, refresh quickly before the mechanism disruption spreads to other contexts.</td>
+        </tr>
+        <tr>
+          <td><strong>Structural Drift</strong></td>
+          <td>Gradual performance decline across similar contexts; outcomes slightly worse than expected; assumptions about system structure are shifting</td>
+          <td>Strategic decision-making; revise the heuristic scope or the trigger conditions, or exit environments where the regularity no longer holds</td>
+          <td>Medium. Early detection provides time to adapt before competitors exploit the drift.</td>
+        </tr>
+        <tr>
+          <td><strong>Normative Erosion</strong></td>
+          <td>Compliance metrics high, outcome benefits flat or declining; staff describe the heuristic as 'box-ticking'</td>
+          <td>Cultural intervention; reconnect to the purpose and mechanism; rebuild the social coordination the heuristic was designed to enable</td>
+          <td>Medium-urgent. Erosion is invisible in routine monitoring but spreads quickly once detected.</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="section-block">
+    <span class="section-number">09</span>
+    <h2 class="section-title">Implications by domain</h2>
+
+    <h3 class="subsection">Clinical medicine and intensive care</h3>
+    <p>Clinical heuristics are under simultaneous pressure from two directions. Mechanistic heuristics are being disrupted by technological changes — from non-invasive physiology, from new biomarkers, from imaging technologies that are making the old cue-outcome relationships obsolete. Structural heuristics are drifting as patient populations change — the sepsis heuristic calibrated to a predominantly bacterial population is being applied to increasingly complex viral and fungal landscapes. Normative heuristics are eroding as checklist culture becomes ritual rather than genuine coordination.</p>
+    <p>The clinical response requires all three dimensions: technical surveillance of which mechanisms are degrading, strategic adaptation of heuristic scope, and cultural work on the social mechanisms that generate safety benefit. AI can help with the technical surveillance — monitoring mechanistic validity — but it must not be substituted for the cultural work that preserves normative heuristics.</p>
+
+    <h3 class="subsection">Pharmaceutical development and market access</h3>
+    <p>Pharmaceutical companies operate with a set of structural heuristics calibrated to an HTA environment that is actively drifting. The evidence generation heuristic — RCT first, then assess cost-effectiveness — is becoming unfitted as payers ask for comparative real-world evidence, patient-level heterogeneity, and outcomes beyond trial duration. The market access heuristic — generate a cost per QALY below the threshold — is becoming unfitted as multi-criteria decision frameworks replace single-point thresholds.</p>
+    <p>The drift is gradual and hard to detect because older heuristics continue to deliver some value in some contexts. The response requires systematic structural monitoring — tracking what payers are actually asking for, not what the company assumes they want — and strategic decisioning about which markets are drifting faster and how to revise the evidence generation strategy before the performance data becomes undeniable.</p>
+
+    <h3 class="subsection">Military operations and strategic planning</h3>
+    <p>Military heuristics are among the most resistant to revision because they are most embedded in identity, training, and organisational structure. The mechanistic heuristics of the previous century — hold the high ground, control the lines of communication — face constant disruption from technological change. The structural heuristics of mid-century strategy — mass and concentration of force — are drifting in an environment of precision targeting and distributed operations. The normative heuristics of command coordination — hierarchical decision-making, centralised planning — are eroding as adversaries operate in looser, networked forms.</p>
+    <p>Military organisations with the best strategic outcomes are those that maintain the most disciplined heuristic refresh mechanisms — after-action reviews that identify which mechanistic heuristics are broken, strategic planning processes that anticipate structural drift, and leadership cultures that are willing to rebuild coordination mechanisms around new principles.</p>
+  </div>
+
+  <div class="section-block">
+    <span class="section-number">10</span>
+    <h2 class="section-title">Conclusion: hold lightly, revise <em>deliberately</em></h2>
+    <p>The arc of heuristic thinking in complex systems runs from recognising their necessity — they are the only sustainable cognitive architecture for operating in environments of unbounded information demand — to recognising their limits: they become unfitted as the systems they are calibrated to change.</p>
+    <p>The deep paradox of heuristic management is that the better a heuristic has worked, the more resistant it becomes to revision. The expertise that the heuristic embeds, the identity the organisation has built around it, the training systems that transmit it — all of these create lock-in that makes timely revision difficult. The organisation that held the high ground heuristic successfully for a century is the one least prepared to abandon it when the mechanism breaks.</p>
+    <p>The answer is not to hold heuristics more lightly — to abandon them in the face of every technological shift or market change. That would be thrashing, not adaptation. The answer is to hold them more deliberately — to maintain the mechanism monitoring, boundary testing, and decay-mechanism response systems that allow early detection and timely revision.</p>
+    <p>AI will be part of this picture, but not in the way most AI adoption frameworks assume. AI will be valuable for mechanistic heuristics where it offloads application while mechanism monitoring is preserved. AI will be valuable for structural heuristics where it detects drift earlier than human observation. AI will be actively dangerous for normative heuristics where it offers to replace the social mechanism that generates the benefit. AI will be corrosive for adversarial heuristics where it offers sophistication that destroys the robustness the simplicity was designed to protect.</p>
+    <p>The question is not whether to use AI to augment heuristics. The question is which heuristics, which dimensions of which heuristics, and at what cost to the mechanisms that make the heuristics work. The taxonomy provides the answer — but only if you use it to ask the right questions before you deploy the technology, not after the heuristic has been destroyed.</p>
   </div>
 
 </div>
