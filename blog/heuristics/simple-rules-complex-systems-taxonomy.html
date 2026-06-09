@@ -349,6 +349,32 @@
   }
   .taxonomy-table tr:nth-child(even) { background: var(--paper); }
   .taxonomy-table tr:hover { background: #f0f3fa; }
+
+    /* ── Mobile nav (hamburger) ─────────────────────────── */
+    .nav-toggle {
+      display: none; background: none; cursor: pointer;
+      border: 1px solid rgba(122,154,191,0.4);
+      padding: 0.45rem 0.55rem; margin-left: 0.9rem;
+    }
+    .nav-toggle span { display: block; width: 18px; height: 2px; background: #7A9ABF; margin: 3.5px 0; }
+    @media (max-width: 760px) {
+      .nav-toggle { display: block; }
+      nav .wc-nav-links {
+        display: none; position: absolute; top: 100%; left: 0; right: 0;
+        flex-direction: column; gap: 0; padding: 0.5rem 1.5rem 1.1rem;
+        background: rgba(6,13,27,0.97); border-bottom: 1px solid rgba(74,144,226,0.18);
+        backdrop-filter: blur(16px);
+      }
+      nav.nav-open .wc-nav-links { display: flex; }
+      nav .wc-nav-links li { padding: 0.55rem 0; }
+      .wc-nav-cta { padding: 0.4rem 0.7rem; font-size: 0.55rem; letter-spacing: 0.06em; white-space: nowrap; }
+    }
+  
+  /* ── Post navigation ── */
+  .post-nav { display: flex; justify-content: space-between; align-items: center; gap: 1.5rem 2rem; flex-wrap: wrap; max-width: 760px; margin: 0 auto; padding: 2.5rem 1.5rem 3rem; border-top: 1px solid rgba(122,154,191,0.3); }
+  .post-nav a { font-family: 'Space Mono', monospace; font-size: 0.66rem; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; color: #7A9ABF; transition: color 0.2s; }
+  .post-nav a:hover { color: #C4A46B; }
+  .post-nav .post-nav-next { margin-left: auto; text-align: right; }
 </style>
 </head>
 <body>
@@ -359,10 +385,15 @@
     <span class="wc-nav-logo-sub">— .health</span>
   </a>
   <ul class="wc-nav-links">
-    <li><a href="https://workingcomplexity.health/#about">About</a></li>
-    <li><a href="https://workingcomplexity.health/blog/">Blog</a></li>
+    <li><a href="/#pillars">Philosophy</a></li>
+    <li><a href="/#approach">Approach</a></li>
+    <li><a href="/#services">Services</a></li>
+    <li><a href="/#about">About</a></li>
+    <li><a href="/blog/" class="active">Blog</a></li>
+    <li><a href="/#contact">Contact</a></li>
   </ul>
-  <a href="https://workingcomplexity.health/#contact" class="wc-nav-cta">Contact</a>
+  <a href="/#contact" class="wc-nav-cta">Start a Conversation</a>
+  <button class="nav-toggle" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
 </nav>
 
 <div class="article-cover">
@@ -552,5 +583,30 @@
 
 </div>
 
+
+
+<nav class="post-nav" aria-label="More writing">
+    <a class="post-nav-prev" href="/blog/heuristics/simple-rules-complex-systems">&larr; When simple rules beat complex models</a>
+    <a class="post-nav-all" href="/blog/">All writing</a>
+    <a class="post-nav-next" href="/blog/heuristics/knowing-when-to-let-go">Knowing when to let go &rarr;</a>
+</nav>
+
+<script>
+  (function () {
+    var nav = document.querySelector('nav');
+    var btn = document.querySelector('.nav-toggle');
+    if (!nav || !btn) return;
+    btn.addEventListener('click', function () {
+      var open = nav.classList.toggle('nav-open');
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    nav.querySelectorAll('ul a').forEach(function (a) {
+      a.addEventListener('click', function () {
+        nav.classList.remove('nav-open');
+        btn.setAttribute('aria-expanded', 'false');
+      });
+    });
+  })();
+</script>
 </body>
 </html>

@@ -532,6 +532,12 @@
     }
     .service-hex:hover .hex-accent { opacity: 1; }
 
+    @media (max-width: 1140px) {
+      .hex-grid { width: 100%; }
+      .hex-row { flex-direction: column; align-items: center; gap: 3px; }
+      .hex-row-offset { margin: 3px 0 0 0; }
+    }
+
     /* ── MANIFESTO ──────────────────────────────────────── */
     #manifesto {
       padding: 7rem 0;
@@ -732,6 +738,11 @@
     }
     .footer-links a:hover { color: var(--text-muted); }
 
+    @media (max-width: 860px) {
+      footer { flex-direction: column; gap: 1.5rem; padding: 2.5rem 1.5rem; text-align: center; }
+      .footer-links { flex-wrap: wrap; justify-content: center; gap: 1rem 1.5rem; }
+    }
+
     /* ── Blueprint SVG decorations ──────────────────────── */
     .bp-crosshair {
       position: absolute;
@@ -815,6 +826,26 @@
       .contact-item-label { width: 56px; }
     }
 
+  
+    /* ── Mobile nav (hamburger) ─────────────────────────── */
+    .nav-toggle {
+      display: none; background: none; cursor: pointer;
+      border: 1px solid rgba(122,154,191,0.4);
+      padding: 0.45rem 0.55rem; margin-left: 0.9rem;
+    }
+    .nav-toggle span { display: block; width: 18px; height: 2px; background: #7A9ABF; margin: 3.5px 0; }
+    @media (max-width: 760px) {
+      .nav-toggle { display: block; }
+      nav .nav-links {
+        display: none; position: absolute; top: 100%; left: 0; right: 0;
+        flex-direction: column; gap: 0; padding: 0.5rem 1.5rem 1.1rem;
+        background: rgba(6,13,27,0.97); border-bottom: 1px solid rgba(74,144,226,0.18);
+        backdrop-filter: blur(16px);
+      }
+      nav.nav-open .nav-links { display: flex; }
+      nav .nav-links li { padding: 0.55rem 0; }
+      .nav-cta { padding: 0.4rem 0.7rem; font-size: 0.55rem; letter-spacing: 0.06em; white-space: nowrap; }
+    }
   </style>
 </head>
 <body>
@@ -829,10 +860,12 @@
     <li><a href="#pillars">Philosophy</a></li>
     <li><a href="#approach">Approach</a></li>
     <li><a href="#services">Services</a></li>
+    <li><a href="#about">About</a></li>
     <li><a href="/blog/">Blog</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
   <a href="#contact" class="nav-cta">Start a Conversation</a>
+  <button class="nav-toggle" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
 </nav>
 
 <!-- ═══════════════════════════════ HERO ══════════════════════════════ -->
@@ -1170,11 +1203,31 @@
   </div>
 </section>
 
-<!-- ═════════════════════ HUMAN CONTEXT · PERSONAL ════════════════════ -->
-<section id="human-context" style="padding: 7rem 0 0;">
+<!-- ═════════════════════ ABOUT · HUMAN CONTEXT ════════════════════ -->
+<section id="about" style="padding: 7rem 0 0;">
   <div class="container">
-    <div class="section-label reveal">Human context</div>
-    <a href="/blog/the-pull-of-complexity.html" class="reveal hc-feature"
+    <div class="section-label reveal">Who we are</div>
+    <div class="reveal" style="max-width:640px; margin-bottom:3.5rem;">
+      <h2 style="font-size:clamp(1.8rem,3.5vw,2.8rem); font-weight:800; line-height:1.1; letter-spacing:-0.03em; color:var(--text); margin-bottom:1.25rem;">
+        The person <em style="font-style:normal; font-weight:300; color:var(--gold);">behind</em> the practice
+      </h2>
+      <p style="color:var(--text-muted); font-size:1rem; line-height:1.75; margin-bottom:1.35rem;">
+        Working Complexity is the practice of Michael Baldwin — shaped by a career in and
+        around healthcare, where trial data and market projections meet the people, families
+        and clinicians behind the numbers.
+      </p>
+      <p style="color:var(--text-muted); font-size:1rem; line-height:1.75; margin-bottom:1.35rem;">
+        The intellectual anchors are named openly. Dave Snowden's Cynefin framework, for telling
+        the complicated from the complex. Complex adaptive systems, as the honest description of
+        how healthcare behaves. Joan Tronto's ethics of care, as the reminder that the analytical
+        and the moral are not separate stances.
+      </p>
+      <p style="color:var(--text-muted); font-size:1rem; line-height:1.75;">
+        Based in the United Kingdom. Working globally — with the NHS, charities, pharma
+        and commissioners.
+      </p>
+    </div>
+    <a href="/blog/the-pull-of-complexity" class="reveal hc-feature"
        onmouseover="this.style.borderColor='rgba(74,144,226,0.4)'" onmouseout="this.style.borderColor='var(--border)'">
       <div class="hc-feature-body">
         <span style="font-family:var(--mono); font-size:0.58rem; letter-spacing:0.22em; text-transform:uppercase; color:var(--gold); display:flex; align-items:center; gap:0.6rem; margin-bottom:1.5rem;">
@@ -1214,15 +1267,35 @@
         </p>
         <a href="/blog/" style="font-family:var(--mono); font-size:0.68rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--bg); background:var(--gold); padding:0.65rem 1.5rem; text-decoration:none; display:inline-block; transition:opacity 0.2s;" onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">Read the blog →</a>
       </div>
-      <a href="/blog/soft-drift-series.html" class="reveal" style="display:block; background:var(--bg-card); border:1px solid var(--border); padding:2.5rem 2.75rem; text-decoration:none; color:inherit; transition:border-color 0.25s;" onmouseover="this.style.borderColor='rgba(74,144,226,0.4)'" onmouseout="this.style.borderColor='var(--border)'">
-        <span style="font-family:var(--mono); font-size:0.58rem; letter-spacing:0.22em; text-transform:uppercase; color:var(--gold); display:flex; align-items:center; gap:0.6rem; margin-bottom:1.25rem;">
-          <span style="display:inline-block; width:22px; height:1px; background:var(--gold); opacity:0.6;"></span>
-          Series · Three parts · Complete
-        </span>
-        <h3 style="font-size:1.5rem; font-weight:700; line-height:1.2; letter-spacing:-0.02em; color:var(--text); margin-bottom:0.85rem;">Managing the Soft Drift</h3>
-        <p style="font-size:0.9rem; color:var(--text-muted); line-height:1.65; margin-bottom:2rem;">A three-part argument on chronic disease, AI, and the architecture of change in healthcare systems built around the wrong event.</p>
-        <span style="font-family:var(--mono); font-size:0.65rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--text-dim); transition:color 0.2s;">Read the series →</span>
-      </a>
+      <div class="reveal" style="display:flex; flex-direction:column; gap:1.1rem;">
+        <a href="/blog/soft-drift-series" style="display:block; background:var(--bg-card); border:1px solid var(--border); padding:1.75rem 2rem; text-decoration:none; color:inherit; transition:border-color 0.25s;" onmouseover="this.style.borderColor='rgba(74,144,226,0.4)'" onmouseout="this.style.borderColor='var(--border)'">
+          <span style="font-family:var(--mono); font-size:0.58rem; letter-spacing:0.22em; text-transform:uppercase; color:var(--gold); display:flex; align-items:center; gap:0.6rem; margin-bottom:0.9rem;">
+            <span style="display:inline-block; width:22px; height:1px; background:var(--gold); opacity:0.6;"></span>
+            Series · Three parts · Complete
+          </span>
+          <h3 style="font-size:1.25rem; font-weight:700; line-height:1.2; letter-spacing:-0.02em; color:var(--text); margin-bottom:0.6rem;">Managing the Soft Drift</h3>
+          <p style="font-size:0.85rem; color:var(--text-muted); line-height:1.6; margin-bottom:1.1rem;">A three-part argument on chronic disease, AI, and the architecture of change in healthcare systems built around the wrong event.</p>
+          <span style="font-family:var(--mono); font-size:0.62rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--text-dim);">Read the series →</span>
+        </a>
+        <a href="/blog/experiments-with-uncertainty" style="display:block; background:var(--bg-card); border:1px solid var(--border); padding:1.75rem 2rem; text-decoration:none; color:inherit; transition:border-color 0.25s;" onmouseover="this.style.borderColor='rgba(74,144,226,0.4)'" onmouseout="this.style.borderColor='var(--border)'">
+          <span style="font-family:var(--mono); font-size:0.58rem; letter-spacing:0.22em; text-transform:uppercase; color:var(--gold); display:flex; align-items:center; gap:0.6rem; margin-bottom:0.9rem;">
+            <span style="display:inline-block; width:22px; height:1px; background:var(--gold); opacity:0.6;"></span>
+            Series · Two parts · Complete
+          </span>
+          <h3 style="font-size:1.25rem; font-weight:700; line-height:1.2; letter-spacing:-0.02em; color:var(--text); margin-bottom:0.6rem;">Experiments with Uncertainty</h3>
+          <p style="font-size:0.85rem; color:var(--text-muted); line-height:1.6; margin-bottom:1.1rem;">What not-knowing really means in healthcare — four patient personas across the ILD journey, then an advisory board stress-testing every finding.</p>
+          <span style="font-family:var(--mono); font-size:0.62rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--text-dim);">Read the series →</span>
+        </a>
+        <a href="/blog/heuristics/" style="display:block; background:var(--bg-card); border:1px solid var(--border); padding:1.75rem 2rem; text-decoration:none; color:inherit; transition:border-color 0.25s;" onmouseover="this.style.borderColor='rgba(74,144,226,0.4)'" onmouseout="this.style.borderColor='var(--border)'">
+          <span style="font-family:var(--mono); font-size:0.58rem; letter-spacing:0.22em; text-transform:uppercase; color:var(--gold); display:flex; align-items:center; gap:0.6rem; margin-bottom:0.9rem;">
+            <span style="display:inline-block; width:22px; height:1px; background:var(--gold); opacity:0.6;"></span>
+            Exploration · Three essays · Complete
+          </span>
+          <h3 style="font-size:1.25rem; font-weight:700; line-height:1.2; letter-spacing:-0.02em; color:var(--text); margin-bottom:0.6rem;">Heuristics in complex systems</h3>
+          <p style="font-size:0.85rem; color:var(--text-muted); line-height:1.6; margin-bottom:1.1rem;">When do simple rules outperform complex models? Three essays through medicine, markets, and organisational design.</p>
+          <span style="font-family:var(--mono); font-size:0.62rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--text-dim);">Read the essays →</span>
+        </a>
+      </div>
     </div>
   </div>
 </section>
@@ -1313,6 +1386,7 @@
     <li><a href="#pillars">Philosophy</a></li>
     <li><a href="#approach">Approach</a></li>
     <li><a href="#services">Services</a></li>
+    <li><a href="#about">About</a></li>
     <li><a href="/blog/">Blog</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
@@ -1337,5 +1411,23 @@
   });
 </script>
 
+
+<script>
+  (function () {
+    var nav = document.querySelector('nav');
+    var btn = document.querySelector('.nav-toggle');
+    if (!nav || !btn) return;
+    btn.addEventListener('click', function () {
+      var open = nav.classList.toggle('nav-open');
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    nav.querySelectorAll('ul a').forEach(function (a) {
+      a.addEventListener('click', function () {
+        nav.classList.remove('nav-open');
+        btn.setAttribute('aria-expanded', 'false');
+      });
+    });
+  })();
+</script>
 </body>
 </html>

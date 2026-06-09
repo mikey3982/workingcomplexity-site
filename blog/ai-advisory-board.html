@@ -400,6 +400,32 @@
     footer { padding: 2rem 1.25rem; }
     .footer-links { display: none; }
   }
+
+    /* ── Mobile nav (hamburger) ─────────────────────────── */
+    .nav-toggle {
+      display: none; background: none; cursor: pointer;
+      border: 1px solid rgba(122,154,191,0.4);
+      padding: 0.45rem 0.55rem; margin-left: 0.9rem;
+    }
+    .nav-toggle span { display: block; width: 18px; height: 2px; background: #7A9ABF; margin: 3.5px 0; }
+    @media (max-width: 760px) {
+      .nav-toggle { display: block; }
+      nav .wc-nav-links {
+        display: none; position: absolute; top: 100%; left: 0; right: 0;
+        flex-direction: column; gap: 0; padding: 0.5rem 1.5rem 1.1rem;
+        background: rgba(6,13,27,0.97); border-bottom: 1px solid rgba(74,144,226,0.18);
+        backdrop-filter: blur(16px);
+      }
+      nav.nav-open .wc-nav-links { display: flex; }
+      nav .wc-nav-links li { padding: 0.55rem 0; }
+      .wc-nav-cta { padding: 0.4rem 0.7rem; font-size: 0.55rem; letter-spacing: 0.06em; white-space: nowrap; }
+    }
+  
+  /* ── Post navigation ── */
+  .post-nav { display: flex; justify-content: space-between; align-items: center; gap: 1.5rem 2rem; flex-wrap: wrap; max-width: 760px; margin: 0 auto; padding: 2.5rem 1.5rem 3rem; border-top: 1px solid rgba(122,154,191,0.3); }
+  .post-nav a { font-family: 'Space Mono', monospace; font-size: 0.66rem; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; color: #7A9ABF; transition: color 0.2s; }
+  .post-nav a:hover { color: #C4A46B; }
+  .post-nav .post-nav-next { margin-left: auto; text-align: right; }
 </style>
 </head>
 <body>
@@ -411,12 +437,15 @@
     <span class="wc-nav-logo-sub">— .health</span>
   </a>
   <ul class="wc-nav-links">
-    <li><a href="https://workingcomplexity.health/#services">Services</a></li>
-    <li><a href="https://workingcomplexity.health/#about">About</a></li>
-    <li><a href="/blog/">Writing</a></li>
-    <li><a href="/blog/ai-advisory-board.html" class="active">Cast</a></li>
+    <li><a href="/#pillars">Philosophy</a></li>
+    <li><a href="/#approach">Approach</a></li>
+    <li><a href="/#services">Services</a></li>
+    <li><a href="/#about">About</a></li>
+    <li><a href="/blog/" class="active">Blog</a></li>
+    <li><a href="/#contact">Contact</a></li>
   </ul>
-  <a href="https://workingcomplexity.health/#contact" class="wc-nav-cta">Get in touch</a>
+  <a href="/#contact" class="wc-nav-cta">Start a Conversation</a>
+  <button class="nav-toggle" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
 </nav>
 
 <!-- HERO -->
@@ -465,12 +494,12 @@
       <div class="citizen-appears">
         <strong>Primary uncertainty type:</strong> Existential — "Will I see my grandchild start school?"<br>
         <strong>Appears in:</strong>
-        <a href="/blog/experiments-with-uncertainty.html">Experiments with Uncertainty</a> ·
-        <a href="/blog/the-certainty-complex.html">The Certainty Complex</a> ·
-        <a href="/blog/what-the-west-forgot-to-carry.html">What the West Forgot to Carry</a> ·
-        <a href="/blog/three-arguments-one-problem.html">Three Arguments, One Problem</a> ·
-        <a href="/blog/value-of-perfect-information.html">The Price of Not Knowing</a> ·
-        <a href="/blog/after-the-drift.html">After the Drift</a>
+        <a href="/blog/experiments-with-uncertainty">Experiments with Uncertainty</a> ·
+        <a href="/blog/the-certainty-complex">The Certainty Complex</a> ·
+        <a href="/blog/what-the-west-forgot-to-carry">What the West Forgot to Carry</a> ·
+        <a href="/blog/three-arguments-one-problem">Three Arguments, One Problem</a> ·
+        <a href="/blog/value-of-perfect-information">The Price of Not Knowing</a> ·
+        <a href="/blog/after-the-drift">After the Drift</a>
       </div>
     </div>
 
@@ -496,11 +525,11 @@
       <div class="citizen-appears">
         <strong>Primary uncertainty type:</strong> Aleatory — the irreducible randomness his data cannot resolve<br>
         <strong>Appears in:</strong>
-        <a href="/blog/experiments-with-uncertainty.html">Experiments with Uncertainty</a> ·
-        <a href="/blog/the-certainty-complex.html">The Certainty Complex</a> ·
-        <a href="/blog/what-the-west-forgot-to-carry.html">What the West Forgot to Carry</a> ·
-        <a href="/blog/three-arguments-one-problem.html">Three Arguments, One Problem</a> ·
-        <a href="/blog/after-the-drift.html">After the Drift</a>
+        <a href="/blog/experiments-with-uncertainty">Experiments with Uncertainty</a> ·
+        <a href="/blog/the-certainty-complex">The Certainty Complex</a> ·
+        <a href="/blog/what-the-west-forgot-to-carry">What the West Forgot to Carry</a> ·
+        <a href="/blog/three-arguments-one-problem">Three Arguments, One Problem</a> ·
+        <a href="/blog/after-the-drift">After the Drift</a>
       </div>
     </div>
 
@@ -526,11 +555,11 @@
       <div class="citizen-appears">
         <strong>Primary uncertainty type:</strong> Existential — not what is in his lungs, but what his life now means<br>
         <strong>Appears in:</strong>
-        <a href="/blog/experiments-with-uncertainty.html">Experiments with Uncertainty</a> ·
-        <a href="/blog/the-certainty-complex.html">The Certainty Complex</a> ·
-        <a href="/blog/what-the-west-forgot-to-carry.html">What the West Forgot to Carry</a> ·
-        <a href="/blog/soft-drift-series.html">Managing the Soft Drift</a> ·
-        <a href="/blog/after-the-drift.html">After the Drift</a>
+        <a href="/blog/experiments-with-uncertainty">Experiments with Uncertainty</a> ·
+        <a href="/blog/the-certainty-complex">The Certainty Complex</a> ·
+        <a href="/blog/what-the-west-forgot-to-carry">What the West Forgot to Carry</a> ·
+        <a href="/blog/soft-drift-series">Managing the Soft Drift</a> ·
+        <a href="/blog/after-the-drift">After the Drift</a>
       </div>
     </div>
 
@@ -556,11 +585,11 @@
       <div class="citizen-appears">
         <strong>Primary uncertainty type:</strong> Aleatory — chose to hold it rather than be held by it<br>
         <strong>Appears in:</strong>
-        <a href="/blog/experiments-with-uncertainty.html">Experiments with Uncertainty</a> ·
-        <a href="/blog/the-certainty-complex.html">The Certainty Complex</a> ·
-        <a href="/blog/what-the-west-forgot-to-carry.html">What the West Forgot to Carry</a> ·
-        <a href="/blog/three-arguments-one-problem.html">Three Arguments, One Problem</a> ·
-        <a href="/blog/after-the-drift.html">After the Drift</a>
+        <a href="/blog/experiments-with-uncertainty">Experiments with Uncertainty</a> ·
+        <a href="/blog/the-certainty-complex">The Certainty Complex</a> ·
+        <a href="/blog/what-the-west-forgot-to-carry">What the West Forgot to Carry</a> ·
+        <a href="/blog/three-arguments-one-problem">Three Arguments, One Problem</a> ·
+        <a href="/blog/after-the-drift">After the Drift</a>
       </div>
     </div>
 
@@ -604,7 +633,7 @@
     <span class="section-label">02 — The advisory board</span>
     <div>
       <h2 class="section-title">Six healthcare professionals who <em>stress-tested the frameworks</em></h2>
-      <p class="section-desc">The paper <em>Living with Not Knowing</em> was circulated to six ILD system decision-makers 72 hours before a structured roundtable. They came prepared with written reactions. What followed was three rounds of structured dialogue — and fifteen concrete commitments. Their positions, including where they changed their minds, are recorded in full in the <a href="/blog/experiments-with-uncertainty.html" style="color: var(--blue);">Experiments with Uncertainty</a> series.</p>
+      <p class="section-desc">The paper <em>Living with Not Knowing</em> was circulated to six ILD system decision-makers 72 hours before a structured roundtable. They came prepared with written reactions. What followed was three rounds of structured dialogue — and fifteen concrete commitments. Their positions, including where they changed their minds, are recorded in full in the <a href="/blog/experiments-with-uncertainty" style="color: var(--blue);">Experiments with Uncertainty</a> series.</p>
     </div>
   </div>
 
@@ -627,7 +656,7 @@
       </div>
       <div class="board-appears">
         <strong>Appears in:</strong>
-        <a href="/blog/experiments-with-uncertainty.html">Experiments with Uncertainty (Part Two)</a>
+        <a href="/blog/experiments-with-uncertainty">Experiments with Uncertainty (Part Two)</a>
       </div>
     </div>
 
@@ -648,7 +677,7 @@
       </div>
       <div class="board-appears">
         <strong>Appears in:</strong>
-        <a href="/blog/experiments-with-uncertainty.html">Experiments with Uncertainty (Part Two)</a>
+        <a href="/blog/experiments-with-uncertainty">Experiments with Uncertainty (Part Two)</a>
       </div>
     </div>
 
@@ -669,7 +698,7 @@
       </div>
       <div class="board-appears">
         <strong>Appears in:</strong>
-        <a href="/blog/experiments-with-uncertainty.html">Experiments with Uncertainty (Part Two)</a>
+        <a href="/blog/experiments-with-uncertainty">Experiments with Uncertainty (Part Two)</a>
       </div>
     </div>
 
@@ -690,7 +719,7 @@
       </div>
       <div class="board-appears">
         <strong>Appears in:</strong>
-        <a href="/blog/experiments-with-uncertainty.html">Experiments with Uncertainty (Part Two)</a>
+        <a href="/blog/experiments-with-uncertainty">Experiments with Uncertainty (Part Two)</a>
       </div>
     </div>
 
@@ -711,7 +740,7 @@
       </div>
       <div class="board-appears">
         <strong>Appears in:</strong>
-        <a href="/blog/experiments-with-uncertainty.html">Experiments with Uncertainty (Part Two)</a>
+        <a href="/blog/experiments-with-uncertainty">Experiments with Uncertainty (Part Two)</a>
       </div>
     </div>
 
@@ -732,7 +761,7 @@
       </div>
       <div class="board-appears">
         <strong>Appears in:</strong>
-        <a href="/blog/experiments-with-uncertainty.html">Experiments with Uncertainty (Part Two)</a>
+        <a href="/blog/experiments-with-uncertainty">Experiments with Uncertainty (Part Two)</a>
       </div>
     </div>
 
@@ -747,25 +776,51 @@
     <p>These ten characters were developed with Claude as part of a working practice in which AI is used not to generate conclusions but to inhabit positions — to speak from inside an archetype with enough consistency and specificity to reveal structural failures that aggregate research cannot. Harold is not a real farmer. But Harold's two-year misdiagnosis is a documented pattern. George is not a real engineer. But George's inability to get an honest answer about prognosis from a system optimised to project confidence is a described and widespread experience.</p>
     <p>The advisory board session was not a real meeting. But the positions its members hold — on evidence standards, actuarial models, informal care networks, and what it actually means to be in a twelve-minute clinic appointment with all four of these patients — are positions that real people in those roles hold. The fiction is in the names. The substance is in the system.</p>
     <p><strong>We use AI-developed personas as analytical instruments, not as substitutes for lived experience.</strong> They sit alongside — and are informed by — the real patient and professional voices in the research literature and in Working Complexity's own engagements. The distinction matters. We state it plainly.</p>
-    <p>Read the full research: <a href="/blog/experiments-with-uncertainty.html">Experiments with Uncertainty</a> · <a href="/blog/the-certainty-complex.html">The Certainty Complex</a> · <a href="/blog/after-the-drift.html">After the Drift: a Wayfinding</a></p>
+    <p>Read the full research: <a href="/blog/experiments-with-uncertainty">Experiments with Uncertainty</a> · <a href="/blog/the-certainty-complex">The Certainty Complex</a> · <a href="/blog/after-the-drift">After the Drift: a Wayfinding</a></p>
   </div>
 </div>
 
 
 <!-- FOOTER -->
+
+<nav class="post-nav" aria-label="More writing">
+    <a class="post-nav-prev" href="/blog/rewild-regenerative-economics">&larr; Do we need to rewild healthcare?</a>
+    <a class="post-nav-all" href="/blog/">All writing</a>
+</nav>
+
 <footer>
   <div class="footer-logo">
     <strong>workingcomplexity</strong>
     <span>— .health</span>
   </div>
   <ul class="footer-links">
-    <li><a href="https://workingcomplexity.health">Home</a></li>
+    <li><a href="/#pillars">Philosophy</a></li>
+    <li><a href="/#approach">Approach</a></li>
+    <li><a href="/#services">Services</a></li>
+    <li><a href="/#about">About</a></li>
     <li><a href="/blog/">Blog</a></li>
-    <li><a href="/blog/experiments-with-uncertainty.html">Uncertainty</a></li>
-    <li><a href="https://workingcomplexity.health/#contact">Contact</a></li>
+    <li><a href="/#contact">Contact</a></li>
   </ul>
   <div class="footer-copy">© 2026 Working Complexity Ltd</div>
 </footer>
 
+
+<script>
+  (function () {
+    var nav = document.querySelector('nav');
+    var btn = document.querySelector('.nav-toggle');
+    if (!nav || !btn) return;
+    btn.addEventListener('click', function () {
+      var open = nav.classList.toggle('nav-open');
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    nav.querySelectorAll('ul a').forEach(function (a) {
+      a.addEventListener('click', function () {
+        nav.classList.remove('nav-open');
+        btn.setAttribute('aria-expanded', 'false');
+      });
+    });
+  })();
+</script>
 </body>
 </html>
