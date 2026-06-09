@@ -761,6 +761,44 @@
     .text-gold { color: var(--gold); }
     .mt-xs { margin-top: 0.5rem; }
 
+    /* ── Human-context feature + blog teaser ────────────── */
+    .hc-feature {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 0;
+      margin-top: 2.25rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      text-decoration: none;
+      color: inherit;
+      transition: border-color 0.25s;
+    }
+    .hc-feature-body { padding: 3.25rem 3.5rem; }
+    .hc-feature-aside {
+      border-left: 1px solid var(--border);
+      padding: 3.25rem 3rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background: rgba(11, 22, 41, 0.55);
+    }
+    .blog-teaser-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+    @media (max-width: 820px) {
+      .hc-feature { grid-template-columns: 1fr; }
+      .hc-feature-body { padding: 2.5rem 1.75rem; }
+      .hc-feature-aside {
+        border-left: none;
+        border-top: 1px solid var(--border);
+        padding: 2.25rem 1.75rem;
+      }
+      .blog-teaser-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    }
+
   </style>
 </head>
 <body>
@@ -1120,10 +1158,9 @@
 <section id="human-context" style="padding: 7rem 0 0;">
   <div class="container">
     <div class="section-label reveal">Human context</div>
-    <a href="/blog/the-pull-of-complexity.html" class="reveal"
-       style="display:grid; grid-template-columns: 1.15fr 0.85fr; gap:0; margin-top:2.25rem; background:var(--bg-card); border:1px solid var(--border); text-decoration:none; color:inherit; transition:border-color 0.25s;"
+    <a href="/blog/the-pull-of-complexity.html" class="reveal hc-feature"
        onmouseover="this.style.borderColor='rgba(74,144,226,0.4)'" onmouseout="this.style.borderColor='var(--border)'">
-      <div style="padding:3.25rem 3.5rem;">
+      <div class="hc-feature-body">
         <span style="font-family:var(--mono); font-size:0.58rem; letter-spacing:0.22em; text-transform:uppercase; color:var(--gold); display:flex; align-items:center; gap:0.6rem; margin-bottom:1.5rem;">
           <span style="display:inline-block; width:22px; height:1px; background:var(--gold); opacity:0.6;"></span>
           Personal essay &nbsp;·&nbsp; Michael Baldwin
@@ -1138,7 +1175,7 @@
         </p>
         <span style="font-family:var(--mono); font-size:0.65rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--text-dim); transition:color 0.2s;">Read the essay →</span>
       </div>
-      <div style="border-left:1px solid var(--border); padding:3.25rem 3rem; display:flex; flex-direction:column; justify-content:center; background:rgba(11,22,41,0.55);">
+      <div class="hc-feature-aside">
         <p style="font-size:clamp(1.3rem,2.4vw,1.7rem); font-weight:300; font-style:italic; line-height:1.35; color:var(--text); letter-spacing:-0.01em;">
           "I lost something.<br><span style="color:var(--gold);">I also gained something.</span>"
         </p>
@@ -1151,7 +1188,7 @@
 <section id="blog" style="padding: 7rem 0; border-top: 1px solid var(--border);">
   <div class="container">
     <div class="section-label reveal">Thinking</div>
-    <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start;">
+    <div class="blog-teaser-grid">
       <div class="reveal">
         <h2 style="font-size: clamp(1.8rem,3.5vw,2.8rem); font-weight:800; line-height:1.1; letter-spacing:-0.03em; color:var(--text); margin-bottom:1.25rem;">
           We write when we have<br/><em style="font-style:normal; font-weight:300; color:var(--gold);">something to say</em>
