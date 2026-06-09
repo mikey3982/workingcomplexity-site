@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The certainty complex — Working Complexity</title>
+<meta name="description" content="Rainer Kattel argues that those who most want power are precisely those least fit to hold it — because they seek it to impose certainty on an uncertain world. Healthcare systems make the same mistake." />
+<link rel="canonical" href="https://workingcomplexity.health/blog/the-certainty-complex.html" />
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='100' height='100' fill='%23060D1B'/%3E%3Cpolygon points='50,2 91.57,26 91.57,74 50,98 8.43,74 8.43,26' stroke='%235B9BD5' stroke-width='0.8' fill='none'/%3E%3Cpolygon points='50,26 70.78,38 70.78,62 50,74 29.22,62 29.22,38' stroke='%23C4A46B' stroke-width='0.8' fill='none'/%3E%3Cpolygon points='50,38 60.39,44 60.39,56 50,62 39.61,56 39.61,44' stroke='%235B9BD5' stroke-width='0.8' fill='none'/%3E%3Ccircle cx='50' cy='50' r='2.5' fill='%23C4A46B'/%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --nearblack:  #060D1B;
+    --offwhite:   #f4f6fa;
+    --paper:      #eaeff7;
+    --gold:       #C4A46B;
+    --gold-dim:   rgba(196,164,107,0.4);
+    --blue:       #5B9BD5;
+    --blue-dim:   rgba(91,155,213,0.14);
+    --border:     rgba(91,155,213,0.18);
+    --muted:      #7A9ABF;
+    --ink:        #0F1E36;
+    --ink-mid:    #3E5870;
+    --ff-display: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --ff-mono:    'Space Mono', 'ui-monospace', 'SFMono-Regular', Menlo, monospace;
+    --max-w: 760px;
+    --gutter: clamp(1.25rem, 5vw, 3rem);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--offwhite);
+    color: var(--ink);
+    font-family: var(--ff-display);
+    font-size: 17px;
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── NAV ──────────────────────────────────────────────── */
+  .wc-nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(6,13,27,0.96);
+    border-bottom: 1px solid rgba(74,144,226,0.18);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.1rem 3rem;
+    backdrop-filter: blur(16px);
+  }
+  .wc-nav-logo {
+    font-family: var(--ff-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    color: #E0E8F4;
+    text-decoration: none;
+    display: flex; flex-direction: column; gap: 2px;
+  }
+  .wc-nav-logo-main { color: #E0E8F4; font-weight: 700; }
+  .wc-nav-logo-sub  { color: var(--gold); font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; }
+  .wc-nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .wc-nav-links a {
+    font-family: var(--ff-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #7A9ABF;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .wc-nav-links a:hover { color: var(--gold); }
+  .wc-nav-cta {
+    font-family: var(--ff-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #060D1B;
+    background: var(--gold);
+    padding: 0.55rem 1.2rem;
+    text-decoration: none;
+    transition: opacity 0.2s;
+  }
+  .wc-nav-cta:hover { opacity: 0.85; }
+  @media (max-width: 720px) {
+    .wc-nav-links, .wc-nav-cta { display: none; }
+    .wc-nav { padding: 1rem 1.25rem; }
+  }
+
+  /* ── ARTICLE COVER ────────────────────────────────────── */
+  .article-cover {
+    padding: clamp(4rem,10vw,7rem) var(--gutter) clamp(2.5rem,5vw,4rem);
+    max-width: calc(var(--max-w) + 2 * var(--gutter));
+    margin: 0 auto;
+  }
+  .doc-code {
+    font-family: var(--ff-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-mid);
+    margin-bottom: 2.2rem;
+    display: block;
+  }
+  .kicker {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    font-family: var(--ff-mono);
+    font-size: 0.72rem;
+    font-weight: 400;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.75rem;
+  }
+  .kicker::before {
+    content: '';
+    display: block; width: 2.5rem; height: 1px;
+    background: var(--gold);
+  }
+  .article-title {
+    font-family: var(--ff-display);
+    font-size: clamp(2.4rem,7vw,4.4rem);
+    font-weight: 800;
+    line-height: 1.05;
+    color: var(--nearblack);
+    letter-spacing: -0.025em;
+    margin-bottom: 0.5rem;
+  }
+  .article-title em {
+    font-style: italic;
+    font-weight: 300;
+    color: var(--gold);
+  }
+  .article-subtitle {
+    font-size: clamp(1rem,2.5vw,1.35rem);
+    font-style: italic;
+    font-weight: 300;
+    color: var(--ink-mid);
+    max-width: 640px;
+    line-height: 1.5;
+    margin-bottom: 2.75rem;
+  }
+  .article-meta {
+    display: flex; align-items: center; gap: 2rem; flex-wrap: wrap;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+  }
+  .meta-item {
+    font-family: var(--ff-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+  }
+  .meta-item strong { color: var(--ink-mid); font-weight: 700; }
+  .meta-ref {
+    font-family: var(--ff-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.06em;
+    color: var(--ink-mid);
+    margin-top: 0.75rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--border);
+    width: 100%;
+  }
+  .meta-ref a { color: var(--blue); text-decoration: none; }
+  .meta-ref a:hover { text-decoration: underline; }
+
+  /* ── ARTICLE BODY ─────────────────────────────────────── */
+  .article {
+    max-width: calc(var(--max-w) + 2 * var(--gutter));
+    margin: 0 auto;
+    padding: 0 var(--gutter) clamp(4rem,8vw,6rem);
+  }
+
+  .opening-pull {
+    margin: 3rem 0 3.5rem;
+    padding: 2rem 2.5rem;
+    background: var(--paper);
+    border-left: 3px solid var(--gold);
+    position: relative;
+  }
+  .opening-pull::before {
+    content: '\201C';
+    font-family: var(--ff-display);
+    font-size: 5rem;
+    color: var(--gold);
+    opacity: 0.22;
+    position: absolute;
+    top: -0.5rem; left: 1rem;
+    line-height: 1;
+  }
+  .opening-pull p {
+    font-family: var(--ff-display);
+    font-size: 1.2rem;
+    font-style: italic;
+    line-height: 1.65;
+    color: var(--ink-mid);
+    position: relative; z-index: 1;
+  }
+  .opening-pull cite {
+    font-family: var(--ff-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: block;
+    margin-top: 0.75rem;
+    font-style: normal;
+    position: relative; z-index: 1;
+  }
+
+  .section-block {
+    margin-top: 4rem;
+    padding-top: 2.5rem;
+    border-top: 1px solid var(--border);
+  }
+  .section-number {
+    font-family: var(--ff-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 0.55rem;
+  }
+  h2.section-title {
+    font-family: var(--ff-display);
+    font-size: clamp(1.5rem,3.5vw,2rem);
+    font-weight: 700;
+    color: var(--nearblack);
+    line-height: 1.18;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.015em;
+  }
+  h2.section-title em {
+    font-style: italic;
+    font-weight: 300;
+    color: var(--gold);
+  }
+  h3.subsection {
+    font-family: var(--ff-mono);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin: 2.5rem 0 0.8rem;
+  }
+
+  .article p {
+    margin-bottom: 1.35rem;
+    color: var(--ink);
+    font-weight: 300;
+  }
+  .article p strong { font-weight: 600; color: var(--nearblack); }
+  .article p em { font-style: italic; }
+  .article ul, .article ol {
+    margin: 0 0 1.5rem 1.5rem;
+    color: var(--ink);
+    font-weight: 300;
+  }
+  .article li { margin-bottom: 0.6rem; line-height: 1.65; }
+
+  /* ── PULL QUOTE ───────────────────────────────────────── */
+  .pull-quote {
+    margin: 2.5rem -0.25rem;
+    padding: 1.6rem 2rem;
+    border-top: 1px solid var(--gold);
+    border-bottom: 1px solid var(--gold);
+  }
+  .pull-quote p {
+    font-size: 1.15rem;
+    font-style: italic;
+    line-height: 1.55;
+    color: var(--nearblack);
+    font-weight: 400;
+    margin: 0;
+  }
+  .pull-quote p em { font-weight: 300; color: var(--gold); font-style: normal; }
+
+  /* ── PARALLEL BOX ─────────────────────────────────────── */
+  .parallel {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin: 2.5rem 0;
+  }
+  @media (max-width: 580px) { .parallel { grid-template-columns: 1fr; } }
+  .parallel-cell {
+    background: var(--paper);
+    padding: 1.5rem 1.75rem;
+  }
+  .parallel-label {
+    font-family: var(--ff-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 0.7rem;
+    padding-bottom: 0.6rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .parallel-cell p {
+    font-size: 0.9rem;
+    color: var(--ink-mid);
+    margin: 0 !important;
+    line-height: 1.65;
+  }
+  .parallel-cell p + p { margin-top: 0.75rem !important; }
+  .parallel-cell p strong { font-weight: 600; color: var(--nearblack); }
+
+  /* ── WC INSIGHT BOX ───────────────────────────────────── */
+  .wc-insight {
+    background: var(--nearblack);
+    color: #E0E8F4;
+    padding: 1.6rem 2rem;
+    margin: 3rem 0;
+    position: relative;
+  }
+  .wc-insight::before {
+    content: 'workingcomplexity — synthesis';
+    font-family: var(--ff-mono);
+    font-size: 0.58rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 0.8rem;
+  }
+  .wc-insight p {
+    color: rgba(224,232,244,0.85);
+    font-size: 0.95rem;
+    margin: 0 !important;
+    line-height: 1.7;
+  }
+  .wc-insight p + p { margin-top: 0.9rem !important; }
+  .wc-insight p strong { color: #E0E8F4; font-weight: 600; }
+
+  /* ── CALLOUT ──────────────────────────────────────────── */
+  .callout {
+    background: var(--paper);
+    border-left: 3px solid var(--blue);
+    padding: 1.2rem 1.75rem;
+    margin: 2rem 0;
+  }
+  .callout-label {
+    font-family: var(--ff-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--blue);
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+  .callout p {
+    font-size: 0.92rem;
+    color: var(--ink-mid);
+    margin: 0 !important;
+    line-height: 1.65;
+  }
+  .callout p + p { margin-top: 0.6rem !important; }
+  .callout p strong { font-weight: 600; color: var(--nearblack); }
+
+  /* ── CLOSING ──────────────────────────────────────────── */
+  .article-close {
+    background: var(--nearblack);
+    padding: clamp(3rem,7vw,5rem) var(--gutter);
+    margin-top: 4rem;
+  }
+  .close-inner {
+    max-width: var(--max-w);
+    margin: 0 auto;
+  }
+  .close-kicker {
+    font-family: var(--ff-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+    display: block;
+  }
+  .close-statement {
+    font-size: clamp(1.4rem,3vw,2rem);
+    font-weight: 700;
+    color: #E0E8F4;
+    line-height: 1.25;
+    margin-bottom: 1.75rem;
+    letter-spacing: -0.015em;
+  }
+  .close-statement em { font-style: italic; font-weight: 300; color: var(--gold); }
+  .close-body {
+    font-size: 1rem;
+    color: rgba(224,232,244,0.75);
+    line-height: 1.75;
+    max-width: 600px;
+    font-weight: 300;
+  }
+  .close-body + .close-body { margin-top: 1rem; }
+  .close-refs {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(74,144,226,0.2);
+    font-family: var(--ff-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.06em;
+    color: #3E5870;
+    line-height: 1.8;
+  }
+  .close-refs a { color: #5B9BD5; text-decoration: none; }
+  .close-refs a:hover { text-decoration: underline; }
+  .close-logo {
+    margin-top: 2.5rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(74,144,226,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .close-logo-wordmark {
+    font-family: var(--ff-mono);
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    color: #E0E8F4;
+    text-decoration: none;
+  }
+  .close-logo-sub {
+    font-family: var(--ff-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-top: 3px;
+  }
+  .close-scale {
+    font-family: var(--ff-mono);
+    font-size: 0.58rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #3E5870;
+  }
+</style>
+</head>
+<body>
+
+<!-- ── NAV ────────────────────────────────────────────────────── -->
+<nav class="wc-nav" aria-label="Site navigation">
+  <a href="https://workingcomplexity.health" class="wc-nav-logo">
+    <span class="wc-nav-logo-main">workingcomplexity</span>
+    <span class="wc-nav-logo-sub">— .health</span>
+  </a>
+  <ul class="wc-nav-links">
+    <li><a href="https://workingcomplexity.health/#services">Services</a></li>
+    <li><a href="https://workingcomplexity.health/#about">About</a></li>
+    <li><a href="/blog/">Writing</a></li>
+    <li><a href="/blog/ai-advisory-board.html">Cast</a></li>
+  </ul>
+  <a href="https://workingcomplexity.health/#contact" class="wc-nav-cta">Get in touch</a>
+</nav>
+
+<!-- ── ARTICLE COVER ─────────────────────────────────────────── -->
+<header class="article-cover">
+  <span class="doc-code">WC-BLOG-005 / THE CERTAINTY COMPLEX / REV.A</span>
+  <span class="kicker">Power, medicine &amp; epistemology</span>
+  <h1 class="article-title">
+    The certainty complex.<br>
+    <em>How politics and medicine make the same mistake.</em>
+  </h1>
+  <p class="article-subtitle">
+    Rainer Kattel argues that those who most desire power are those who seek to impose certainty on an uncertain world. Healthcare systems do the same — and suffer the same consequences. The love of certainty is not a solution. It is the problem.
+  </p>
+  <div class="article-meta">
+    <span class="meta-item"><strong>Michael Baldwin</strong></span>
+    <span class="meta-item">workingcomplexity.health</span>
+    <span class="meta-item">May 2026</span>
+    <div class="meta-ref">
+      In dialogue with: Rainer Kattel, <a href="https://rainerkattel.substack.com/p/the-people-who-want-power" target="_blank" rel="noopener">"The People Who Want Power"</a> (Substack, 2026) — and the WorkingComplexity series <em>Experiments with Uncertainty</em> and <em>The Price of Not Knowing</em>.
+    </div>
+  </div>
+</header>
+
+<!-- ── ARTICLE BODY ───────────────────────────────────────────── -->
+<main class="article">
+
+  <div class="opening-pull">
+    <p>The people who seek power are, by the very fact of seeking it, the worst candidates to hold it. What they are really seeking — though they may not know it — is certainty. And certainty, in a world as genuinely uncertain as ours, is always a performance. Always, in the end, a lie.</p>
+    <cite>— After Rainer Kattel, "The People Who Want Power"</cite>
+  </div>
+
+  <!-- ── SECTION 1 ── -->
+  <div class="section-block">
+    <span class="section-number">§ 01</span>
+    <h2 class="section-title">Two arguments, one <em>diagnosis</em></h2>
+
+    <p>Rainer Kattel's recent essay on Plato's philosopher-king begins with a paradox and ends with a warning. The paradox: those least suited to govern are those most eager to do so, because the eagerness itself reveals what they are actually after. Not the work. Not the problem. Not the people. What they want is the resolution — the satisfaction of a world made legible, predictable, controllable. What they want, in a word, is certainty. And power, as Kattel reads Plato, is the social technology that lets you impose certainty without actually having it.</p>
+
+    <p>Working Complexity has been making a structurally identical argument about healthcare. The parallels are not decorative. They run through the foundations — through the same human discomfort with not-knowing, the same institutional tendency to resolve that discomfort through authority rather than inquiry, the same consequential costs borne by those the system is meant to serve.</p>
+
+    <p>Two domains, one diagnosis: <strong>the love of certainty corrupts</strong>. It corrupts governance. It corrupts care. And it corrupts precisely because it presents itself as a virtue — as competence, as confidence, as the responsible exercise of authority — when it is, in both contexts, primarily a flight from the difficulty of genuine knowledge.</p>
+
+  </div>
+
+  <!-- ── SECTION 2 ── -->
+  <div class="section-block">
+    <span class="section-number">§ 02</span>
+    <h2 class="section-title">The false resolution. Power and diagnosis as authority over <em>uncertainty</em></h2>
+
+    <p>Kattel's core move is to locate the appeal of power not in greed or ambition but in something more epistemically interesting: the desire to resolve what cannot be resolved. Governing, he argues, involves a fundamental tension — between the imperfection of human beings and the incompleteness of expertise, on one side, and the irreducible need to decide and act, on the other. This tension cannot be dissolved. It can only be lived with, navigated, held.</p>
+
+    <p>Power offers a false escape. Authority short-circuits the tension. If you are sufficiently powerful, you do not need to hold the uncertainty — you can simply declare it resolved. The diagnosis is pronounced. The policy is announced. The uncertainty, which was always there and remains there, is simply no longer permitted to speak.</p>
+
+    <p>Healthcare does this with extraordinary sophistication. The diagnostic system — the MDT, the ICD code, the clinical guideline — is, among other things, a social technology for managing the discomfort of not-knowing. Harold, the farmer in our <em>Living with Not Knowing</em> analysis, arrives at his GP with breathlessness and cough that have been troubling him for months. He leaves with a COPD diagnosis and an inhaler prescription. The appointment has discharged its institutional function: a problem was presented; authority was exercised; a resolution was produced. The uncertainty — which is real, biological, and in this case ultimately attributable to idiopathic pulmonary fibrosis — is now officially not there.</p>
+
+    <p>The GP who gave Harold that diagnosis was not being dishonest in any simple sense. They were operating within a system calibrated to produce resolutions. The appointment structure, the time allocation, the pattern-matching logic of clinical reasoning, the institutional expectation that the patient leaves with a plan — all of these are incentives toward a confident answer. The uncertain answer, the "I'm not sure and here is what I'm not sure about," has no designated place in the encounter. It is not what the system was designed to produce.</p>
+
+    <div class="parallel">
+      <div class="parallel-cell">
+        <span class="parallel-label">In politics — Kattel</span>
+        <p>The leader who cannot tolerate uncertainty imposes certainty through authority. The policy is announced; the debate is closed; the question is declared settled by the weight of power rather than the weight of evidence. The uncertainty that was real continues to operate — but now it does so without acknowledgement, beyond the reach of collective inquiry.</p>
+        <p><strong>The cost falls on those the decision affects.</strong></p>
+      </div>
+      <div class="parallel-cell">
+        <span class="parallel-label">In medicine — WorkingComplexity</span>
+        <p>The clinician who cannot tolerate uncertainty imposes certainty through diagnosis. The label is assigned; the pathway opens; the complexity is officially resolved into a category. The uncertainty that was real continues to operate in the patient's body — but now it does so without acknowledgement, beyond the reach of the care system that has moved on to the next appointment.</p>
+        <p><strong>The cost falls on the patient.</strong></p>
+      </div>
+    </div>
+
+    <p>In both cases, the false resolution is not a deliberate deception. It is a structural feature of systems designed around the expectation of certainty. The political system expects decisive leadership. The healthcare system expects diagnostic clarity. Both systems punish the honest acknowledgement of uncertainty — the politician who says "I don't know" is weak; the clinician who says "I'm not sure" is inadequate. The incentive is always toward the performed confidence that neither domain can actually deliver.</p>
+
+  </div>
+
+  <!-- ── SECTION 3 ── -->
+  <div class="section-block">
+    <span class="section-number">§ 03</span>
+    <h2 class="section-title">The insatiable desire. Why certainty-seeking is a <em>structural</em> pathology</h2>
+
+    <p>Kattel's most precise formulation is that the desire for perfect knowledge is "insatiable." This is not primarily a critique of individual character. It is a structural observation: the desire cannot be satisfied because the world does not contain what the certainty-seeker is looking for. Uncertainty is not a temporary gap between the current state of knowledge and some future state of complete knowledge. In complex systems — human, biological, political — it is constitutive. It is what the system is.</p>
+
+    <p>This is what complexity science means when it describes biological and social systems as complex adaptive systems: systems whose behaviour is emergent, non-linear, path-dependent, and in principle irreducible to any model simple enough to generate confident predictions. Harold's IPF is not a disease whose uncertain prognosis will eventually yield to better research. The genuine stochasticity of biological fibrosis — why it progresses rapidly in one patient and slowly in another with an identical phenotypic presentation — is not epistemically uncertain in the standard sense. It is aleatorically uncertain: the randomness is in the system, not in our incomplete knowledge of the system.</p>
+
+    <p>The same is true of governance. Why does this policy produce that outcome in this city and a different outcome in that one? Not primarily because we lack data. Because the social and institutional systems being governed are complex adaptive systems whose emergent properties cannot be predicted from their components. The certainty-seeker in government, like the certainty-seeker in medicine, is pursuing a form of knowledge that the structure of the domain does not permit.</p>
+
+    <div class="pull-quote">
+      <p>The love of certainty is insatiable because <em>certainty is not available</em>. The desire cannot be satisfied — only performed. And in performing it, both politics and medicine do their greatest damage.</p>
+    </div>
+
+    <p>What does "greatest damage" mean in practice? In Kattel's framing, it means governance that concentrates power rather than distributing it, suppresses experimentation rather than enabling it, and mistakes the performance of decisiveness for the substance of wisdom. The strongman — his contemporary example of the certainty complex at its most destructive — is not a leader who knows more than others. He is a leader who has resolved to pretend certainty he does not have, and who must therefore suppress the feedback that would expose the pretence: dissent, complexity, evidence of being wrong.</p>
+
+    <p>In healthcare, the equivalent damage appears at every scale. At the clinical level: the misdiagnosis that is never corrected because the system has no feedback loop for its own confident errors — Harold's two-year delay with the wrong inhaler. At the institutional level: research funding systems, like standard EVPI analysis, that can only price epistemic uncertainty and are therefore systematically blind to the irreducible, the ontological, and the existential — the uncertainties that matter most to the patient who is living with them. At the system level: AI tools trained to project confidence, deployed in a system that rewards confidence, amplifying the certainty-seeking properties of an already certainty-seeking system.</p>
+
+  </div>
+
+  <!-- ── SECTION 4 ── -->
+  <div class="section-block">
+    <span class="section-number">§ 04</span>
+    <h2 class="section-title">The distributed alternative. Follett's relational leadership and the care <em>network</em></h2>
+
+    <p>Kattel's positive case draws on Mary Parker Follett — the early twentieth-century management theorist who argued that leadership is not a property of individuals but an emergent property of relationships and institutional structures. The effective leader, in Follett's framework, does not resolve uncertainty by authority. She creates the conditions in which uncertainty can be worked through collectively — distributed across the people who have the most direct knowledge of the situation, organised to share it, empowered to act on it.</p>
+
+    <p>This is precisely what Working Complexity means by distributed sensing. The MDT is already a form of distributed intelligence — multiple specialists, each calibrated to detect different signals from the same patient presentation. But the MDT, as currently constituted, is still a relatively narrow sensing apparatus. It receives clinical data. It does not receive Harold's wife's continuous observation of his respiratory effort on the farm. It does not receive George's meticulous functional notebook. It does not receive Francis's monthly call with his specialist nurse — the relationship that is, in practice, the most information-rich interaction in Francis's entire care pathway, and is nowhere systematically captured in his clinical record.</p>
+
+    <p>The Follett principle applied to care would design explicitly for this. Not as a welfare measure. As an epistemic one. The carer's knowledge, the patient's longitudinal self-observation, the voluntary sector advocate's understanding of what the system looks like from the patient's side of it — these are distributed sensing nodes in a complex information network. The system that centralises sensing — in the clinic, in the algorithm, in the specialist's confident diagnosis — is not gathering more information. It is gathering less, from fewer places, with greater apparent authority.</p>
+
+    <div class="wc-insight">
+      <p>Follett's insight was that good governance emerges from relationships, not from positions. The analogous insight in care is that good diagnosis — and good management of uncertainty — emerges from networks, not from consultants. The MDT that excludes the patient and the carer is not a more objective sensing apparatus than one that includes them. It is a narrower one that is confident about the narrowness.</p>
+      <p>The certainty-seeker centralises information because distributed information is ambiguous and difficult to manage. The complexity-navigator distributes sensing precisely because the ambiguity is the information. A system that is designed to hear only the signals it can confidently process is a system that is systematically filtering out the signals that matter most in complex disease.</p>
+    </div>
+
+    <p>Kattel's admirable leaders are "coalition builders, connectors, negotiators" whose hunger is "for the problem, for the craft, for the people they work with" — not for the position. The analogue in care is the clinician who says "I don't know what this is yet — let's look together" rather than the one who resolves the uncertainty of the appointment with a confident label. The specialist nurse who calls Francis every month, who has built a relationship of sufficient trust that Francis will report symptoms he would not mention in a clinic appointment, is doing something that the certainty-seeking system cannot do and does not reward. She is creating the conditions in which uncertainty can surface — which is the necessary precondition for it to be navigated.</p>
+
+  </div>
+
+  <!-- ── SECTION 5 ── -->
+  <div class="section-block">
+    <span class="section-number">§ 05</span>
+    <h2 class="section-title">The craft of not knowing. What good leadership and <em>good care</em> share</h2>
+
+    <p>There is a specific quality Kattel identifies in effective leaders: they are motivated by the problem itself, by the craft of working with complexity. This is worth sitting with. The craft of governance — of actually understanding why a policy is or isn't working, of building the coalitions and relationships through which collective action becomes possible — is fundamentally incompatible with the certainty-seeker's disposition. The craft requires being wrong, being surprised, revising, learning from feedback that contradicts the initial hypothesis. It requires, as Kattel puts it, experimentation and collective thinking. These are not comfortable activities for people who have resolved to project certainty.</p>
+
+    <p>Medicine has an analogous craft tradition, often in tension with its own institutional structures. The clinician who is genuinely curious about why this patient's presentation doesn't fit the expected pattern — who treats the anomaly as signal rather than noise — is practising a form of diagnostic craft that the certainty-seeking system does not reward and sometimes actively penalises. The MDT discussion that goes on longer than scheduled because the diagnosis is genuinely unclear is, from an efficiency standpoint, a failure. From a craft standpoint, it is the system working correctly — registering, honestly, the difficulty of the problem.</p>
+
+    <p>George, the engineer in our uncertainty framework, would recognise this immediately. His professional life was built on the principle that problems have solutions and that diligent systematic attention will find them. What the disease has given him is the experience of a problem that is not of this kind — a problem whose uncertainty is irreducible, where more data does not yield the answer he is looking for. What he needs from his care team is not a clinician who pretends to have resolved this but one who can model a different relationship with uncertainty — who can show, by their own practice, that it is possible to act well in the presence of irreducible not-knowing. That is the craft he now needs to learn, and it is the one his care system is least equipped to teach.</p>
+
+    <div class="callout">
+      <span class="callout-label">Victor — the entrepreneur</span>
+      <p>Victor's rejection of the prognostic estimate — "that's for other people," he says, at a dinner where he is carefully not discussing his oxygen saturation — is frequently read, by the certainty-seeking clinical system, as denial. It is not denial. It is a sophisticated epistemic strategy for living with irreducible aleatory uncertainty. He has made a deliberate choice about what information to hold and what to set aside, calibrated to his own adaptive capacity and values.</p>
+      <p>The clinician who respects this — who understands that Victor's relationship with his own uncertainty is his to own — is the clinician Kattel would recognise as practising the craft well. The clinician who insists on delivering the full prognostic estimate regardless, because the system demands it and because it is "what the evidence shows," is practising the certainty-seeking reflex in the name of clinical rigour.</p>
+    </div>
+
+  </div>
+
+  <!-- ── SECTION 6 ── -->
+  <div class="section-block">
+    <span class="section-number">§ 06</span>
+    <h2 class="section-title">The amplification risk. Strongmen, algorithms, and the <em>concentration</em> of certainty</h2>
+
+    <p>Kattel's contemporary concern is the strongman: the political leader who resolves the discomfort of uncertainty by concentrating authority, suppressing feedback, and projecting confident decisiveness as a substitute for competent governance. The strongman is not a more capable version of the Follett-style relational leader. He is a fundamentally different kind of actor, optimised for a different goal: not for working with the problem but for making the problem — and especially the uncertainty about the problem — invisible.</p>
+
+    <p>Working Complexity has articulated an analogous risk in the context of AI in healthcare. AI, as we have argued, amplifies the properties of the system it is deployed within. A healthcare system that is designed to project certainty will produce AI tools that project certainty — with greater sophistication, greater apparent authority, and greater insulation from the feedback loops that would expose its errors. The diagnostic AI that reads the CT scan with 94% sensitivity and specificity is not humble about the 6%. It does not say "here is what I can see, here is what I cannot, and here is the population this model was trained on and how different this patient is from that population." It produces an output. The output carries authority. The authority suppresses the clinical uncertainty that was legitimate and informative.</p>
+
+    <p>The structural parallel is precise. Kattel's strongman is a political AI of sorts — an authority-generating machine that concentrates certainty in one place, suppresses the distributed sensing that would challenge it, and mistakes the performance of confidence for its substance. The healthcare AI, deployed in a system that rewards certainty and punishes acknowledged uncertainty, does the same thing in the diagnostic register.</p>
+
+    <div class="parallel">
+      <div class="parallel-cell">
+        <span class="parallel-label">The strongman — Kattel</span>
+        <p>Concentrates authority. Suppresses experimentation and dissent. Treats complexity as a problem to be resolved by power rather than navigated through collective intelligence. Mistakes the performance of decisiveness for the substance of governance.</p>
+        <p>The systems that sustain him — political, media, institutional — are calibrated to reward his certainty-projection and punish the complexity-tolerance of his opponents.</p>
+      </div>
+      <div class="parallel-cell">
+        <span class="parallel-label">The certainty-seeking AI — WorkingComplexity</span>
+        <p>Concentrates diagnostic authority. Suppresses the distributed sensing — carer observations, longitudinal patient data, clinical instinct — that would challenge its outputs. Treats uncertainty as a confidence interval to be minimised rather than a signal to be held.</p>
+        <p>The systems that deploy it — clinical governance, reimbursement structures, EVPI-based research priorities — reward its certainty-projection and punish the complexity-tolerance of the clinician who disagrees.</p>
+      </div>
+    </div>
+
+    <p>Kattel's warning is that the institutional structures that enable strongman politics are themselves a form of accumulated certainty-worship — systems that have been gradually optimised to reward the performance of decisive authority and penalise the expression of genuine uncertainty. The same structural critique applies in healthcare. The problem is not the individual clinician who gives Harold a wrong diagnosis, or the individual algorithm that classifies his CT incorrectly. The problem is the system that has been designed to produce diagnoses — confident, actionable, pathway-opening diagnoses — whether or not the underlying complexity warrants the confidence. The diagnostic event is a system requirement, not an epistemic achievement.</p>
+
+  </div>
+
+  <!-- ── SECTION 7 ── -->
+  <div class="section-block">
+    <span class="section-number">§ 07</span>
+    <h2 class="section-title">Productive uncertainty as governance. What <em>both</em> domains need</h2>
+
+    <p>What does it look like to govern well in a complex world? Kattel's answer, rooted in Follett and the complexity tradition he is drawing on, involves three things: a leader motivated by the problem rather than by the position; institutional structures that distribute authority rather than concentrate it; and a culture of experimentation — of acting, observing, revising — rather than a culture of pronouncement.</p>
+
+    <p>The WorkingComplexity answer to the equivalent question in care is structurally identical. The clinician motivated by the craft of diagnosis and care rather than by the institutional requirement to produce a confident output. The care system designed to distribute sensing — across the patient, the carer, the network, and the institution — rather than concentrate it in the specialist's confident assessment. The evidence standard calibrated to the actual complexity of the disease — adaptive trial designs, longitudinal dynamical data, patient-generated evidence — rather than the cross-sectional RCT that produces confident population-average results that may apply to none of the four individuals sitting in the waiting room.</p>
+
+    <p>And, in both domains, the rehabilitation of honest not-knowing as a legitimate, informative, even valuable state. Kattel's philosopher-king is not the person who knows most. She is the person who is most comfortable with not-knowing — who has the intellectual security to hold complexity without resolving it prematurely, and the relational capacity to think collectively through what cannot be thought individually. The equivalent in care is not the consultant with the most confident diagnostic record. It is the clinician who can say "this is genuinely difficult to classify, and here is what we know, and here is what we cannot know, and here is how we navigate together" — and who has built the institutional and relational infrastructure to make that navigation real.</p>
+
+    <p>This is not a concession. It is not a counsel of inadequacy. In both governance and healthcare, the honest acknowledgement of uncertainty is the beginning of better practice — not because it is virtuous to acknowledge limits, but because a system that cannot hear its own uncertainty cannot learn. The feedback loops that drive improvement in any complex adaptive system — political or biological — require the system to register that things are not as expected, that the model was wrong, that revision is necessary. The certainty-seeking system, political or medical, systematically blocks these feedback loops in the name of authoritative decisiveness. It optimises for the appearance of knowledge and pays for it with the reality of ignorance.</p>
+
+  </div>
+
+</main>
+
+<!-- ── CLOSING ─────────────────────────────────────────────────── -->
+<footer class="article-close">
+  <div class="close-inner">
+    <span class="close-kicker">WorkingComplexity — Conclusion</span>
+    <p class="close-statement">
+      Certainty is not a virtue.<br>
+      <em>It is the refuge of those who cannot tolerate the work.</em>
+    </p>
+    <p class="close-body">Harold is still in the car. George is still reading the trial data, looking for the number that will resolve what no number can resolve. Francis is still preparing his list of questions for the next appointment, trusting a system that has not always deserved it. Victor is still at dinner.</p>
+    <p class="close-body">Kattel's philosopher-king is, in the end, not a philosopher at all. She is simply a person who has learned to live honestly with the complexity of the world she governs — who has given up the false comfort of certainty for the harder, more genuine practice of inquiry. The people who want power are the ones who cannot do this. The people who should have it are those who have stopped wanting it in the sense Kattel means — who are no longer trying to escape the uncertainty, but have learned to work within it.</p>
+    <p class="close-body">The healthcare system we need — the one that Harold and George and Francis and Victor deserve — is one that has made the same shift. Not a system that promises certainty it cannot deliver. A system that has learned the harder craft: to hold what is not known, to say so honestly, and to navigate together the terrain that will not, in the end, yield to any amount of authority.</p>
+    <div class="close-refs">
+      <strong>In dialogue with:</strong><br>
+      Rainer Kattel, "The People Who Want Power," Substack 2026 — <a href="https://rainerkattel.substack.com/p/the-people-who-want-power" target="_blank" rel="noopener">rainerkattel.substack.com</a><br>
+      WorkingComplexity, "Living with Not Knowing: Uncertainty in Healthcare Through a Complexity Lens," May 2026<br>
+      WorkingComplexity, "The Price of Not Knowing: Value of Perfect Information in a System That Cannot Deliver It," May 2026 — <a href="/blog/value-of-perfect-information.html">workingcomplexity.health/blog</a><br>
+      Mary Parker Follett, <em>Creative Experience</em> (1924); Plato, <em>The Republic</em>
+    </div>
+    <div class="close-logo">
+      <div>
+        <a href="https://workingcomplexity.health" class="close-logo-wordmark">workingcomplexity</a>
+        <div class="close-logo-sub">— .health</div>
+      </div>
+      <span class="close-scale">WC-BLOG-005 / REV.A · SCALE 1:1 · ALL DIMENSIONS IN EXPERIENCE</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

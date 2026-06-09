@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Three arguments, one problem — Working Complexity</title>
+<meta name="description" content="Hard transitions, clinical uncertainty, and the value of information are not three separate ideas. They are the same structural failure, seen from different angles. This essay is about what it demands in practice." />
+<link rel="canonical" href="https://workingcomplexity.health/blog/three-arguments-one-problem.html" />
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='100' height='100' fill='%23060D1B'/%3E%3Cpolygon points='50,2 91.57,26 91.57,74 50,98 8.43,74 8.43,26' stroke='%235B9BD5' stroke-width='0.8' fill='none'/%3E%3Cpolygon points='50,26 70.78,38 70.78,62 50,74 29.22,62 29.22,38' stroke='%23C4A46B' stroke-width='0.8' fill='none'/%3E%3Cpolygon points='50,38 60.39,44 60.39,56 50,62 39.61,56 39.61,44' stroke='%235B9BD5' stroke-width='0.8' fill='none'/%3E%3Ccircle cx='50' cy='50' r='2.5' fill='%23C4A46B'/%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --nearblack:  #060D1B;
+    --offwhite:   #f4f6fa;
+    --paper:      #eaeff7;
+    --gold:       #C4A46B;
+    --gold-dim:   rgba(196,164,107,0.4);
+    --blue:       #5B9BD5;
+    --blue-dim:   rgba(91,155,213,0.14);
+    --border:     rgba(91,155,213,0.18);
+    --muted:      #7A9ABF;
+    --ink:        #0F1E36;
+    --ink-mid:    #3E5870;
+    --ff-display: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --ff-mono:    'Space Mono', 'ui-monospace', 'SFMono-Regular', Menlo, monospace;
+    --max-w: 760px;
+    --gutter: clamp(1.25rem, 5vw, 3rem);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--offwhite);
+    color: var(--ink);
+    font-family: var(--ff-display);
+    font-size: 17px;
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── NAV ──────────────────────────────────────────────── */
+  .wc-nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(6,13,27,0.96);
+    border-bottom: 1px solid rgba(74,144,226,0.18);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.1rem 3rem;
+    backdrop-filter: blur(16px);
+  }
+  .wc-nav-logo {
+    font-family: var(--ff-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    color: #E0E8F4;
+    text-decoration: none;
+    display: flex; flex-direction: column; gap: 2px;
+  }
+  .wc-nav-logo-main { color: #E0E8F4; font-weight: 700; }
+  .wc-nav-logo-sub  { color: var(--gold); font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; }
+  .wc-nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .wc-nav-links a {
+    font-family: var(--ff-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #7A9ABF;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .wc-nav-links a:hover { color: var(--gold); }
+  .wc-nav-cta {
+    font-family: var(--ff-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #060D1B;
+    background: var(--gold);
+    padding: 0.55rem 1.2rem;
+    text-decoration: none;
+    transition: opacity 0.2s;
+  }
+  .wc-nav-cta:hover { opacity: 0.85; }
+  @media (max-width: 720px) {
+    .wc-nav-links, .wc-nav-cta { display: none; }
+    .wc-nav { padding: 1rem 1.25rem; }
+  }
+
+  /* ── ARTICLE COVER ────────────────────────────────────── */
+  .article-cover {
+    padding: clamp(4rem,10vw,7rem) var(--gutter) clamp(2.5rem,5vw,4rem);
+    max-width: calc(var(--max-w) + 2 * var(--gutter));
+    margin: 0 auto;
+  }
+  .doc-code {
+    font-family: var(--ff-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-mid);
+    margin-bottom: 2.2rem;
+    display: block;
+  }
+  .kicker {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    font-family: var(--ff-mono);
+    font-size: 0.72rem;
+    font-weight: 400;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.75rem;
+  }
+  .kicker::before {
+    content: '';
+    display: block; width: 2.5rem; height: 1px;
+    background: var(--gold);
+  }
+  .article-title {
+    font-family: var(--ff-display);
+    font-size: clamp(2.4rem,7vw,4.4rem);
+    font-weight: 800;
+    line-height: 1.05;
+    color: var(--nearblack);
+    letter-spacing: -0.025em;
+    margin-bottom: 0.5rem;
+  }
+  .article-title em {
+    font-style: italic;
+    font-weight: 300;
+    color: var(--gold);
+  }
+  .article-subtitle {
+    font-size: clamp(1rem,2.5vw,1.35rem);
+    font-style: italic;
+    font-weight: 300;
+    color: var(--ink-mid);
+    max-width: 640px;
+    line-height: 1.5;
+    margin-bottom: 2.75rem;
+  }
+  .article-meta {
+    display: flex; align-items: center; gap: 2rem; flex-wrap: wrap;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+  }
+  .meta-item {
+    font-family: var(--ff-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+  }
+  .meta-item strong { color: var(--ink-mid); font-weight: 700; }
+
+  /* ── RELATES-TO STRIP ─────────────────────────────────── */
+  .relates-strip {
+    max-width: calc(var(--max-w) + 2 * var(--gutter));
+    margin: 0 auto;
+    padding: 0 var(--gutter) 0;
+  }
+  .relates-inner {
+    background: var(--paper);
+    border: 1px solid var(--border);
+    padding: 1.1rem 1.5rem;
+    display: flex; gap: 1rem; flex-wrap: wrap; align-items: flex-start;
+  }
+  .relates-label {
+    font-family: var(--ff-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    padding-top: 0.1rem;
+    white-space: nowrap;
+  }
+  .relates-links { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; }
+  .relates-links a {
+    font-size: 0.88rem;
+    color: var(--blue);
+    text-decoration: none;
+    font-style: italic;
+  }
+  .relates-links a:hover { text-decoration: underline; }
+
+  /* ── ARTICLE BODY ─────────────────────────────────────── */
+  .article {
+    max-width: calc(var(--max-w) + 2 * var(--gutter));
+    margin: 0 auto;
+    padding: 0 var(--gutter) clamp(4rem,8vw,6rem);
+  }
+
+  .opening-pull {
+    margin: 3rem 0 3.5rem;
+    padding: 2rem 2.5rem;
+    background: var(--paper);
+    border-left: 3px solid var(--gold);
+    position: relative;
+  }
+  .opening-pull::before {
+    content: '\201C';
+    font-family: var(--ff-display);
+    font-size: 5rem;
+    color: var(--gold);
+    opacity: 0.22;
+    position: absolute;
+    top: -0.5rem; left: 1rem;
+    line-height: 1;
+  }
+  .opening-pull p {
+    font-family: var(--ff-display);
+    font-size: 1.2rem;
+    font-style: italic;
+    line-height: 1.65;
+    color: var(--ink-mid);
+    position: relative; z-index: 1;
+  }
+
+  .section-block {
+    margin-top: 4rem;
+    padding-top: 2.5rem;
+    border-top: 1px solid var(--border);
+  }
+  .section-number {
+    font-family: var(--ff-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 0.55rem;
+  }
+  h2.section-title {
+    font-family: var(--ff-display);
+    font-size: clamp(1.5rem,3.5vw,2rem);
+    font-weight: 700;
+    color: var(--nearblack);
+    line-height: 1.18;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.015em;
+  }
+  h2.section-title em {
+    font-style: italic;
+    font-weight: 300;
+    color: var(--gold);
+  }
+  h3.subsection {
+    font-family: var(--ff-mono);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin: 2.5rem 0 0.8rem;
+  }
+
+  .article p {
+    margin-bottom: 1.35rem;
+    color: var(--ink);
+    font-weight: 300;
+  }
+  .article p strong { font-weight: 600; color: var(--nearblack); }
+  .article p em { font-style: italic; }
+
+  /* ── PULL QUOTE ───────────────────────────────────────── */
+  .pull-quote {
+    margin: 2.5rem -0.25rem;
+    padding: 1.6rem 2rem;
+    border-top: 1px solid var(--gold);
+    border-bottom: 1px solid var(--gold);
+  }
+  .pull-quote p {
+    font-size: 1.15rem;
+    font-style: italic;
+    line-height: 1.55;
+    color: var(--nearblack);
+    font-weight: 400;
+    margin: 0;
+  }
+  .pull-quote p em { font-weight: 300; color: var(--gold); font-style: normal; }
+
+  /* ── MAPPING TABLE ────────────────────────────────────── */
+  .map-table {
+    margin: 2.5rem 0;
+    border: 1px solid var(--border);
+    overflow-x: auto;
+  }
+  .map-table-header {
+    display: grid;
+    grid-template-columns: 1.8fr 1fr 1fr 1.3fr;
+    background: var(--nearblack);
+    padding: 0.75rem 0;
+  }
+  .map-table-header span {
+    font-family: var(--ff-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    padding: 0 1.2rem;
+  }
+  .map-row {
+    display: grid;
+    grid-template-columns: 1.8fr 1fr 1fr 1.3fr;
+    border-top: 1px solid var(--border);
+    background: var(--paper);
+  }
+  .map-row:nth-child(even) { background: var(--offwhite); }
+  .map-cell {
+    padding: 0.9rem 1.2rem;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: var(--ink-mid);
+    border-right: 1px solid var(--border);
+  }
+  .map-cell:last-child { border-right: none; }
+  .map-cell strong { font-weight: 600; color: var(--nearblack); display: block; margin-bottom: 0.1rem; }
+  .tag {
+    font-family: var(--ff-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.15rem 0.5rem;
+    display: inline-block;
+    margin-top: 0.3rem;
+  }
+  .tag-works   { background: rgba(91,155,213,0.15); color: #5B9BD5; }
+  .tag-partial { background: rgba(196,164,107,0.15); color: #C4A46B; }
+  .tag-breaks  { background: rgba(196,107,107,0.12); color: #C47A6B; }
+  @media (max-width: 640px) {
+    .map-table-header, .map-row { grid-template-columns: 1fr; }
+    .map-table-header span:not(:first-child) { display: none; }
+    .map-cell { border-right: none; border-top: 1px solid var(--border); }
+  }
+
+  /* ── MOVE CARDS ───────────────────────────────────────── */
+  .moves-stack { margin: 2.5rem 0; display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); }
+  .move-card { background: var(--paper); padding: 1.6rem 2rem; }
+  .move-card:nth-child(even) { background: var(--offwhite); }
+  .move-number {
+    font-family: var(--ff-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 0.4rem;
+  }
+  .move-title {
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: var(--nearblack);
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.01em;
+  }
+  .move-card p {
+    font-size: 0.93rem;
+    color: var(--ink-mid);
+    line-height: 1.65;
+    margin-bottom: 0 !important;
+    font-weight: 300;
+  }
+  .move-card p + p { margin-top: 0.75rem !important; }
+
+  /* ── ATTRACTOR DIAGRAM ────────────────────────────────── */
+  .attractor-diagram {
+    margin: 2.5rem 0;
+    background: var(--nearblack);
+    padding: 2rem 2.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .attractor-diagram::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 220px; height: 220px;
+    border: 1px solid rgba(91,155,213,0.12);
+    border-radius: 50%;
+  }
+  .attractor-diagram::after {
+    content: '';
+    position: absolute;
+    top: -20px; right: -20px;
+    width: 140px; height: 140px;
+    border: 1px solid rgba(196,164,107,0.1);
+    border-radius: 50%;
+  }
+  .attractor-label {
+    font-family: var(--ff-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.2rem;
+    display: block;
+  }
+  .attractor-chain {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    position: relative; z-index: 1;
+  }
+  .attractor-node {
+    background: rgba(91,155,213,0.12);
+    border: 1px solid rgba(91,155,213,0.3);
+    padding: 0.55rem 1rem;
+    font-size: 0.82rem;
+    color: #C8D8EE;
+    font-family: var(--ff-display);
+    font-weight: 400;
+  }
+  .attractor-arrow {
+    color: var(--gold);
+    font-size: 0.9rem;
+    font-family: var(--ff-mono);
+  }
+  .attractor-note {
+    margin-top: 1.2rem;
+    font-size: 0.85rem;
+    color: rgba(200,216,238,0.55);
+    font-style: italic;
+    font-weight: 300;
+    position: relative; z-index: 1;
+  }
+
+  /* ── FOOTER ───────────────────────────────────────────── */
+  .wc-footer {
+    background: var(--nearblack);
+    border-top: 1px solid rgba(91,155,213,0.15);
+    padding: 3.5rem var(--gutter);
+    text-align: center;
+  }
+  .footer-logo {
+    font-family: var(--ff-mono);
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: 0.08em;
+    color: #E0E8F4;
+    display: block;
+    margin-bottom: 0.4rem;
+  }
+  .footer-sub {
+    font-family: var(--ff-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 2rem;
+  }
+  .footer-nav {
+    display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap;
+    list-style: none; margin-bottom: 2.5rem;
+  }
+  .footer-nav a {
+    font-family: var(--ff-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+  }
+  .footer-nav a:hover { color: var(--gold); }
+  .footer-copy {
+    font-size: 0.8rem;
+    color: rgba(122,154,191,0.5);
+    font-weight: 300;
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="wc-nav">
+  <a href="../index.html" class="wc-nav-logo">
+    <span class="wc-nav-logo-main">workingcomplexity</span>
+    <span class="wc-nav-logo-sub">— .health</span>
+  </a>
+  <ul class="wc-nav-links">
+    <li><a href="../index.html">Home</a></li>
+    <li><a href="index.html">Blog</a></li>
+    <li><a href="/blog/ai-advisory-board.html">Cast</a></li>
+    <li><a href="../index.html#work">Work</a></li>
+    <li><a href="../index.html#contact">Contact</a></li>
+  </ul>
+  <a href="../index.html#contact" class="wc-nav-cta">Work with us</a>
+</nav>
+
+<!-- COVER -->
+<header class="article-cover">
+  <span class="doc-code">WC-BLOG-005 / Synthesis / REV.A</span>
+  <span class="kicker">Healthcare Systems · Synthesis</span>
+  <h1 class="article-title">Three arguments,<br><em>one problem.</em></h1>
+  <p class="article-subtitle">Hard transitions, clinical uncertainty, and the value of information are not three separate ideas. They are the same structural failure, seen from different angles — and they demand the same practical response.</p>
+  <div class="article-meta">
+    <div class="meta-item"><strong>Michael Baldwin</strong> — workingcomplexity.health</div>
+    <div class="meta-item"><strong>May 2026</strong></div>
+    <div class="meta-item">Reading time <strong>18 min</strong></div>
+    <div class="meta-item">Topics <strong>Synthesis · Systems · Practice</strong></div>
+  </div>
+</header>
+
+<!-- RELATES-TO -->
+<div class="relates-strip">
+  <div class="relates-inner">
+    <span class="relates-label">Draws on</span>
+    <div class="relates-links">
+      <a href="soft-drift-series.html">Managing the Soft Drift — Series, 2025–2026</a>
+      <a href="experiments-with-uncertainty.html">Living with Not Knowing — Scholarly Paper, May 2026</a>
+      <a href="value-of-perfect-information.html">The price of not knowing — Essay, May 2026</a>
+    </div>
+  </div>
+</div>
+
+<!-- BODY -->
+<article class="article">
+
+  <div class="opening-pull">
+    <p>A commissioner sits in a board meeting. The dashboard shows 30-day readmissions, A&amp;E attendances, elective waiting times. None of the figures tell her how many patients quietly recalibrated their lives around their breathlessness last month. None of them tell her what it cost Harold to carry a COPD diagnosis that was wrong for two years. None of them capture the specialist nurse who noticed something in a phone call that no algorithm had flagged and no code would ever record. The dashboard is not wrong. It is measuring exactly what it was built to measure. The problem is that what it was built to measure is not the same as what matters.</p>
+  </div>
+
+  <!-- §01 -->
+  <div class="section-block">
+    <span class="section-number">§ 01</span>
+    <h2 class="section-title">The same argument, three times</h2>
+
+    <p>Three bodies of work have now argued the same case from different angles. The Soft Drift series argued that healthcare systems organised around hard transitions are structurally blind to the slow deterioration that precedes them — and that this blindness is not accidental but is enforced by payment, coding, and measurement architecture. The uncertainty work argued that clinical uncertainty takes five distinct forms — aleatory, epistemic, ontological, systemic, and existential — and that collapsing them into a single category is itself a system failure, not a description of the system's limits. The value of perfect information essay argued that EVPI, the economist's tool for pricing uncertainty, is precisely calibrated for one of those forms and structurally blind to the other four.</p>
+
+    <p>These are not three separate arguments. They are one argument, expressed in the language of care design, then clinical epistemology, then health economics. The claim they share is this: <strong>the healthcare system is stuck in an attractor state in which it can only see, reward, and improve the things it already knows how to price — and it built the pricing tools to confirm what it already knew.</strong></p>
+
+    <p>This essay does two things. First, it shows how the three bodies of work connect — how hard transitions, uncertainty type, and information valuation map onto each other. Second, it names five practical moves that any health system can take now, without waiting for a transformation programme, a national strategy, or a technology platform that does not yet exist.</p>
+  </div>
+
+  <!-- §02 -->
+  <div class="section-block">
+    <span class="section-number">§ 02</span>
+    <h2 class="section-title">The mapping: what hard and soft transitions actually are</h2>
+
+    <p>The connection between the three bodies of work becomes visible when you place them against each other.</p>
+
+    <p>Hard transitions — the acute exacerbation, the first hospitalisation, the formal cancer diagnosis — are, in the uncertainty framework, <strong>epistemic-dominant</strong>. Something happens that is legible. The cause is identifiable, or at least attributable. The question the system is asked — what happened here, and what should we do about it — is, in principle, answerable. Uncertainty exists, but it is the reducible kind: better tests, better protocols, better training will close it. EVPI works here. More information about which treatment has the higher hazard ratio, or which patient population responds best, has a calculable value. Health technology assessment was designed for exactly this territory.</p>
+
+    <p>Soft transitions inhabit entirely different terrain. The patient who quietly stops walking to the shops, the one whose medicine adherence slides imperceptibly over eight months, the one whose family notices a change in respiratory effort before any clinical measurement registers it — these are not epistemic problems. The uncertainty is <strong>aleatory</strong>: the stochastic interaction of biology, environment, and behaviour that no trial will fully characterise. It is <strong>ontological</strong>: the classification framework that returns "unclassifiable ILD" is not reporting a data gap — it is registering a failure of the concept. It is <strong>systemic</strong>: the six-month wait for an MDT review is not a biological uncertainty; it is an institutional one. And it is <strong>existential</strong>: will I see my grandchild start school? That question is not a parameter in any cost-effectiveness model.</p>
+
+    <div class="map-table" role="table" aria-label="Mapping of transitions to uncertainty types and EVPI applicability">
+      <div class="map-table-header" role="row">
+        <span>Uncertainty type</span>
+        <span>Transition domain</span>
+        <span>EVPI applies?</span>
+        <span>What breaks</span>
+      </div>
+      <div class="map-row" role="row">
+        <div class="map-cell"><strong>Epistemic</strong>What we do not yet know but could learn</div>
+        <div class="map-cell">Hard<br><span class="tag tag-works">Works</span></div>
+        <div class="map-cell"><span class="tag tag-works">Yes</span></div>
+        <div class="map-cell" style="font-size:0.85rem;">Nothing — this is its home territory. Research that reduces epistemic uncertainty is worth commissioning.</div>
+      </div>
+      <div class="map-row" role="row">
+        <div class="map-cell"><strong>Aleatory</strong>Irreducible biological randomness</div>
+        <div class="map-cell">Soft<br><span class="tag tag-breaks">Breaks</span></div>
+        <div class="map-cell"><span class="tag tag-breaks">No</span></div>
+        <div class="map-cell" style="font-size:0.85rem;">EVPI is theoretically zero. Perfect information about an irreducibly random process does not exist. The concept fails precisely where the uncertainty is deepest.</div>
+      </div>
+      <div class="map-row" role="row">
+        <div class="map-cell"><strong>Ontological</strong>Uncertainty in the classification frameworks themselves</div>
+        <div class="map-cell">Soft<br><span class="tag tag-partial">Partial</span></div>
+        <div class="map-cell"><span class="tag tag-partial">Partial</span></div>
+        <div class="map-cell" style="font-size:0.85rem;">More data within a flawed taxonomy produces more data within a flawed taxonomy. EVPI prices the wrong question until the framework is revised.</div>
+      </div>
+      <div class="map-row" role="row">
+        <div class="map-cell"><strong>Systemic</strong>Arising from institutional design — delays, incentive structures, referral patterns</div>
+        <div class="map-cell">Soft<br><span class="tag tag-breaks">Breaks</span></div>
+        <div class="map-cell"><span class="tag tag-partial">Partial</span></div>
+        <div class="map-cell" style="font-size:0.85rem;">A two-year diagnostic delay is a design failure, not an information problem. EVPI cannot price the value of fixing what it was not built to see.</div>
+      </div>
+      <div class="map-row" role="row">
+        <div class="map-cell"><strong>Existential</strong>The lived experience of not knowing what will happen</div>
+        <div class="map-cell">Soft<br><span class="tag tag-breaks">Breaks</span></div>
+        <div class="map-cell"><span class="tag tag-breaks">No</span></div>
+        <div class="map-cell" style="font-size:0.85rem;">"Will I see my grandchild start school?" is not a QALY question. It is the uncertainty that matters most and the one the framework cannot touch.</div>
+      </div>
+    </div>
+
+    <p>This is not a coincidence. The Cynefin framework makes the same distinction in a different register: hard transitions are <em>complicated</em> — they yield to expert protocol — while soft transitions are <em>complex</em>, emerging from interactions no single variable governs. Four different conceptual traditions — health economics, uncertainty science, complexity theory, and care design — have arrived at the same topology.</p>
+
+    <div class="pull-quote">
+      <p>The healthcare system does not have a separate problem with transitions, a separate problem with uncertainty, and a separate problem with information valuation. It has <em>one</em> problem — looked at three ways. The system can only see, measure, and reward what it already knows how to price.</p>
+    </div>
+  </div>
+
+  <!-- §03 -->
+  <div class="section-block">
+    <span class="section-number">§ 03</span>
+    <h2 class="section-title">Why the attractor is stable</h2>
+
+    <p>Complex adaptive systems settle into stable configurations — attractors — because the feedback loops reinforcing them are stronger than any single perturbation. The healthcare system's event-based attractor is extraordinarily stable, for three interlocking reasons.</p>
+
+    <div class="attractor-diagram">
+      <span class="attractor-label">The self-reinforcing loop</span>
+      <div class="attractor-chain">
+        <div class="attractor-node">Payment rewards hard events</div>
+        <span class="attractor-arrow">→</span>
+        <div class="attractor-node">Trials designed around hard endpoints</div>
+        <span class="attractor-arrow">→</span>
+        <div class="attractor-node">EVPI analysis prioritises epistemic uncertainty</div>
+        <span class="attractor-arrow">→</span>
+        <div class="attractor-node">Guidelines calibrated to hard transitions</div>
+        <span class="attractor-arrow">→</span>
+        <div class="attractor-node">Commissioners fund what guidelines reward</div>
+        <span class="attractor-arrow">→</span>
+        <div class="attractor-node">Payment rewards hard events</div>
+      </div>
+      <p class="attractor-note">Each actor responds rationally to the incentives in front of them. No individual is driving this. The system is the driver.</p>
+    </div>
+
+    <p><strong>Payment architecture rewards what it can code.</strong> Hard transitions generate ICD-10 codes, DRG payments, 30-day readmission metrics. The clinician who prevents six soft transitions from becoming one hard event has nothing to bill. The ward that manages that event with textbook efficiency has everything.</p>
+
+    <p><strong>The evidence infrastructure is built around the same events.</strong> EVPI analysis drives research commissioning toward epistemic uncertainty — the only uncertainty it can price. Clinical trials are designed around hard endpoints: mortality, hospitalisation, spirometric thresholds. The evidence that emerges cannot be used to argue for managing soft transitions, because it was not designed to see them. Guidelines derived from event-based trials produce protocols calibrated to hard transitions. Clinicians trained in those guidelines optimise for what the protocol rewards.</p>
+
+    <p><strong>The cost of false certainty is invisible.</strong> EVPI measures the value of moving from genuine uncertainty to perfect information. It does not price the cost of the system projecting confidence it does not have. Harold's GP issued a COPD diagnosis. He did not have COPD. The resolution of his uncertainty was a fiction that delayed his correct diagnosis by an estimated two years. The framework does not ask for this calculation — it assumes the current state is honest uncertainty, not spurious confidence. Where it is not, the cost is large and unmodelled.</p>
+
+    <p>This is not a story about bad actors. Every participant — the commissioner, the clinician, the NICE committee member, the trial designer — is responding rationally to the incentive and evidence structures in front of them. The attractor is the system. It does not require villains to maintain itself.</p>
+  </div>
+
+  <!-- §04 -->
+  <div class="section-block">
+    <span class="section-number">§ 04</span>
+    <h2 class="section-title">What the theory demands: five practical moves</h2>
+
+    <p>The question a health system leader needs to answer is not whether this analysis is intellectually coherent. It is: what do we actually do on Monday morning? The answer is not to redesign the NHS. It is to introduce five specific moves, each feasible within existing institutional authority, each of which erodes the attractor without requiring its full dismantlement.</p>
+
+    <div class="moves-stack">
+      <div class="move-card">
+        <span class="move-number">Move 01</span>
+        <div class="move-title">Name the uncertainty type before you act on it</div>
+        <p>The most immediately practicable intervention costs almost nothing. Before any significant clinical or policy decision, require a one-sentence classification of the uncertainty being navigated. Is it epistemic — more data would help? Aleatory — the stochasticity is irreducible and must be held, not resolved? Ontological — the classification framework itself is the problem? Systemic — the delay is institutional, not biological? Existential — the patient is asking about their future, not their spirometry?</p>
+        <p>The purpose is not to produce a taxonomy. The purpose is to prevent category errors. A clinical team that deploys a test to resolve an aleatory uncertainty will produce a number that cannot provide the certainty they are seeking, because the uncertainty is not of the kind that numbers resolve. A commissioner who commissions research to address a systemic uncertainty — a referral delay, a diagnostic bottleneck — will fund a trial that cannot change what the system is doing, because the problem is not in the evidence base. Harold's GP ordered tests and issued a diagnosis. The underlying uncertainty was ontological — ILD did not yet fit the available categories in primary care. More tests within the primary care toolkit would not have resolved it, because the toolkit was the problem. Two years of false certainty followed. Naming the uncertainty type is not a philosophical exercise. It is a clinical governance requirement.</p>
+      </div>
+      <div class="move-card">
+        <span class="move-number">Move 02</span>
+        <div class="move-title">Require expected cost of false certainty analysis alongside EVPI</div>
+        <p>NICE's EVPI analysis asks: how much is it worth to resolve this uncertainty before we decide? The complementary question — which we have proposed calling the expected cost of false certainty, ECFC — asks: what did it cost when the system projected certainty that was not real?</p>
+        <p>For progressive chronic conditions — ILD, heart failure, dementia, multimorbid frailty — the diagnostic delay data exists. The misclassification rates exist, in pockets. The QALYs lost to two years of wrong diagnosis are, in principle, calculable. They are simply not routinely calculated, because the framework does not ask for them. Requiring ECFC analysis alongside the standard EVPI in a submission dossier would do two things: make visible the costs of the current system, not just the benefits of incremental improvement; and shift the research prioritisation question from "how much is it worth to resolve this uncertainty?" to "how much are we currently losing by pretending we already have?" For a commissioning body serious about long-term population health, this is not an academic exercise. It is the question that should precede every coverage decision in a complex chronic condition.</p>
+      </div>
+      <div class="move-card">
+        <span class="move-number">Move 03</span>
+        <div class="move-title">Pilot one trajectory-based contract</div>
+        <p>Value-based commissioning frameworks, as currently designed, routinely reward event-avoidance measured by hard-transition metrics. The consequence is that systems optimised for VBC are still being governed by event-based thinking, dressed in new vocabulary. A genuine trajectory-based contract looks different. It does not pay per event avoided. It pays per measurable improvement in longitudinal patient trajectory — indexed to continuous patient-reported outcomes, functional status, and care plan adherence over a rolling 24-month window. The clinical team is rewarded not for managing the exacerbation well but for the absence of the exacerbation — and for the improved functional reserve that made absence possible.</p>
+        <p>This requires two things now available in most advanced health systems: continuous digital PRO collection infrastructure, and a commissioning appetite for 24-month evaluation horizons rather than quarterly performance reviews. Identify one condition where soft drift is the dominant pathway — frailty, chronic kidney disease, ILD, heart failure — and one clinical network willing to operate under different accountability rules. The goal is not to prove the model at scale. It is to generate the learning that cannot be generated by thought experiment: what actually breaks? What works better than expected? What data is missing? Complex problems do not yield to large planned interventions. They yield to a portfolio of well-designed probes that generate learning and allow adaptive response.</p>
+      </div>
+      <div class="move-card">
+        <span class="move-number">Move 04</span>
+        <div class="move-title">Redesign AI procurement criteria around the domain distinction</div>
+        <p>Every health system is currently evaluating or deploying AI for clinical decision support, risk stratification, or remote monitoring. The procurement criteria being applied are almost universally built around model performance: AUC, sensitivity, specificity. These are the right questions for a complicated-domain tool, where the answer is known and the task is pattern recognition. For soft-transition applications, they are the wrong questions. A risk stratification model that fires an alert when a score crosses a threshold is event-based logic implemented in algorithmic form. It does not manage the soft transition — it automates the event cascade.</p>
+        <p>Procurement criteria for AI intended to work in the soft-transition domain should ask different questions. Does the output <strong>probe rather than alert</strong> — does it raise a question for a clinician to investigate, rather than trigger an autonomous response? Does it <strong>show trajectory rather than threshold</strong> — does it communicate direction of travel rather than current position against a cutoff? Does it <strong>protect rather than replace relational capacity</strong> — does deployment free clinician time for unhurried patient contact, or consume it in alert management? These are not aspirational standards. They are functional requirements that distinguish systems that will improve care from systems that will automate its failure modes. An NHS trust or integrated care board procuring AI for population health management can require them now, in the next contract, without waiting for national guidance.</p>
+      </div>
+      <div class="move-card">
+        <span class="move-number">Move 05</span>
+        <div class="move-title">Count the distributed sensing capacity you already have</div>
+        <p>The value of perfect information essay pointed at something most health systems have not calculated: the information value of the sensing infrastructure that already exists, outside the formal clinical record. Harold's wife notices a change in his respiratory effort before any clinical measurement registers it. The specialist nurse who calls Francis monthly hears something in his voice. The community pharmacist who knows George is collecting his prescription less frequently than the script says has an early warning signal. None of this enters a clinical record. None of it contributes to a trial dataset. None of it is visible to any EVSI calculation.</p>
+        <p>This is not a technical gap. It is a design gap. The sensing capacity of the health system is broader than the evidence capture capacity of the health system. Building the bridge between them does not require advanced AI. It requires structured processes for capturing what the specialist nurse already knows — a brief structured log entry after each call, shared with the multidisciplinary team, indexable over time. The NHS already employs specialist nurses, community pharmacists, care co-ordinators, and social prescribers whose primary function is, effectively, soft-transition sensing. Very little of what they sense is captured in forms that can inform clinical management or commission better care. That is the simplest possible intervention in this domain: make the existing sensing visible to the existing clinical system.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- §05 -->
+  <div class="section-block">
+    <span class="section-number">§ 05</span>
+    <h2 class="section-title">What this is not</h2>
+
+    <p>None of these five moves is a transformation programme. None requires a new national strategy, a system reorganisation, or a change-management engagement. Each is a perturbation — a probe, in Snowden's language — that introduces a small amount of complexity-awareness into an existing process and creates the conditions for learning.</p>
+
+    <p>This matters because the conventional response to the argument made here is to seek a proportionate solution: the problem is large, therefore the solution should be large. A ten-year plan. A national digital infrastructure. A payment reform of the kind attempted six times in six countries with six varieties of disappointing result.</p>
+
+    <p>The argument from complexity science is that this response is in the wrong register. Complex problems do not yield to large planned interventions. They yield to a portfolio of small, well-designed experiments that generate learning and allow adaptive response. The Sussex Kidney Unit — the proof-of-concept described in the first Soft Drift article — was not the output of a national strategy. It was the work of a clinical team that probed, sensed, and responded, sustained by an institution willing to hold the ambiguity. That is the model. The question is where it can run next.</p>
+
+    <div class="pull-quote">
+      <p>The five moves above are not the full answer. <em>They are the probe.</em> The answer is what you learn from running them.</p>
+    </div>
+  </div>
+
+  <!-- §06 -->
+  <div class="section-block">
+    <span class="section-number">§ 06</span>
+    <h2 class="section-title">The thesis, practically stated</h2>
+
+    <p>The Working Complexity thesis — the healthcare system doesn't need to be simpler, it needs to be better understood — is not a philosophical position. It has operational consequences.</p>
+
+    <p>Better understood means: understanding which type of uncertainty you are navigating before you decide how to navigate it. It means calculating what false certainty costs, not only what perfect information would be worth. It means designing contracts around trajectories, not events. It means requiring AI that probes rather than alerts. It means counting the warm data that already exists in the system — carried by specialist nurses, carers, community pharmacists, and the patients themselves — and has never been captured.</p>
+
+    <p>The commissioner with the dashboard of 30-day readmission rates is not looking at the wrong thing. She is looking at the right thing with the wrong instrument. The instrument she needs is the one that shows her where the drift is already underway — which patients are already recalibrating their lives around a breathlessness that has not yet crossed a threshold, which clinical teams are already holding complexity with inadequate support, which referral pathways are already generating the systemic uncertainty that will, in six months, present as a hard event.</p>
+
+    <p>That instrument is not yet built. But the five moves above are the beginning of building it — and they do not require permission from anyone who is not already in the room.</p>
+
+    <div class="pull-quote">
+      <p>Uncertainty acknowledged is navigable. <em>Uncertainty disguised as certainty is not.</em> The asymmetry is the system's central unsolved problem — and the most tractable one, if the system is willing to name it.</p>
+    </div>
+  </div>
+
+</article>
+
+<!-- FOOTER -->
+<footer class="wc-footer">
+  <span class="footer-logo">workingcomplexity</span>
+  <span class="footer-sub">— .health</span>
+  <ul class="footer-nav">
+    <li><a href="../index.html">Home</a></li>
+    <li><a href="index.html">Blog</a></li>
+    <li><a href="soft-drift-series.html">Soft Drift Series</a></li>
+    <li><a href="experiments-with-uncertainty.html">Uncertainty</a></li>
+    <li><a href="value-of-perfect-information.html">Value of Information</a></li>
+    <li><a href="../index.html#contact">Contact</a></li>
+  </ul>
+  <p class="footer-copy">&copy; 2026 Working Complexity Ltd. All rights reserved.</p>
+</footer>
+
+</body>
+</html>

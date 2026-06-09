@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Measuring a complex disease — Working Complexity</title>
+<meta name="description" content="We agree interstitial lung disease is complex — then track it with the simplest instruments we own. Why reductionist measurement is the field's primary epistemology, why the composite is a smaller nod to complexity than we think, and the complexity-science toolkit that could change it." />
+<link rel="canonical" href="https://workingcomplexity.health/blog/measuring-a-complex-disease.html" />
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='100' height='100' fill='%23060D1B'/%3E%3Cpolygon points='50,2 91.57,26 91.57,74 50,98 8.43,74 8.43,26' stroke='%235B9BD5' stroke-width='0.8' fill='none'/%3E%3Cpolygon points='50,26 70.78,38 70.78,62 50,74 29.22,62 29.22,38' stroke='%23C4A46B' stroke-width='0.8' fill='none'/%3E%3Cpolygon points='50,38 60.39,44 60.39,56 50,62 39.61,56 39.61,44' stroke='%235B9BD5' stroke-width='0.8' fill='none'/%3E%3Ccircle cx='50' cy='50' r='2.5' fill='%23C4A46B'/%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --nearblack:  #060D1B;
+    --offwhite:   #f4f6fa;
+    --paper:      #eaeff7;
+    --gold:       #C4A46B;
+    --gold-dim:   rgba(196,164,107,0.4);
+    --blue:       #5B9BD5;
+    --blue-dim:   rgba(91,155,213,0.14);
+    --border:     rgba(91,155,213,0.18);
+    --muted:      #7A9ABF;
+    --ink:        #0F1E36;
+    --ink-mid:    #3E5870;
+    --ff-display: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --ff-mono:    'Space Mono', 'ui-monospace', 'SFMono-Regular', Menlo, monospace;
+    --max-w: 760px;
+    --gutter: clamp(1.25rem, 5vw, 3rem);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--offwhite);
+    color: var(--ink);
+    font-family: var(--ff-display);
+    font-size: 17px;
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── NAV ──────────────────────────────────────────────── */
+  .wc-nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(6,13,27,0.96);
+    border-bottom: 1px solid rgba(74,144,226,0.18);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.1rem 3rem;
+    backdrop-filter: blur(16px);
+  }
+  .wc-nav-logo {
+    font-family: var(--ff-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    color: #E0E8F4;
+    text-decoration: none;
+    display: flex; flex-direction: column; gap: 2px;
+  }
+  .wc-nav-logo-main { color: #E0E8F4; font-weight: 700; }
+  .wc-nav-logo-sub  { color: var(--gold); font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; }
+  .wc-nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .wc-nav-links a {
+    font-family: var(--ff-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #7A9ABF;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .wc-nav-links a:hover { color: var(--gold); }
+  .wc-nav-cta {
+    font-family: var(--ff-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #060D1B;
+    background: var(--gold);
+    padding: 0.55rem 1.2rem;
+    text-decoration: none;
+    transition: opacity 0.2s;
+  }
+  .wc-nav-cta:hover { opacity: 0.85; }
+  @media (max-width: 720px) {
+    .wc-nav-links, .wc-nav-cta { display: none; }
+    .wc-nav { padding: 1rem 1.25rem; }
+  }
+
+  /* ── ARTICLE COVER ────────────────────────────────────── */
+  .article-cover {
+    padding: clamp(4rem,10vw,7rem) var(--gutter) clamp(2.5rem,5vw,4rem);
+    max-width: calc(var(--max-w) + 2 * var(--gutter));
+    margin: 0 auto;
+  }
+  .doc-code {
+    font-family: var(--ff-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-mid);
+    margin-bottom: 2.2rem;
+    display: block;
+  }
+  .kicker {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    font-family: var(--ff-mono);
+    font-size: 0.72rem;
+    font-weight: 400;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.75rem;
+  }
+  .kicker::before {
+    content: '';
+    display: block; width: 2.5rem; height: 1px;
+    background: var(--gold);
+  }
+  .article-title {
+    font-family: var(--ff-display);
+    font-size: clamp(2.4rem,7vw,4.4rem);
+    font-weight: 800;
+    line-height: 1.05;
+    color: var(--nearblack);
+    letter-spacing: -0.025em;
+    margin-bottom: 0.5rem;
+  }
+  .article-title em {
+    font-style: italic;
+    font-weight: 300;
+    color: var(--gold);
+  }
+  .article-subtitle {
+    font-size: clamp(1rem,2.5vw,1.35rem);
+    font-style: italic;
+    font-weight: 300;
+    color: var(--ink-mid);
+    max-width: 640px;
+    line-height: 1.5;
+    margin-bottom: 2.75rem;
+  }
+  .article-meta {
+    display: flex; align-items: center; gap: 2rem; flex-wrap: wrap;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+  }
+  .meta-item {
+    font-family: var(--ff-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+  }
+  .meta-item strong { color: var(--ink-mid); font-weight: 700; }
+  .meta-ref {
+    font-family: var(--ff-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.06em;
+    color: var(--ink-mid);
+    margin-top: 0.75rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--border);
+    width: 100%;
+  }
+  .meta-ref a { color: var(--blue); text-decoration: none; }
+  .meta-ref a:hover { text-decoration: underline; }
+
+  /* ── ARTICLE BODY ─────────────────────────────────────── */
+  .article {
+    max-width: calc(var(--max-w) + 2 * var(--gutter));
+    margin: 0 auto;
+    padding: 0 var(--gutter) clamp(4rem,8vw,6rem);
+  }
+
+  .opening-pull {
+    margin: 3rem 0 3.5rem;
+    padding: 2rem 2.5rem;
+    background: var(--paper);
+    border-left: 3px solid var(--gold);
+    position: relative;
+  }
+  .opening-pull::before {
+    content: '\201C';
+    font-family: var(--ff-display);
+    font-size: 5rem;
+    color: var(--gold);
+    opacity: 0.22;
+    position: absolute;
+    top: -0.5rem; left: 1rem;
+    line-height: 1;
+  }
+  .opening-pull p {
+    font-family: var(--ff-display);
+    font-size: 1.2rem;
+    font-style: italic;
+    line-height: 1.65;
+    color: var(--ink-mid);
+    position: relative; z-index: 1;
+  }
+  .opening-pull cite {
+    font-family: var(--ff-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: block;
+    margin-top: 0.75rem;
+    font-style: normal;
+    position: relative; z-index: 1;
+  }
+
+  .section-block {
+    margin-top: 4rem;
+    padding-top: 2.5rem;
+    border-top: 1px solid var(--border);
+  }
+  .section-number {
+    font-family: var(--ff-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 0.55rem;
+  }
+  h2.section-title {
+    font-family: var(--ff-display);
+    font-size: clamp(1.5rem,3.5vw,2rem);
+    font-weight: 700;
+    color: var(--nearblack);
+    line-height: 1.18;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.015em;
+  }
+  h2.section-title em {
+    font-style: italic;
+    font-weight: 300;
+    color: var(--gold);
+  }
+  h3.subsection {
+    font-family: var(--ff-mono);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin: 2.5rem 0 0.8rem;
+  }
+
+  .article p {
+    margin-bottom: 1.35rem;
+    color: var(--ink);
+    font-weight: 300;
+  }
+  .article p strong { font-weight: 600; color: var(--nearblack); }
+  .article p em { font-style: italic; }
+  .article ul, .article ol {
+    margin: 0 0 1.5rem 1.5rem;
+    color: var(--ink);
+    font-weight: 300;
+  }
+  .article li { margin-bottom: 0.6rem; line-height: 1.65; }
+
+  /* ── PULL QUOTE ───────────────────────────────────────── */
+  .pull-quote {
+    margin: 2.5rem -0.25rem;
+    padding: 1.6rem 2rem;
+    border-top: 1px solid var(--gold);
+    border-bottom: 1px solid var(--gold);
+  }
+  .pull-quote p {
+    font-size: 1.15rem;
+    font-style: italic;
+    line-height: 1.55;
+    color: var(--nearblack);
+    font-weight: 400;
+    margin: 0;
+  }
+  .pull-quote p em { font-weight: 300; color: var(--gold); font-style: normal; }
+
+  /* ── PARALLEL BOX ─────────────────────────────────────── */
+  .parallel {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin: 2.5rem 0;
+  }
+  @media (max-width: 580px) { .parallel { grid-template-columns: 1fr; } }
+  .parallel-cell {
+    background: var(--paper);
+    padding: 1.5rem 1.75rem;
+  }
+  .parallel-label {
+    font-family: var(--ff-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 0.7rem;
+    padding-bottom: 0.6rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .parallel-cell p {
+    font-size: 0.9rem;
+    color: var(--ink-mid);
+    margin: 0 !important;
+    line-height: 1.65;
+  }
+  .parallel-cell p + p { margin-top: 0.75rem !important; }
+  .parallel-cell p strong { font-weight: 600; color: var(--nearblack); }
+
+  /* ── WC INSIGHT BOX ───────────────────────────────────── */
+  .wc-insight {
+    background: var(--nearblack);
+    color: #E0E8F4;
+    padding: 1.6rem 2rem;
+    margin: 3rem 0;
+    position: relative;
+  }
+  .wc-insight::before {
+    content: 'workingcomplexity — synthesis';
+    font-family: var(--ff-mono);
+    font-size: 0.58rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 0.8rem;
+  }
+  .wc-insight p {
+    color: rgba(224,232,244,0.85);
+    font-size: 0.95rem;
+    margin: 0 !important;
+    line-height: 1.7;
+  }
+  .wc-insight p + p { margin-top: 0.9rem !important; }
+  .wc-insight p strong { color: #E0E8F4; font-weight: 600; }
+
+  /* ── CALLOUT ──────────────────────────────────────────── */
+  .callout {
+    background: var(--paper);
+    border-left: 3px solid var(--blue);
+    padding: 1.2rem 1.75rem;
+    margin: 2rem 0;
+  }
+  .callout-label {
+    font-family: var(--ff-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--blue);
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+  .callout p {
+    font-size: 0.92rem;
+    color: var(--ink-mid);
+    margin: 0 !important;
+    line-height: 1.65;
+  }
+  .callout p + p { margin-top: 0.6rem !important; }
+  .callout p strong { font-weight: 600; color: var(--nearblack); }
+
+  /* ── CLOSING ──────────────────────────────────────────── */
+  .article-close {
+    background: var(--nearblack);
+    padding: clamp(3rem,7vw,5rem) var(--gutter);
+    margin-top: 4rem;
+  }
+  .close-inner {
+    max-width: var(--max-w);
+    margin: 0 auto;
+  }
+  .close-kicker {
+    font-family: var(--ff-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+    display: block;
+  }
+  .close-statement {
+    font-size: clamp(1.4rem,3vw,2rem);
+    font-weight: 700;
+    color: #E0E8F4;
+    line-height: 1.25;
+    margin-bottom: 1.75rem;
+    letter-spacing: -0.015em;
+  }
+  .close-statement em { font-style: italic; font-weight: 300; color: var(--gold); }
+  .close-body {
+    font-size: 1rem;
+    color: rgba(224,232,244,0.75);
+    line-height: 1.75;
+    max-width: 600px;
+    font-weight: 300;
+  }
+  .close-body + .close-body { margin-top: 1rem; }
+  .close-refs {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(74,144,226,0.2);
+    font-family: var(--ff-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.06em;
+    color: #3E5870;
+    line-height: 1.8;
+  }
+  .close-refs a { color: #5B9BD5; text-decoration: none; }
+  .close-refs a:hover { text-decoration: underline; }
+  .close-logo {
+    margin-top: 2.5rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(74,144,226,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .close-logo-wordmark {
+    font-family: var(--ff-mono);
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    color: #E0E8F4;
+    text-decoration: none;
+  }
+  .close-logo-sub {
+    font-family: var(--ff-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-top: 3px;
+  }
+  .close-scale {
+    font-family: var(--ff-mono);
+    font-size: 0.58rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #3E5870;
+  }
+</style>
+</head>
+<body>
+
+<!-- ── NAV ────────────────────────────────────────────────────── -->
+<nav class="wc-nav" aria-label="Site navigation">
+  <a href="https://workingcomplexity.health" class="wc-nav-logo">
+    <span class="wc-nav-logo-main">workingcomplexity</span>
+    <span class="wc-nav-logo-sub">— .health</span>
+  </a>
+  <ul class="wc-nav-links">
+    <li><a href="https://workingcomplexity.health/#services">Services</a></li>
+    <li><a href="https://workingcomplexity.health/#about">About</a></li>
+    <li><a href="/blog/">Writing</a></li>
+    <li><a href="/blog/ai-advisory-board.html">Cast</a></li>
+  </ul>
+  <a href="https://workingcomplexity.health/#contact" class="wc-nav-cta">Get in touch</a>
+</nav>
+
+<!-- ── ARTICLE COVER ─────────────────────────────────────────── -->
+<header class="article-cover">
+  <span class="doc-code">WC-BLOG-008 / MEASURING A COMPLEX DISEASE / REV.A</span>
+  <span class="kicker">ILD · measurement &amp; complexity science</span>
+  <h1 class="article-title">
+    Complex by diagnosis.<br>
+    <em>Reductionist by measurement.</em>
+  </h1>
+  <p class="article-subtitle">
+    If interstitial lung disease is complex, why do we still track it — and trial against it — with the simplest instruments we own? Reductionist measurement is the field's primary epistemology. The composite is a smaller nod to complexity than we think. And the tools for the next step already exist.
+  </p>
+  <div class="article-meta">
+    <span class="meta-item"><strong>Michael Baldwin</strong></span>
+    <span class="meta-item">workingcomplexity.health</span>
+    <span class="meta-item">June 2026</span>
+    <span class="meta-item"><strong>Reading time</strong> 14 min</span>
+    <div class="meta-ref">
+      A position paper for ILD clinicians and researchers. Eleven references, verified against PubMed and publisher records — full citations at the foot of the page.
+    </div>
+  </div>
+</header>
+
+<!-- ── ARTICLE BODY ───────────────────────────────────────────── -->
+<main class="article">
+
+  <div class="opening-pull">
+    <p>We have agreed, almost without dissent, that interstitial lung disease is complex. We say it in the first slide of every advisory board. And then, having said it, we reach for forced vital capacity.</p>
+    <cite>— The contradiction worth sitting with</cite>
+  </div>
+
+  <p>The pathways are heterogeneous. The trajectories are non-linear. A single label — IPF, NSIP, HP, SARD-ILD — sits over a biology that refuses to hold still. Progression is not one thing happening at one rate. It is fibroblast foci, epithelial injury, immune feedback, pulmonary vasculopathy, deconditioning, anxiety, and the accumulating weight of comorbidity, all moving at once and all coupled to one another.</p>
+
+  <p>The language we use to <em>describe</em> the disease is the language of complexity. The instruments we use to <em>measure</em> it are the instruments of reduction. We declare the system irreducible and then we reduce it — to a single scalar, sampled a few times a year, modelled as if it fell along a straight line. The gap between the two is not a detail. It is the reason so many of our trials are underpowered against the thing patients actually experience, and so much of our prognostication is a population average wearing the costume of a personal forecast.</p>
+
+  <p>This piece is an argument and a path. The argument: reductionist measurement is not a regrettable compromise we tolerate until something better arrives — it is the primary epistemology of the field, and the composite endpoint, which we treat as our concession to complexity, is a far smaller concession than we think. The path: complexity science already owns a toolkit built for exactly this kind of system. We outline it, and we are specific about how each instrument could be deployed in ILD.</p>
+
+  <!-- ── SECTION 1 ── -->
+  <div class="section-block">
+    <span class="section-number">§ 01</span>
+    <h2 class="section-title">The anatomy of a <em>reduction</em></h2>
+
+    <p>Look honestly at what we measure and how.</p>
+
+    <p><strong>FVC as a scalar.</strong> The forced vital capacity is effort-dependent, sampled sparsely, and reported as a single number per visit. We then define meaningful decline as a threshold crossing — 10% relative, sometimes 5–10% — and we model the change as approximately linear over 52 weeks. Every one of those moves is a reduction. A lung is reduced to a volume. A volume is reduced to a slope. A slope is reduced to a binary: progressed, or not. By the time a patient becomes a data point, almost everything that made the disease complex has been quotiented away.</p>
+
+    <p><strong>The single primary endpoint.</strong> Regulatory convention rewards one pre-specified primary, and FVC decline has become the field's default because it is familiar, it moves within a trial's horizon, and it is defensible to a committee. The convention is reasonable as governance. It is poor as biology. A single endpoint can only test a single, pre-committed hypothesis about what the drug does — and a drug acting on a complex system rarely does one clean thing.</p>
+
+    <p><strong>The univariate prognostic marker.</strong> DLCO. Six-minute walk distance. Each is read as a channel in isolation, its trend interpreted on its own axis, as if the patient were several diseases running in parallel rather than one system whose parts are wired together.</p>
+
+    <div class="callout">
+      <span class="callout-label">The point</span>
+      <p>None of these instruments is <strong>wrong</strong>. FVC tracks something real, and the antifibrotic trials that relied on it changed practice. The problem is not that the instruments are invalid. The problem is that they are the <strong>primary</strong> epistemology — the thing we reach for first and trust most — for a disease we have already conceded is the wrong shape for them.</p>
+    </div>
+
+  </div>
+
+  <!-- ── SECTION 2 ── -->
+  <div class="section-block">
+    <span class="section-number">§ 02</span>
+    <h2 class="section-title">The composite is a smaller nod to complexity than we <em>think</em></h2>
+
+    <p>When pressed on this, the field has an answer ready: the composite.</p>
+
+    <p>We have GAP and ILD-GAP, which fold gender, age and physiology into a staging score (Ley et al., 2012; Ryerson et al., 2014). We have the Composite Physiologic Index, built explicitly to net out the confounding effect of emphysema on function (Wells et al., 2003). We have the multi-criterion definition of progressive pulmonary fibrosis used to enrol INBUILD — physiological <em>or</em> symptomatic <em>or</em> radiological worsening (Flaherty et al., 2019). And we now have hierarchical composites and the win ratio, which rank patients across a priority order of outcomes rather than summing them.</p>
+
+    <p>These are genuine intellectual work, and we should say so. But notice what kind of object a composite is. It is an <em>aggregation of reductions</em>. We take several univariate measures — each already a scalar, each already stripped of its dynamics — and we combine them with fixed weights, or a fixed hierarchy, into one number or one ordering. The composite acknowledges that the disease has more than one dimension. It does not, in any deep sense, acknowledge that the disease is a <em>system</em>.</p>
+
+    <p>Three things a composite still cannot do:</p>
+
+    <ul>
+      <li><strong>It cannot represent interaction.</strong> A weighted sum treats dyspnoea, walk distance and FVC as additive contributions. But in the patient, deconditioning drives breathlessness drives inactivity drives deconditioning. The clinically decisive fact is the <em>loop</em>, and a loop is precisely what a sum erases.</li>
+      <li><strong>It cannot represent dynamics.</strong> A composite is computed at a visit. It carries no information about the <em>rate of change of the rate of change</em>, the rising variance, the loss of regulatory tone — the signatures by which complex systems announce that they are about to tip.</li>
+      <li><strong>It cannot represent heterogeneity of structure.</strong> The same composite score can sit over two patients whose diseases are organised completely differently — one driven by a vascular hub, one by an inflammatory one. Averaged together in a trial, they cancel, and the drug looks inert.</li>
+    </ul>
+
+    <div class="pull-quote">
+      <p>The composite is real progress and a small nod at once. It is multidimensional measurement. <em>It is not yet complexity-aware measurement.</em></p>
+    </div>
+
+    <p>The distinction matters because it tells us the work is not finished — and points at what the next instruments have to be able to do.</p>
+
+  </div>
+
+  <!-- ── SECTION 3 ── -->
+  <div class="section-block">
+    <span class="section-number">§ 03</span>
+    <h2 class="section-title">The toolkit complexity science <em>already owns</em></h2>
+
+    <p>Complexity science is not a metaphor we are importing for colour. It is a set of mathematics — dynamical systems, networks, statistical mechanics, information theory — developed precisely to characterise systems with feedback, heterogeneity, and emergent behaviour. ILD is such a system. The tools below already exist, are validated in adjacent fields, and map onto specific, named problems in our discipline. We take them in turn, with the deployment spelled out.</p>
+
+    <h3 class="subsection">01 · Critical transitions &amp; early-warning signals</h3>
+    <p>The single highest-value target in ILD is the acute exacerbation: sudden, often fatal, and at present essentially unpredictable on the clinical timescale that would let us act. Dynamical systems theory offers a reason for hope. As a system approaches a tipping point — a bifurcation — it exhibits <em>critical slowing down</em>: it recovers more sluggishly from small perturbations, and that shows up as rising temporal autocorrelation, rising variance, and rising cross-correlation between coupled signals <em>before</em> the transition itself (Scheffer et al., 2009; Scheffer et al., 2012). These early-warning signals have been demonstrated in ecosystems, climate, and physiological collapse.</p>
+    <div class="callout">
+      <span class="callout-label">Deployment in ILD — forecasting the acute exacerbation</span>
+      <p>Home spirometry, wearable oximetry, actigraphy and acoustic cough monitoring already generate the high-frequency longitudinal data in which early-warning statistics live. Instead of asking only "has FVC dropped 10%?", we compute the rolling variance and lag-1 autocorrelation of daily home FVC, nocturnal SpO₂ and cough count, and watch for the rise. The deliverable is not a better cross-sectional score. It is a <strong>time-to-event alarm</strong> — a personalised forecast that this patient's system is losing resilience and an exacerbation is becoming probable, issued in the window where steroids, referral, or trial rescue could change the outcome.</p>
+    </div>
+
+    <h3 class="subsection">02 · Network analysis — symptoms &amp; multimorbidity as a wired structure</h3>
+    <p>Borrowing from psychometric network theory (Borsboom &amp; Cramer, 2013) and network medicine (Barabási et al., 2011), we stop treating symptoms and comorbidities as a checklist and start treating them as nodes in a graph, with edges estimated from their conditional dependencies. Dyspnoea, cough, fatigue, anxiety, depression, deconditioning, GORD, pulmonary hypertension, coronary disease — these do not co-occur by accident. They are coupled.</p>
+    <div class="callout">
+      <span class="callout-label">Deployment in ILD — find the hub, not the sum</span>
+      <p>Estimate the patient- or subgroup-level symptom-and-comorbidity network from longitudinal PRO and clinical data, and compute centrality. The actionable output is the identification of <strong>hub</strong> and <strong>bridge</strong> nodes — the symptom or comorbidity through which the most activation flows. If anxiety is the bridge that couples breathlessness to inactivity, the highest-leverage intervention is the anxiety node, even though it never appears on a respiratory endpoint. A composite sums these nodes; a network tells us which one to push. The same method, run on the referral pathway rather than the patient, exposes the structural bottlenecks behind the diagnostic delay we keep describing and rarely re-engineer.</p>
+    </div>
+
+    <h3 class="subsection">03 · Joint longitudinal–survival &amp; latent trajectory models</h3>
+    <p>FVC decline is not linear and not homogeneous. The population contains distinct trajectory shapes — slow, rapid, stepwise, relapsing — and the slope so far is informative about the hazard ahead. <em>Latent class mixed models</em> discover the trajectory subgroups from the data rather than imposing them. <em>Joint models</em> link the longitudinal biomarker process to the time-to-event process, so the entire shape of a patient's FVC and DLCO history — not just the latest value — drives a continuously updated survival prediction (Rizopoulos, 2012).</p>
+    <div class="callout">
+      <span class="callout-label">Deployment in ILD — prognosis that updates</span>
+      <p>Replace static GAP-at-baseline with <strong>dynamic prediction</strong>: at each visit, the model ingests the full longitudinal record and returns an updated, individualised survival and progression forecast with honest uncertainty bands. In trials, the same machinery enriches enrolment — selecting the rapid-trajectory latent class for whom an antifibrotic effect is detectable in 52 weeks — and recovers power that a single-slope analysis throws away. Prognosis as a moving estimate, not a one-time stamp.</p>
+    </div>
+
+    <h3 class="subsection">04 · Computational phenotyping — endotypes, not imposed labels</h3>
+    <p>Our diagnostic taxonomy is historical, not mechanistic. IPF-versus-not is a clinically useful line that almost certainly cuts across the biology rather than along it. Unsupervised learning on multimodal data — HRCT radiomic texture, longitudinal physiology, peripheral blood transcriptomics and proteomics, genetics — can recover <em>data-driven endotypes</em>: clusters of patients who share an underlying mechanism regardless of which named ILD they carry.</p>
+    <div class="callout">
+      <span class="callout-label">Deployment in ILD — randomise within mechanism</span>
+      <p>Cluster the multimodal feature space; characterise each endotype biologically; then re-stratify. The prize is trial design that randomises within a mechanistically coherent endotype rather than within a label, so a drug acting on, say, a vascular-predominant cluster is tested in the patients who can respond, not diluted across a population defined by chest-CT pattern and clinical history. This is how we stop averaging responders and non-responders into a null.</p>
+    </div>
+
+    <h3 class="subsection">05 · Mechanistic multi-scale models &amp; the patient digital twin</h3>
+    <p>Fibrosis is an emergent property of a feedback system — epithelial injury, fibroblast activation, ECM stiffening that itself drives further activation, a mechano-biological positive loop with the hallmarks of self-organised criticality. Multi-scale mechanistic models couple this tissue-level biology to organ-level lung mechanics. Combine such a model with a patient's own streaming data through data assimilation — Kalman filtering, particle filters — and you have a <em>digital twin</em>: a personalised, continuously corrected simulation of that individual's lung.</p>
+    <div class="callout">
+      <span class="callout-label">Deployment in ILD — forecast and simulate</span>
+      <p>The twin does two things a statistical model cannot. It <strong>forecasts</strong> the individual trajectory with a mechanistic basis, so the prediction degrades gracefully and explains itself. And it lets us run <strong>in silico interventions</strong> — simulate this patient on antifibrotic A versus B versus add-on before committing them — and supports in silico trial arms that reduce the real-world sample size needed to detect an effect. Ambitious, data-hungry, and the most genuinely systems-level instrument on this list.</p>
+    </div>
+
+    <h3 class="subsection">06 · Information-theoretic complexity of physiological signals</h3>
+    <p>A robust and counter-intuitive finding from physiology: health is <em>complex</em>, and disease is a <em>loss</em> of complexity. Healthy physiological output — heart rate, breathing, gait, daily activity — carries rich, fractal, multi-scale variability; ageing and disease flatten it (Lipsitz &amp; Goldberger, 1992; Goldberger et al., 2002). The breath of a failing respiratory system is more regular, not less. Variability is regulatory reserve, and losing it is the signal.</p>
+    <div class="callout">
+      <span class="callout-label">Deployment in ILD — loss of complexity as a biomarker</span>
+      <p>From the same passive wearable streams, compute multiscale entropy and fractal scaling of breathing pattern, heart-rate dynamics and activity. A falling complexity index becomes a continuous, effort-independent digital biomarker of declining reserve — one that does not depend on a patient performing a maximal manoeuvre on a clinic spirometer, and that can move months before the threshold crossing we currently wait for.</p>
+    </div>
+
+  </div>
+
+  <!-- ── SECTION 4 ── -->
+  <div class="section-block">
+    <span class="section-number">§ 04</span>
+    <h2 class="section-title">What changes if we take this <em>seriously</em></h2>
+
+    <p>These tools are not a wish list to be deferred. Several are deployable now on data we are already collecting, and they imply concrete change at three levels.</p>
+
+    <div class="parallel">
+      <div class="parallel-cell">
+        <span class="parallel-label">In the clinic</span>
+        <p>Prognosis becomes a <strong>living estimate</strong> that updates at every visit and integrates the whole record, rather than a stage assigned once at diagnosis.</p>
+        <p>Monitoring shifts from sparse maximal tests to dense passive signals, and from threshold-crossing to resilience-watching. The question moves from <em>has it progressed?</em> to <em>is it about to?</em></p>
+      </div>
+      <div class="parallel-cell">
+        <span class="parallel-label">In the trial</span>
+        <p>Enrolment is enriched by trajectory class and endotype, not by label. Endpoints can become genuinely <strong>systemic</strong> — a forecast of time-to-exacerbation, a network-derived measure of symptom-system burden, a complexity index — rather than a single slope.</p>
+        <p>In silico arms and dynamic prediction recover statistical power that reductionist analysis discards. In a disease this heterogeneous, that is the difference between a viable programme and an underpowered one.</p>
+      </div>
+    </div>
+
+    <p>And then the honest hard part: the conversation with regulators and payers. A novel endpoint has to be validated, qualified, and accepted, and that is slow. So the route is not to abandon FVC but to run these instruments <em>alongside</em> it — accumulating the evidence that an early-warning alarm or a complexity index predicts the outcomes that matter, until the new measure earns standing on its own. We win the argument with data, not assertion.</p>
+
+    <div class="wc-insight">
+      <p>We should name the costs plainly, because the brand of this field is overpromising. These methods are <strong>data-hungry</strong> and demand longitudinal, multimodal collection most centres do not yet do at scale. They can <strong>overfit</strong> — a flexible model that fits the past and forecasts nothing is worse than a humble slope. They need <strong>external validation</strong> across cohorts and countries before they touch a decision.</p>
+      <p>None of this is a reason to wait. It is the specification for doing it properly.</p>
+    </div>
+
+  </div>
+
+</main>
+
+<!-- ── CLOSING ─────────────────────────────────────────────────── -->
+<footer class="article-close">
+  <div class="close-inner">
+    <span class="close-kicker">Working Complexity — Conclusion</span>
+    <p class="close-statement">
+      The composite was an honest first step beyond the scalar.<br>
+      <em>It is not the destination.</em>
+    </p>
+    <p class="close-body">We keep saying ILD is complex. We mean it. The next move is to let that belief reach our instruments — to stop describing the disease in one language and measuring it in another.</p>
+    <p class="close-body">Reductionist measurement got us the antifibrotics, and we will not throw it away. But it cannot be the whole of how we see, because it cannot see the things that make the disease lethal and personal — the loops, the tipping points, the structure that differs from one patient to the next.</p>
+    <p class="close-body">The mathematics for the next step already exists. It was built for systems exactly like this one. The task is not to invent it. It is to deploy it — carefully, validated, alongside what we trust — and to finally measure the disease in the shape it actually has. Complex by diagnosis. It is time it was complex by measurement too.</p>
+    <div class="close-refs">
+      <strong>References — verified against PubMed and publisher records:</strong><br>
+      Barabási, A.-L., Gulbahce, N. &amp; Loscalzo, J. (2011) 'Network medicine: a network-based approach to human disease', <em>Nature Reviews Genetics</em>, 12(1), 56–68. <a href="https://doi.org/10.1038/nrg2918" target="_blank" rel="noopener">doi:10.1038/nrg2918</a><br>
+      Borsboom, D. &amp; Cramer, A.O.J. (2013) 'Network analysis: an integrative approach to the structure of psychopathology', <em>Annual Review of Clinical Psychology</em>, 9, 91–121. <a href="https://doi.org/10.1146/annurev-clinpsy-050212-185608" target="_blank" rel="noopener">doi:10.1146/annurev-clinpsy-050212-185608</a><br>
+      Flaherty, K.R. et al. (2019) 'Nintedanib in progressive fibrosing interstitial lung diseases', <em>New England Journal of Medicine</em>, 381(18), 1718–1727. <a href="https://doi.org/10.1056/NEJMoa1908681" target="_blank" rel="noopener">doi:10.1056/NEJMoa1908681</a><br>
+      Goldberger, A.L. et al. (2002) 'Fractal dynamics in physiology: alterations with disease and aging', <em>PNAS</em>, 99(Suppl. 1), 2466–2472. <a href="https://doi.org/10.1073/pnas.012579499" target="_blank" rel="noopener">doi:10.1073/pnas.012579499</a><br>
+      Ley, B. et al. (2012) 'A multidimensional index and staging system for idiopathic pulmonary fibrosis', <em>Annals of Internal Medicine</em>, 156(10), 684–691. <a href="https://doi.org/10.7326/0003-4819-156-10-201205150-00004" target="_blank" rel="noopener">doi:10.7326/0003-4819-156-10-201205150-00004</a><br>
+      Lipsitz, L.A. &amp; Goldberger, A.L. (1992) 'Loss of "complexity" and aging', <em>JAMA</em>, 267(13), 1806–1809. <a href="https://doi.org/10.1001/jama.1992.03480130122036" target="_blank" rel="noopener">doi:10.1001/jama.1992.03480130122036</a><br>
+      Rizopoulos, D. (2012) <em>Joint Models for Longitudinal and Time-to-Event Data, with Applications in R</em>. Chapman &amp; Hall/CRC. ISBN 9781439872864<br>
+      Ryerson, C.J. et al. (2014) 'Predicting survival across chronic interstitial lung disease: the ILD-GAP model', <em>Chest</em>, 145(4), 723–728. <a href="https://doi.org/10.1378/chest.13-1474" target="_blank" rel="noopener">doi:10.1378/chest.13-1474</a><br>
+      Scheffer, M. et al. (2009) 'Early-warning signals for critical transitions', <em>Nature</em>, 461(7260), 53–59. <a href="https://doi.org/10.1038/nature08227" target="_blank" rel="noopener">doi:10.1038/nature08227</a><br>
+      Scheffer, M. et al. (2012) 'Anticipating critical transitions', <em>Science</em>, 338(6105), 344–348. <a href="https://doi.org/10.1126/science.1225244" target="_blank" rel="noopener">doi:10.1126/science.1225244</a><br>
+      Wells, A.U. et al. (2003) 'Idiopathic pulmonary fibrosis: a composite physiologic index derived from disease extent observed by computed tomography', <em>American Journal of Respiratory and Critical Care Medicine</em>, 167(7), 962–969. <a href="https://doi.org/10.1164/rccm.2111053" target="_blank" rel="noopener">doi:10.1164/rccm.2111053</a>
+    </div>
+    <div class="close-logo">
+      <div>
+        <a href="https://workingcomplexity.health" class="close-logo-wordmark">workingcomplexity</a>
+        <div class="close-logo-sub">— .health</div>
+      </div>
+      <span class="close-scale">WC-BLOG-008 / REV.A · SCALE 1:1 · ALL DIMENSIONS IN EXPERIENCE</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

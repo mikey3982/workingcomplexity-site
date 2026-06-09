@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>I lost something. I also gained something. — Working Complexity</title>
+<meta name="description" content="A personal note on a lifelong attraction — why I have always been drawn to complexity, from a schoolboy's disappointment with Newton to the question that matters most in health care: what matters to you?" />
+<link rel="canonical" href="https://workingcomplexity.health/blog/the-pull-of-complexity.html" />
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='100' height='100' fill='%23060D1B'/%3E%3Cpolygon points='50,2 91.57,26 91.57,74 50,98 8.43,74 8.43,26' stroke='%235B9BD5' stroke-width='0.8' fill='none'/%3E%3Cpolygon points='50,26 70.78,38 70.78,62 50,74 29.22,62 29.22,38' stroke='%23C4A46B' stroke-width='0.8' fill='none'/%3E%3Cpolygon points='50,38 60.39,44 60.39,56 50,62 39.61,56 39.61,44' stroke='%235B9BD5' stroke-width='0.8' fill='none'/%3E%3Ccircle cx='50' cy='50' r='2.5' fill='%23C4A46B'/%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --nearblack:  #060D1B;
+    --offwhite:   #f4f6fa;
+    --paper:      #eaeff7;
+    --gold:       #C4A46B;
+    --gold-dim:   rgba(196,164,107,0.4);
+    --blue:       #5B9BD5;
+    --blue-dim:   rgba(91,155,213,0.14);
+    --border:     rgba(91,155,213,0.18);
+    --muted:      #7A9ABF;
+    --ink:        #0F1E36;
+    --ink-mid:    #3E5870;
+    --ff-display: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --ff-mono:    'Space Mono', 'ui-monospace', 'SFMono-Regular', Menlo, monospace;
+    --max-w: 760px;
+    --gutter: clamp(1.25rem, 5vw, 3rem);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--offwhite);
+    color: var(--ink);
+    font-family: var(--ff-display);
+    font-size: 17px;
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── NAV ──────────────────────────────────────────────── */
+  .wc-nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(6,13,27,0.96);
+    border-bottom: 1px solid rgba(74,144,226,0.18);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.1rem 3rem;
+    backdrop-filter: blur(16px);
+  }
+  .wc-nav-logo {
+    font-family: var(--ff-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    color: #E0E8F4;
+    text-decoration: none;
+    display: flex; flex-direction: column; gap: 2px;
+  }
+  .wc-nav-logo-main { color: #E0E8F4; font-weight: 700; }
+  .wc-nav-logo-sub  { color: var(--gold); font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; }
+  .wc-nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .wc-nav-links a {
+    font-family: var(--ff-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #7A9ABF;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .wc-nav-links a:hover { color: var(--gold); }
+  .wc-nav-cta {
+    font-family: var(--ff-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #060D1B;
+    background: var(--gold);
+    padding: 0.55rem 1.2rem;
+    text-decoration: none;
+    transition: opacity 0.2s;
+  }
+  .wc-nav-cta:hover { opacity: 0.85; }
+  @media (max-width: 720px) {
+    .wc-nav-links, .wc-nav-cta { display: none; }
+    .wc-nav { padding: 1rem 1.25rem; }
+  }
+
+  /* ── ARTICLE COVER ────────────────────────────────────── */
+  .article-cover {
+    padding: clamp(4rem,10vw,7rem) var(--gutter) clamp(2.5rem,5vw,4rem);
+    max-width: calc(var(--max-w) + 2 * var(--gutter));
+    margin: 0 auto;
+  }
+  .doc-code {
+    font-family: var(--ff-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-mid);
+    margin-bottom: 2.2rem;
+    display: block;
+  }
+  .kicker {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    font-family: var(--ff-mono);
+    font-size: 0.72rem;
+    font-weight: 400;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.75rem;
+  }
+  .kicker::before {
+    content: '';
+    display: block; width: 2.5rem; height: 1px;
+    background: var(--gold);
+  }
+  .article-title {
+    font-family: var(--ff-display);
+    font-size: clamp(2.4rem,7vw,4.4rem);
+    font-weight: 800;
+    line-height: 1.05;
+    color: var(--nearblack);
+    letter-spacing: -0.025em;
+    margin-bottom: 0.5rem;
+  }
+  .article-title em {
+    font-style: italic;
+    font-weight: 300;
+    color: var(--gold);
+  }
+  .article-subtitle {
+    font-size: clamp(1rem,2.5vw,1.35rem);
+    font-style: italic;
+    font-weight: 300;
+    color: var(--ink-mid);
+    max-width: 640px;
+    line-height: 1.5;
+    margin-bottom: 2.75rem;
+  }
+  .article-meta {
+    display: flex; align-items: center; gap: 2rem; flex-wrap: wrap;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+  }
+  .meta-item {
+    font-family: var(--ff-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+  }
+  .meta-item strong { color: var(--ink-mid); font-weight: 700; }
+  .meta-ref {
+    font-family: var(--ff-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.06em;
+    color: var(--ink-mid);
+    margin-top: 0.75rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--border);
+    width: 100%;
+  }
+  .meta-ref a { color: var(--blue); text-decoration: none; }
+  .meta-ref a:hover { text-decoration: underline; }
+
+  /* ── ARTICLE BODY ─────────────────────────────────────── */
+  .article {
+    max-width: calc(var(--max-w) + 2 * var(--gutter));
+    margin: 0 auto;
+    padding: 0 var(--gutter) clamp(4rem,8vw,6rem);
+  }
+
+  .article > p:first-of-type::first-letter {
+    font-size: 3.1em;
+    font-weight: 800;
+    line-height: 0.8;
+    float: left;
+    margin: 0.05em 0.08em 0 0;
+    color: var(--gold);
+  }
+
+  h3.subsection {
+    font-family: var(--ff-mono);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin: 2.75rem 0 1rem;
+    padding-top: 2.25rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .article p {
+    margin-bottom: 1.35rem;
+    color: var(--ink);
+    font-weight: 300;
+  }
+  .article p strong { font-weight: 600; color: var(--nearblack); }
+  .article p em { font-style: italic; }
+
+  /* ── CLOSING ──────────────────────────────────────────── */
+  .article-close {
+    background: var(--nearblack);
+    padding: clamp(3rem,7vw,5rem) var(--gutter);
+    margin-top: 4rem;
+  }
+  .close-inner {
+    max-width: var(--max-w);
+    margin: 0 auto;
+  }
+  .close-kicker {
+    font-family: var(--ff-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+    display: block;
+  }
+  .close-statement {
+    font-size: clamp(1.4rem,3vw,2rem);
+    font-weight: 700;
+    color: #E0E8F4;
+    line-height: 1.25;
+    margin-bottom: 1.75rem;
+    letter-spacing: -0.015em;
+  }
+  .close-statement em { font-style: italic; font-weight: 300; color: var(--gold); }
+  .close-body {
+    font-size: 1rem;
+    color: rgba(224,232,244,0.75);
+    line-height: 1.75;
+    max-width: 600px;
+    font-weight: 300;
+  }
+  .close-body + .close-body { margin-top: 1rem; }
+  .close-logo {
+    margin-top: 2.5rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(74,144,226,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .close-logo-wordmark {
+    font-family: var(--ff-mono);
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    color: #E0E8F4;
+    text-decoration: none;
+  }
+  .close-logo-sub {
+    font-family: var(--ff-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-top: 3px;
+  }
+  .close-scale {
+    font-family: var(--ff-mono);
+    font-size: 0.58rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #3E5870;
+  }
+</style>
+</head>
+<body>
+
+<!-- ── NAV ────────────────────────────────────────────────────── -->
+<nav class="wc-nav" aria-label="Site navigation">
+  <a href="https://workingcomplexity.health" class="wc-nav-logo">
+    <span class="wc-nav-logo-main">workingcomplexity</span>
+    <span class="wc-nav-logo-sub">— .health</span>
+  </a>
+  <ul class="wc-nav-links">
+    <li><a href="https://workingcomplexity.health/#services">Services</a></li>
+    <li><a href="https://workingcomplexity.health/#about">About</a></li>
+    <li><a href="/blog/">Writing</a></li>
+    <li><a href="/blog/ai-advisory-board.html">Cast</a></li>
+  </ul>
+  <a href="https://workingcomplexity.health/#contact" class="wc-nav-cta">Get in touch</a>
+</nav>
+
+<!-- ── ARTICLE COVER ─────────────────────────────────────────── -->
+<header class="article-cover">
+  <span class="doc-code">WC-BLOG-009 / THE PULL OF COMPLEXITY / REV.A</span>
+  <span class="kicker">Personal · why complexity</span>
+  <h1 class="article-title">
+    I lost something.<br>
+    <em>I also gained something.</em>
+  </h1>
+  <p class="article-subtitle">
+    A personal note on a lifelong attraction — why I have always been drawn to complexity, and why I believe it matters most of all in health care.
+  </p>
+  <div class="article-meta">
+    <span class="meta-item"><strong>Michael Baldwin</strong></span>
+    <span class="meta-item">workingcomplexity.health</span>
+    <span class="meta-item">June 2026</span>
+    <span class="meta-item"><strong>Reading time</strong> 3 min</span>
+    <div class="meta-ref">
+      A personal essay — first person, and meant as such. Less a position paper than the reason behind them.
+    </div>
+  </div>
+</header>
+
+<!-- ── ARTICLE BODY ───────────────────────────────────────────── -->
+<main class="article">
+
+  <p>
+    I remember vividly at school starting a Physics course post elementary exams and was
+    told Newton's laws were too simple. They were everything to me. I lost something when
+    I went into the field of learning about different dimensions. I also gained something
+    – that area of complexity – and throughout my career I have seen this vacillation
+    between something simple and something complex.
+  </p>
+
+  <h3 class="subsection">The search</h3>
+
+  <p>
+    I've always been fascinated by the complexity of things and how we might understand
+    them. Is it through mathematical equations like in economic models – yes, to an extent.
+    How do we explain those ecosystems? More realistically, does nature and biology really
+    treat surrogate outcomes as simply as we often believe they are? Again, it's important
+    not to confuse association with causation.
+  </p>
+
+  <h3 class="subsection">A language for it</h3>
+
+  <p>
+    I am also interested in the human condition and how as a species we communicate
+    knowledge, and it was in my MBA that I was introduced to the work of Prof Dave Snowden.
+    He talked about stories and the rich data that is passed on through storytelling. There
+    were many other aspects of Dave's work that fascinated me – but the Cynefin framework
+    certainly stopped me in my tracks. The work made sense – a jet engine is complicated,
+    a manual can be written and understood. Simple is as it says and looks at simple
+    correlation – like Newtonian physics. Complex is truly emergent, changing all the time
+    – a jet engine doesn't start to grow separate fuel tanks! Chaos took me to Brownian
+    motion and random effects. Dividing the world into Complicated, Complex, Simple and
+    Chaos and then looking at the leadership qualities in each was certainly a revelation,
+    and something worth more exploration. Again, this is one tool in a range of tools
+    looking at complexity.
+  </p>
+
+  <h3 class="subsection">How deep to go</h3>
+
+  <p>
+    The hardest thing about complexity is the depth to go to. Yes, complexity looks like
+    you are deep down a rabbit hole. But asking the right question and understanding how a
+    system emerges is the skill. This is not just about data and prediction – it also has
+    a human touch, and an ability to learn. Yes, at times I got it wrong, but most times
+    this understanding gives a clear direction of the road to travel and the strategy to
+    follow.
+  </p>
+
+  <h3 class="subsection">Medicine</h3>
+
+  <p>
+    Medicine is complex at all levels – biological, clinical and organisational – and
+    overall this has to be delivered not by oiling the cogs on a machine but with care to
+    humans. Trial data and market share are numbers on a projection screen, but we must
+    always remember that there are people and families behind these numbers, and they,
+    their doctors and their health system are making endless real-time choices – most often
+    from experience and some basis of evidence behind them – or guesses! It's here that I
+    see the tools of complexity being employed. How can we create systems that change the
+    biology, enable the clinical presentation and the clinical conversation through care,
+    and lead to better outcomes – all delivered in an organisation that truly wants the
+    patient to gain every opportunity.
+  </p>
+
+  <p>
+    It is to me why health care is a complex adaptive system, constantly evolving,
+    constantly changing, but the constant is that there are people involved. People working
+    hard to do the right thing, say the right thing, and most important, that the patient
+    improves, stabilises or cures their dis-ease. Joan Tronto's ethics of care taught me
+    that the analytical and the moral are not separate stances. To understand a complex
+    system honestly is to hold the rational and the caring together, and to refuse to
+    pretend that either one alone is enough.
+  </p>
+
+</main>
+
+<!-- ── CLOSING ─────────────────────────────────────────────────── -->
+<footer class="article-close">
+  <div class="close-inner">
+    <span class="close-kicker">Working Complexity — a personal note</span>
+    <p class="close-statement">
+      Overall, complexity gave me – not a way of controlling the world but an understanding
+      of how to be in the world, <em>and guiding us forward.</em>
+    </p>
+    <div class="close-logo">
+      <div>
+        <a href="https://workingcomplexity.health" class="close-logo-wordmark">workingcomplexity</a>
+        <div class="close-logo-sub">— .health</div>
+      </div>
+      <span class="close-scale">WC-BLOG-009 / REV.A · SCALE 1:1 · ALL DIMENSIONS IN EXPERIENCE</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

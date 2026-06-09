@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Do we need to rewild healthcare? — Working Complexity</title>
+<meta name="description" content="Regenerative economics proposes that health systems should operate more like living ecosystems and less like supply chains. Drawing on experiments in the US, China, Japan and Germany — and asking what legal change, evidence and AI need to contribute — we examine whether the UK might be among the first to find out." />
+<link rel="canonical" href="https://workingcomplexity.health/blog/rewild-regenerative-economics.html" />
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='100' height='100' fill='%23060D1B'/%3E%3Cpolygon points='50,2 91.57,26 91.57,74 50,98 8.43,74 8.43,26' stroke='%235B9BD5' stroke-width='0.8' fill='none'/%3E%3Cpolygon points='50,26 70.78,38 70.78,62 50,74 29.22,62 29.22,38' stroke='%23C4A46B' stroke-width='0.8' fill='none'/%3E%3Cpolygon points='50,38 60.39,44 60.39,56 50,62 39.61,56 39.61,44' stroke='%235B9BD5' stroke-width='0.8' fill='none'/%3E%3Ccircle cx='50' cy='50' r='2.5' fill='%23C4A46B'/%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --nearblack:  #060D1B;
+    --offwhite:   #f4f6fa;
+    --paper:      #eaeff7;
+    --gold:       #C4A46B;
+    --gold-dim:   rgba(196,164,107,0.4);
+    --blue:       #5B9BD5;
+    --blue-dim:   rgba(91,155,213,0.14);
+    --border:     rgba(91,155,213,0.18);
+    --muted:      #7A9ABF;
+    --ink:        #0F1E36;
+    --ink-mid:    #3E5870;
+    --ff-display: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --ff-mono:    'Space Mono', 'ui-monospace', 'SFMono-Regular', Menlo, monospace;
+    --max-w: 760px;
+    --gutter: clamp(1.25rem, 5vw, 3rem);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--offwhite);
+    color: var(--ink);
+    font-family: var(--ff-display);
+    font-size: 17px;
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── NAV ──────────────────────────────────────────────── */
+  .wc-nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(6,13,27,0.96);
+    border-bottom: 1px solid rgba(74,144,226,0.18);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.1rem 3rem;
+    backdrop-filter: blur(16px);
+  }
+  .wc-nav-logo {
+    font-family: var(--ff-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    color: #E0E8F4;
+    text-decoration: none;
+    display: flex; flex-direction: column; gap: 2px;
+  }
+  .wc-nav-logo-main { color: #E0E8F4; font-weight: 700; }
+  .wc-nav-logo-sub  { color: var(--gold); font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; }
+  .wc-nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .wc-nav-links a {
+    font-family: var(--ff-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #7A9ABF;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .wc-nav-links a:hover { color: var(--gold); }
+  .wc-nav-cta {
+    font-family: var(--ff-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #060D1B;
+    background: var(--gold);
+    padding: 0.55rem 1.2rem;
+    text-decoration: none;
+    transition: opacity 0.2s;
+  }
+  .wc-nav-cta:hover { opacity: 0.85; }
+  @media (max-width: 720px) {
+    .wc-nav-links, .wc-nav-cta { display: none; }
+    .wc-nav { padding: 1rem 1.25rem; }
+  }
+
+  /* ── ARTICLE HERO ─────────────────────────────────────── */
+  .article-hero {
+    background: var(--nearblack);
+    position: relative;
+    overflow: hidden;
+    padding: clamp(4rem,10vw,7rem) var(--gutter) clamp(3.5rem,7vw,5.5rem);
+  }
+  .article-hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='hex' width='69.28' height='120' patternUnits='userSpaceOnUse'%3E%3Cpolygon points='34.64,0 69.28,20 69.28,60 34.64,80 0,60 0,20' stroke='rgba(74,144,226,0.05)' stroke-width='0.5' fill='none'/%3E%3Cpolygon points='34.64,80 69.28,100 69.28,140 34.64,160 0,140 0,100' stroke='rgba(74,144,226,0.05)' stroke-width='0.5' fill='none'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='url(%23hex)'/%3E%3C/svg%3E");
+    pointer-events: none;
+  }
+  .article-hero::after {
+    content: '';
+    position: absolute;
+    top: 20px; left: 20px;
+    width: 20px; height: 20px;
+    border-top: 1px solid rgba(62,88,112,0.4);
+    border-left: 1px solid rgba(62,88,112,0.4);
+  }
+  .corner-br {
+    position: absolute;
+    bottom: 20px; right: 20px;
+    width: 20px; height: 20px;
+    border-bottom: 1px solid rgba(62,88,112,0.4);
+    border-right: 1px solid rgba(62,88,112,0.4);
+  }
+  .hero-inner {
+    position: relative;
+    max-width: calc(var(--max-w) + 2 * var(--gutter));
+    margin: 0 auto;
+  }
+  .doc-code {
+    font-family: var(--ff-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: #3E5870;
+    display: block;
+    margin-bottom: 2rem;
+  }
+  .article-eyebrow {
+    display: inline-flex; align-items: center; gap: 0.65rem;
+    font-family: var(--ff-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.75rem;
+  }
+  .article-eyebrow::before {
+    content: '';
+    display: block; width: 2rem; height: 1px;
+    background: var(--gold);
+  }
+  .article-hero h1 {
+    font-family: var(--ff-display);
+    font-size: clamp(2.4rem, 6.5vw, 4.2rem);
+    font-weight: 800;
+    line-height: 1.05;
+    color: #E0E8F4;
+    letter-spacing: -0.025em;
+    margin-bottom: 1.2rem;
+    max-width: 740px;
+  }
+  .article-hero h1 em {
+    font-style: normal;
+    font-weight: 300;
+    color: var(--gold);
+  }
+  .article-hero .subtitle {
+    font-size: clamp(1rem, 2.2vw, 1.18rem);
+    font-weight: 300;
+    color: #7A9ABF;
+    line-height: 1.65;
+    max-width: 620px;
+    margin-bottom: 2.5rem;
+  }
+  .article-meta {
+    display: flex; align-items: center; gap: 2rem;
+    flex-wrap: wrap;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(91,155,213,0.18);
+  }
+  .article-meta-item {
+    font-family: var(--ff-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #3E5870;
+  }
+  .article-meta-item strong { color: #7A9ABF; font-weight: 400; }
+  .scale-line {
+    font-family: var(--ff-mono);
+    font-size: 0.55rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #3E5870;
+    position: absolute;
+    bottom: -3.5rem;
+    right: 0;
+  }
+
+  /* ── ARTICLE BODY ─────────────────────────────────────── */
+  .article-wrap {
+    max-width: calc(var(--max-w) + 2 * var(--gutter));
+    margin: 0 auto;
+    padding: clamp(3rem, 7vw, 5rem) var(--gutter);
+  }
+  .article { max-width: var(--max-w); }
+
+  .section-eyebrow {
+    font-family: var(--ff-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+  h2.section-title {
+    font-family: var(--ff-display);
+    font-size: clamp(1.45rem, 3vw, 1.9rem);
+    font-weight: 700;
+    color: var(--nearblack);
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.015em;
+  }
+  h2.section-title em {
+    font-style: italic;
+    font-weight: 300;
+    color: var(--gold);
+  }
+  h3.subsection {
+    font-family: var(--ff-mono);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin: 2.75rem 0 0.85rem;
+  }
+
+  .article p {
+    margin-bottom: 1.4rem;
+    color: var(--ink);
+    font-weight: 300;
+  }
+  .article p strong { font-weight: 600; color: var(--nearblack); }
+  .article p em { font-style: italic; }
+  .article ul {
+    margin: 0 0 1.5rem 0;
+    padding: 0;
+    list-style: none;
+  }
+  .article ul li {
+    padding: 0.4rem 0 0.4rem 1.4rem;
+    color: var(--ink);
+    font-weight: 300;
+    position: relative;
+    line-height: 1.65;
+  }
+  .article ul li::before {
+    content: '—';
+    position: absolute; left: 0;
+    color: var(--gold);
+    font-weight: 400;
+  }
+
+  .section-sep {
+    margin: 3.5rem 0;
+    border: none;
+    border-top: 1px solid var(--border);
+  }
+
+  /* ── PULL QUOTE ───────────────────────────────────────── */
+  .pull-quote {
+    margin: 2.75rem -0.25rem;
+    padding: 1.6rem 2rem;
+    border-top: 1px solid var(--gold);
+    border-bottom: 1px solid var(--gold);
+  }
+  .pull-quote p {
+    font-size: 1.1rem;
+    font-style: italic;
+    line-height: 1.58;
+    color: var(--nearblack);
+    font-weight: 400;
+    margin: 0;
+  }
+  .pull-quote p em { font-weight: 300; color: var(--gold); font-style: normal; }
+
+  /* ── WC INSIGHT BOX ───────────────────────────────────── */
+  .wc-insight {
+    background: var(--nearblack);
+    color: #E0E8F4;
+    padding: 1.6rem 2rem;
+    margin: 3rem 0;
+  }
+  .wc-insight::before {
+    content: 'workingcomplexity — analytical note';
+    font-family: var(--ff-mono);
+    font-size: 0.58rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 0.85rem;
+  }
+  .wc-insight p {
+    color: rgba(224,232,244,0.85);
+    font-size: 0.95rem;
+    margin: 0 !important;
+    line-height: 1.72;
+    font-weight: 300;
+  }
+  .wc-insight p + p { margin-top: 0.9rem !important; }
+  .wc-insight p strong { color: #E0E8F4; font-weight: 600; }
+
+  /* ── CALLOUT ──────────────────────────────────────────── */
+  .callout {
+    background: var(--paper);
+    border-left: 3px solid var(--blue);
+    padding: 1.25rem 1.75rem;
+    margin: 2.25rem 0;
+  }
+  .callout-label {
+    font-family: var(--ff-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--blue);
+    display: block;
+    margin-bottom: 0.55rem;
+  }
+  .callout p {
+    font-size: 0.92rem;
+    color: var(--ink-mid);
+    margin: 0 !important;
+    line-height: 1.65;
+    font-weight: 400;
+  }
+  .callout p + p { margin-top: 0.75rem !important; }
+  .callout p strong { color: var(--nearblack); font-weight: 600; }
+
+  /* ── COUNTRY CARDS ────────────────────────────────────── */
+  .country-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin: 2.5rem 0;
+  }
+  @media (max-width: 620px) { .country-grid { grid-template-columns: 1fr; } }
+  .country-card {
+    background: var(--paper);
+    padding: 1.5rem 1.75rem;
+  }
+  .country-card:nth-child(odd) { background: var(--offwhite); }
+  .country-label {
+    font-family: var(--ff-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 0.4rem;
+  }
+  .country-card h4 {
+    font-size: 1.0rem;
+    font-weight: 700;
+    color: var(--nearblack);
+    margin-bottom: 0.75rem;
+    line-height: 1.3;
+  }
+  .country-card p {
+    font-size: 0.88rem;
+    color: var(--ink-mid);
+    line-height: 1.65;
+    margin: 0 !important;
+    font-weight: 400;
+  }
+  .country-card p + p { margin-top: 0.65rem !important; }
+  .country-tension {
+    font-family: var(--ff-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin-top: 0.85rem;
+    padding-top: 0.7rem;
+    border-top: 1px solid var(--border);
+    display: block;
+  }
+
+  /* ── COMPARISON TABLE ─────────────────────────────────── */
+  .compare-table {
+    margin: 2.5rem 0;
+    border: 1px solid var(--border);
+    overflow: hidden;
+    width: 100%;
+  }
+  .compare-header {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr 1fr;
+    background: var(--nearblack);
+    padding: 0.7rem 0;
+  }
+  .compare-header span {
+    font-family: var(--ff-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    padding: 0 1.2rem;
+  }
+  .compare-row {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr 1fr;
+    border-top: 1px solid var(--border);
+  }
+  .compare-row:nth-child(even) { background: var(--paper); }
+  .compare-row:nth-child(odd) { background: var(--offwhite); }
+  .compare-cell {
+    padding: 0.9rem 1.2rem;
+    font-size: 0.88rem;
+    line-height: 1.55;
+    color: var(--ink-mid);
+    border-right: 1px solid var(--border);
+  }
+  .compare-cell:last-child { border-right: none; }
+  .compare-cell strong { font-weight: 600; color: var(--nearblack); display: block; margin-bottom: 0.1rem; }
+  @media (max-width: 600px) {
+    .compare-header, .compare-row { grid-template-columns: 1fr; }
+    .compare-header span:not(:first-child) { display: none; }
+    .compare-cell { border-right: none; border-top: 1px solid var(--border); }
+  }
+
+  /* ── LEGAL TABLE ──────────────────────────────────────── */
+  .legal-table {
+    margin: 2.5rem 0;
+    border: 1px solid var(--border);
+    overflow: hidden;
+    width: 100%;
+  }
+  .legal-header {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr;
+    background: var(--nearblack);
+    padding: 0.7rem 0;
+  }
+  .legal-header span {
+    font-family: var(--ff-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    padding: 0 1.1rem;
+  }
+  .legal-row {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr;
+    border-top: 1px solid var(--border);
+  }
+  .legal-row:nth-child(even) { background: var(--paper); }
+  .legal-row:nth-child(odd) { background: var(--offwhite); }
+  .legal-cell {
+    padding: 0.9rem 1.1rem;
+    font-size: 0.85rem;
+    line-height: 1.55;
+    color: var(--ink-mid);
+    border-right: 1px solid var(--border);
+    vertical-align: top;
+  }
+  .legal-cell:last-child { border-right: none; }
+  .legal-cell strong { font-weight: 600; color: var(--nearblack); display: block; margin-bottom: 0.2rem; }
+  .tag {
+    font-family: var(--ff-mono);
+    font-size: 0.58rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.12rem 0.45rem;
+    display: inline-block;
+    margin: 0.1rem 0.1rem 0 0;
+  }
+  .tag-acc  { background: rgba(91,155,213,0.15); color: #5B9BD5; }
+  .tag-con  { background: rgba(196,107,107,0.12); color: #C47A6B; }
+  .tag-mix  { background: rgba(196,164,107,0.15); color: #C4A46B; }
+  @media (max-width: 620px) {
+    .legal-header, .legal-row { grid-template-columns: 1fr; }
+    .legal-header span:not(:first-child) { display: none; }
+    .legal-cell { border-right: none; border-top: 1px solid var(--border); }
+  }
+
+  /* ── SIGNAL LIST ──────────────────────────────────────── */
+  .signals-list {
+    list-style: none;
+    margin: 1.5rem 0 2rem;
+    padding: 0;
+  }
+  .signals-list li {
+    display: flex;
+    gap: 1.25rem;
+    padding: 1.2rem 0;
+    border-bottom: 1px solid var(--border);
+    align-items: flex-start;
+  }
+  .signals-list li:last-child { border-bottom: none; }
+  .signal-tag {
+    font-family: var(--ff-mono);
+    font-size: 0.58rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.55rem;
+    flex-shrink: 0;
+    margin-top: 0.2rem;
+    white-space: nowrap;
+  }
+  .signal-tag.uk   { background: rgba(91,155,213,0.15); color: #5B9BD5; }
+  .signal-tag.intl { background: rgba(196,164,107,0.15); color: #C4A46B; }
+  .signal-body strong {
+    display: block;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--nearblack);
+    margin-bottom: 0.2rem;
+  }
+  .signal-body p {
+    font-size: 0.87rem;
+    color: var(--ink-mid);
+    line-height: 1.6;
+    margin: 0 !important;
+    font-weight: 400;
+  }
+
+  /* ── FOOTER ───────────────────────────────────────────── */
+  .wc-footer {
+    background: var(--nearblack);
+    border-top: 1px solid rgba(74,144,226,0.12);
+    padding: 3rem var(--gutter);
+    margin-top: 5rem;
+  }
+  .footer-inner {
+    max-width: calc(var(--max-w) + 2 * var(--gutter));
+    margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: flex-end;
+    flex-wrap: wrap; gap: 2rem;
+  }
+  .footer-logo {
+    font-family: var(--ff-mono);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: #E0E8F4;
+    text-decoration: none;
+    display: flex; flex-direction: column; gap: 3px;
+  }
+  .footer-sub {
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 400;
+  }
+  .footer-meta {
+    font-family: var(--ff-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #3E5870;
+    text-align: right;
+    line-height: 1.9;
+  }
+
+  /* ── BACK LINK ────────────────────────────────────────── */
+  .back-link {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    font-family: var(--ff-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--blue);
+    text-decoration: none;
+    margin-bottom: 3rem;
+    transition: color 0.2s;
+  }
+  .back-link:hover { color: var(--gold); }
+  .back-link::before { content: '←'; font-size: 0.9rem; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="wc-nav" aria-label="Site navigation">
+  <a href="/" class="wc-nav-logo" aria-label="Working Complexity home">
+    <span class="wc-nav-logo-main">workingcomplexity</span>
+    <span class="wc-nav-logo-sub">— .health</span>
+  </a>
+  <ul class="wc-nav-links">
+    <li><a href="/#services">Services</a></li>
+    <li><a href="/#about">About</a></li>
+    <li><a href="/blog/">Writing</a></li>
+  </ul>
+  <a href="/#contact" class="wc-nav-cta">Get in touch</a>
+</nav>
+
+<!-- HERO -->
+<header class="article-hero">
+  <div class="corner-br" aria-hidden="true"></div>
+  <div class="hero-inner">
+    <span class="doc-code">WC-007 / REGENERATIVE ECONOMICS / REV.B</span>
+    <span class="article-eyebrow">Complexity series · 2026</span>
+    <h1>Do we need to <em>rewild</em> healthcare?</h1>
+    <p class="subtitle">Regenerative economics proposes that health systems should operate more like living ecosystems and less like supply chains. Drawing on experiments in the US, China, Japan and Germany — and asking what legal architecture, evidence and AI need to contribute — we examine whether the UK might be among the first to find out.</p>
+    <div class="article-meta">
+      <span class="article-meta-item">By <strong>Working Complexity</strong></span>
+      <span class="article-meta-item">Published <strong>May 2026</strong></span>
+      <span class="article-meta-item">Reading time <strong>~26 min</strong></span>
+      <span class="article-meta-item">Series <strong>Understanding complexity</strong></span>
+    </div>
+    <span class="scale-line">SCALE 1:1 · ALL DIMENSIONS IN EXPERIENCE</span>
+  </div>
+</header>
+
+<!-- ARTICLE BODY -->
+<div class="article-wrap">
+  <div class="article">
+    <a href="/blog/" class="back-link">All writing</a>
+
+    <!-- §01 THE METAPHOR -->
+    <span class="section-eyebrow">§01 — The metaphor</span>
+    <h2 class="section-title">Not a nature documentary. <em>A structural argument.</em></h2>
+
+    <p>The word comes from ecology. To rewild is to step back — to reduce human management, restore natural process, allow the system to find its own complexity. At Knepp in West Sussex, where Isabella Tree and Charlie Burrell gave up on conventional agriculture and let grazing herds move across 3,500 acres of former arable land, the results confounded every expectation. Turtle doves. Purple emperor butterflies. Nightingales. Life that hadn't been planned for, hadn't been audited, hadn't appeared in any five-year strategy. It emerged.</p>
+
+    <p>The question this essay asks — seriously, not rhetorically — is whether the same instinct holds something for healthcare. Whether the move toward longer time horizons, reduced central management, and genuine confidence in the intelligence of living systems might produce health outcomes that our current apparatus is structurally unable to generate.</p>
+
+    <p>It is an uncomfortable question. Healthcare is also the domain where uncertainty kills, where improvisation has a body count, where protocols exist not to suppress complexity but to manage it safely. We are not arguing for a health system that stops managing itself and waits for nightingales. We are asking whether the economic framework under which we design, fund, and assess health systems needs to be rebuilt from a different set of first principles — and if so, what law, evidence, and technology would need to provide before that argument becomes actionable.</p>
+
+    <div class="pull-quote">
+      <p>The NHS's perpetual efficiency crisis is not primarily a management failure. It is a structural consequence of designing a system to optimise for throughput in a domain that generates value through <em>relationships, continuity, and the slow accumulation of trust.</em></p>
+    </div>
+
+    <hr class="section-sep">
+
+    <!-- §02 THE PROPOSITION -->
+    <span class="section-eyebrow">§02 — The proposition</span>
+    <h2 class="section-title">What regenerative economics <em>actually</em> argues</h2>
+
+    <p>Regenerative economics is not an anti-market position. It is a critique of a particular economic logic — one that treats value as a flow of financial return, time horizons as a function of political cycles, and natural and social capital as externalities to be managed off the balance sheet.</p>
+
+    <p>In healthcare, that logic shows up as: activity-based payment that rewards throughput over outcomes, commissioning cycles measured in years rather than decades, quality-adjusted life years as the primary unit of value, and chronic under-investment in the conditions — community trust, social connection, continuity of relationship — that generate health in the first place. The regenerative alternative, drawing on thinkers from Kate Raworth's doughnut economics to Partha Dasgupta's natural capital framework, reframes the question. Health is not a cost to be managed. It is capital — social, ecological, and human — that produces everything else.</p>
+
+    <p>Three principles carry the most practical weight for health systems. <strong>Stewardship over extraction</strong> — providers as custodians of an ecosystem's health rather than service providers delivering episodes of care. <strong>Multi-capital accounting</strong> — the social return of a community pharmacy, the reduced isolation and early warning function, made legible in the commissioning system alongside dispensing volumes. <strong>Patient capital and process funding</strong> — the recognition that the repair of damaged social and biological systems requires time horizons longer than any political cycle, funded reliably and without the constant pressure to re-prove viability on short grant cycles.</p>
+
+    <hr class="section-sep">
+
+    <!-- §03 FOUR EXPERIMENTS -->
+    <span class="section-eyebrow">§03 — Four experiments</span>
+    <h2 class="section-title">What the US, China, Japan and Germany <em>reveal</em></h2>
+
+    <p>Regenerative principles in healthcare are not hypothetical. Partial versions of them are being enacted — and contested — across the world's four largest health economies outside the UK. Each country illuminates a different dimension of the argument, and each reveals a different binding constraint.</p>
+
+    <div class="country-grid">
+      <div class="country-card">
+        <span class="country-label">United States</span>
+        <h4>Capital available. Platform fragmented.</h4>
+        <p>The US health system is the starkest demonstration of extractive economics in action — and, paradoxically, also the site of some of the most compelling regenerative experiments. The Evergreen Cooperatives in Cleveland — worker-owned enterprises providing services to major anchor institutions, including healthcare systems — demonstrate distributive design in practice: wealth built within a community, not extracted from it. The Oberlin Project, linking the city, college, and local hospitals in a shared commitment to sourcing food from local growers, connects ecological and human capital through the healthcare system's purchasing power.</p>
+        <p>Oregon's Coordinated Care Organisations represent the most structurally advanced bioregional health model in the US — place-based, globally budgeted, accountable for population health outcomes across a defined geography. Vermont's All-Payer model has gone further still, attempting a generational shift toward prevention investment with state-wide accountability. Both remain fragile, dependent on federal waivers, and unable to displace the deeper logic of a system where private equity has acquired thousands of physician practices and dozens of community hospitals specifically for the financial returns available from margin extraction rather than health generation.</p>
+        <p>The US has the private capital and the innovation culture for regenerative finance. What it lacks is the legal and political platform. ERISA, the 1974 federal statute governing employer health benefits, preempts state-level regulatory innovation for the majority of the working-age insured population. The Inflation Reduction Act (2022) has begun to demonstrate what catalytic public capital can achieve in energy transition — the equivalent in healthcare has not been legislated.</p>
+        <span class="country-tension">Binding constraint: legal fragmentation and private equity extraction</span>
+      </div>
+      <div class="country-card">
+        <span class="country-label">China</span>
+        <h4>Long time horizons. Absent community agency.</h4>
+        <p>China's structural capacity for regenerative investment is, in one dimension, unmatched. The central government can commit to twenty-year programmes — and has done so. The Loess Plateau Watershed Rehabilitation Project restored 3.5 million hectares of degraded land, lifted 2.5 million people out of poverty, and reduced sediment flow into the Yellow River over two decades of sustained investment: multi-capital returns at extraordinary scale, made possible by patient state capital. The Sponge City programme — replacing hard urban infrastructure with nature-based solutions to absorb and reuse rainwater across forty cities — directly improves community health outcomes as a consequence of ecological investment.</p>
+        <p>China's Healthy China 2030 strategy sets explicit long-horizon national targets for population health, environmental quality, and traditional medicine integration. The 2009 Law for the Promotion of the Circular Economy provides a national legal framework for regenerative economic principles. Since 2018, "ecological civilisation" (生态文明) is enshrined in the constitution. The time horizon and the legal infrastructure exist.</p>
+        <p>The binding constraint is the one regenerative economics specifically requires: genuine community agency. Bioregional stewardship depends on local populations having authentic custodianship over their health environment — the power to define what health means in their place, to shape the social contract that governs it. China's governance structure does not permit that in any meaningful sense. The risk is that what looks like regenerative investment is, in practice, sophisticated central extraction with ecological characteristics.</p>
+        <span class="country-tension">Binding constraint: central planning without community custodianship</span>
+      </div>
+      <div class="country-card">
+        <span class="country-label">Japan</span>
+        <h4>Community care codified. Growth logic still embedded.</h4>
+        <p>Japan has arguably gone furthest among large economies in codifying place-based, long-horizon health care into statute. The Community-Based Integrated Care System (地域包括ケアシステム), written into national policy in 2012 and continuously strengthened since, explicitly organises elder care around geographic communities — the hospital, the GP, the community nurse, the social worker, and the family — as an integrated stewardship network rather than a series of discrete service episodes. The Long-Term Care Insurance Act (2000) established a national patient capital structure for elder care that has now accumulated twenty-five years of social investment.</p>
+        <p>The Satoyama concept — traditional Japanese landscape management at the productive interface between human settlement and nature — has been revived as an ecological and social framework, and the UN's Satoyama Initiative now draws on it as a global model for place-rooted stewardship. Dan Buettner's Blue Zones research has repeatedly identified Okinawa as a longevity outlier: the evidence that place-specific social structures generate long-term health outcomes exists, and it is Japanese.</p>
+        <p>The tension is that Japan's growth-agnostic financial policy — it has operated negative interest rates since 2014, implicitly accepting that quantitative growth is no longer the organising principle of its economy — aligns with regenerative economics in theory, while the country's healthcare and pharmaceutical sectors remain organised around the growth and extraction logic they inherited from post-war development. The social care infrastructure is regenerative; the healthcare financing system largely is not.</p>
+        <span class="country-tension">Binding constraint: growth logic in healthcare contradicts regenerative social care</span>
+      </div>
+      <div class="country-card">
+        <span class="country-label">Germany</span>
+        <h4>The legal structure exists. The competitive reform undid it.</h4>
+        <p>Germany comes closest, among G7 economies, to having the legal and institutional infrastructure for regenerative healthcare financing already in place. The <em>Soziale Marktwirtschaft</em> — the social market economy — is not simply a political slogan; it is a constitutional and legal tradition that recognises the legitimacy of social and ecological constraints on market activity. The <em>gemeinnützige GmbH</em> (gGmbH) legal structure provides a vehicle for social enterprise at scale, with the asset lock and charitable purpose requirement that prevent extraction. Germany's sickness funds (Krankenkassen) are quasi-public cooperative entities with social missions embedded in their legal foundations.</p>
+        <p>The Energiewende is the most instructive precedent. The 1999 eco-tax — shifting the tax burden from labour to resource use — reduced fuel consumption by 17% and generated 250,000 jobs over four years: a demonstrable multi-capital outcome at national scale. The 2004 feed-in tariff, requiring the state to pay above-market prices to households and institutions generating renewable energy, generated 30% renewable electricity within a decade. These are state-financed, long-horizon, stewardship-oriented transitions. They are also evidence that the Energiewende model transfers.</p>
+        <p>The binding constraint is that competitive reform of the sickness funds — introduced in the 1990s and 2000s specifically to introduce market incentives — has imposed an extractive logic onto institutions with regenerative foundations. The sickness funds now compete for members on price and service, which rewards throughput optimisation rather than population health stewardship. The legal infrastructure for a regenerative healthcare system exists in Germany; the competitive market overlay is dismantling it slowly.</p>
+        <span class="country-tension">Binding constraint: competitive market reform eroding cooperative foundations</span>
+      </div>
+    </div>
+
+    <p>The pattern across all four is consistent. The regenerative argument is structurally compelling. The binding constraints are specific and legal: fragmented jurisdiction (US), absent community agency (China), growth-logic persistence (Japan), competitive market overlay (Germany). None of these constraints is immovable. All of them require deliberate legislative change to shift.</p>
+
+    <hr class="section-sep">
+
+    <!-- §04 WHY COMPLICATED MECHANISMS WORK -->
+    <span class="section-eyebrow">§04 — The counterargument</span>
+    <h2 class="section-title">Why complicated mechanisms work — and shouldn't be abandoned</h2>
+
+    <p>There is a version of the regenerative argument that, pursued too far, becomes romantic. It would have us dismantle the NICE appraisal process, abandon randomised evidence, and trust in emergence. That is not the argument we are making. But it deserves honest engagement, because the case for the complicated machinery of modern healthcare is real and strong.</p>
+
+    <h3 class="subsection">The case for QALYs</h3>
+    <p>QALYs exist because without them, commissioners face impossible choices with no shared language. The £20,000 to £30,000 per QALY threshold is arbitrary — health economists will say that freely. But it is a <em>shared</em> arbitrary. It makes resource allocation contestable, forces transparency about trade-offs, and gives patient advocates a lever against decisions made on other grounds. Healthcare systems that have abandoned explicit cost-effectiveness thresholds have not become more regenerative; they have become more captured by the best-organised lobbying coalitions, less equitable in treatment access, and harder to hold to account.</p>
+
+    <h3 class="subsection">The case for clinical guidelines</h3>
+    <p>Clinical guidelines reduce variance — and variance, in healthcare, often means inequity. The successive inquiries into care failures at Stafford, Morecambe Bay, and East Kent are, in large part, stories of what happens when local autonomy is exercised without accountability structures. The complicated protocols that feel like a straightjacket to clinicians in well-functioning systems are, in failing systems, the only mechanism preventing harm from becoming catastrophic. Rewilding a dysfunctional system is not the same as rewilding a healthy one. Knepp works because the land had retained sufficient fertility. Some NHS settings have not.</p>
+
+    <h3 class="subsection">The case for randomised evidence</h3>
+    <p>Randomised controlled trials were designed for something simpler than complex adaptive systems — but they remain the most reliable method we have for separating causal signal from confounded noise in biological systems. The regenerative critique of evidence hierarchies is often a critique of the wrong level of the hierarchy. The question is not whether evidence is necessary; it is whether the evidence we collect measures the right outcomes across the right timeframes at the right scale.</p>
+
+    <div class="wc-insight">
+      <p><strong>The core distinction:</strong> complicated mechanisms are fit for complicated problems. They fail — not because they are wrong but because they are misapplied — when the problem is genuinely complex. Complicated problems have many components but known relationships between them. Complex problems have emergent properties, non-linear dynamics, and feedback loops that make prediction structurally uncertain.</p>
+      <p>Healthcare contains both. The pharmacokinetics of a specific drug in a defined patient population is a complicated problem — RCTs, guidelines, and cost-effectiveness thresholds are the right tools. The health of a de-industrialised community in Rotherham or Detroit is a complex problem — those same tools, applied without adaptation, produce confident-looking numbers and poor decisions. The challenge is not to choose a framework but to develop the institutional capacity to know which kind of problem is in front of you, and to reach for the appropriate instrument.</p>
+    </div>
+
+    <hr class="section-sep">
+
+    <!-- §05 TWO LOGICS -->
+    <span class="section-eyebrow">§05 — Mapping the difference</span>
+    <h2 class="section-title">Two logics. One system trying to hold both.</h2>
+
+    <p>The following is not a hierarchy. Neither logic is unconditionally correct. They operate at different scales, on different timescales, and for different kinds of problems. The NHS needs both. What it lacks is a clear account of when to apply which — and the legal and financial structures to fund the second column with any reliability.</p>
+
+    <div class="compare-table" role="table" aria-label="Extractive vs regenerative healthcare logic">
+      <div class="compare-header" role="row">
+        <span role="columnheader">Dimension</span>
+        <span role="columnheader">Extractive / complicated logic</span>
+        <span role="columnheader">Regenerative / complex logic</span>
+      </div>
+      <div class="compare-row" role="row">
+        <div class="compare-cell" role="cell"><strong>Unit of value</strong>The metric used to assess system performance</div>
+        <div class="compare-cell" role="cell">Activity volume, QALYs, cost per episode</div>
+        <div class="compare-cell" role="cell">Multi-capital returns — social, ecological, human, financial</div>
+      </div>
+      <div class="compare-row" role="row">
+        <div class="compare-cell" role="cell"><strong>Time horizon</strong>The period over which returns are assessed</div>
+        <div class="compare-cell" role="cell">1–5 years (commissioning / political cycle)</div>
+        <div class="compare-cell" role="cell">10–20+ years (generational / ecological timescale)</div>
+      </div>
+      <div class="compare-row" role="row">
+        <div class="compare-cell" role="cell"><strong>What is funded</strong>The object of investment</div>
+        <div class="compare-cell" role="cell">Specific interventions with measurable outputs</div>
+        <div class="compare-cell" role="cell">Process and relationships — the conditions for health</div>
+      </div>
+      <div class="compare-row" role="row">
+        <div class="compare-cell" role="cell"><strong>System model</strong>How the system is understood</div>
+        <div class="compare-cell" role="cell">Linear: defined input produces defined output</div>
+        <div class="compare-cell" role="cell">Non-linear: leverage points, feedback, emergence</div>
+      </div>
+      <div class="compare-row" role="row">
+        <div class="compare-cell" role="cell"><strong>Decision mode</strong>How choices are made under uncertainty</div>
+        <div class="compare-cell" role="cell">"Rational economic man" — exhaustive analysis, optimised choice</div>
+        <div class="compare-cell" role="cell">"Heuristic man" — fast and frugal rules, adaptive learning</div>
+      </div>
+      <div class="compare-row" role="row">
+        <div class="compare-cell" role="cell"><strong>Scale of governance</strong>Where decisions are made</div>
+        <div class="compare-cell" role="cell">Centralised, national, standardised</div>
+        <div class="compare-cell" role="cell">Bioregional — place-rooted, community custodian</div>
+      </div>
+      <div class="compare-row" role="row">
+        <div class="compare-cell" role="cell"><strong>Failure mode</strong>What goes wrong when pushed too far</div>
+        <div class="compare-cell" role="cell">Brittle efficiency — optimised systems that fracture under stress</div>
+        <div class="compare-cell" role="cell">Accountability deficit — valuable but invisible, captured by advocates</div>
+      </div>
+    </div>
+
+    <hr class="section-sep">
+
+    <!-- §06 LEGAL ARCHITECTURE -->
+    <span class="section-eyebrow">§06 — The legal question</span>
+    <h2 class="section-title">What the law needs to do — <em>and who it would threaten</em></h2>
+
+    <p>The international evidence suggests that regenerative healthcare is not primarily a technology or a clinical problem. It is a legal problem. The binding constraints in every country we examined are legislative: what commissioning law permits, what accounting standards recognise, what financial regulation allows, what intellectual property frameworks protect. Moving from theory to practice requires specific legislative change — and an honest account of whose interests those changes would threaten.</p>
+
+    <h3 class="subsection">Five legal shifts and their consequences</h3>
+
+    <div class="legal-table" role="table" aria-label="Legal changes, accelerators and constraints">
+      <div class="legal-header" role="row">
+        <span role="columnheader">Legal change</span>
+        <span role="columnheader">Who is accelerated</span>
+        <span role="columnheader">Who is constrained</span>
+      </div>
+      <div class="legal-row" role="row">
+        <div class="legal-cell" role="cell">
+          <strong>Long-horizon NHS contracts (10–20 yr process funding)</strong>
+          Changes to procurement law enabling multi-decade, unrestricted relational contracts for community health — as opposed to the current 1–3 year competitive tender cycle.
+        </div>
+        <div class="legal-cell" role="cell">
+          <span class="tag tag-acc">Accelerates</span> Community and VCSE organisations — the permanent staff and deep community partnerships that make regenerative health possible become fundable.<br><br>
+          <span class="tag tag-acc">Accelerates</span> ICBs and commissioners seeking population health results over long time horizons rather than quarterly activity.
+        </div>
+        <div class="legal-cell" role="cell">
+          <span class="tag tag-con">Constrains</span> Private equity-owned providers whose model depends on contract re-tendering and exit timelines of 5–8 years.<br><br>
+          <span class="tag tag-con">Constrains</span> Large acute trusts that currently benefit from competitive procurement processes to absorb community service contracts.
+        </div>
+      </div>
+      <div class="legal-row" role="row">
+        <div class="legal-cell" role="cell">
+          <strong>Mandatory multi-capital accounting</strong>
+          Requiring health systems and their suppliers to register natural and social capital degradation as balance sheet liabilities — on the model of the EU Corporate Sustainability Reporting Directive (CSRD) or the Dasgupta Review's recommended natural capital accounts.
+        </div>
+        <div class="legal-cell" role="cell">
+          <span class="tag tag-acc">Accelerates</span> Community health organisations and VCSE bodies whose social value — currently invisible to commissioners — would become financially legible.<br><br>
+          <span class="tag tag-acc">Accelerates</span> Prevention-focused NHS programmes whose long-run value is routinely discounted by conventional accounting.
+        </div>
+        <div class="legal-cell" role="cell">
+          <span class="tag tag-con">Constrains</span> Pharmaceutical companies whose IP-intensive, high-margin model generates negative social and ecological externalities that multi-capital accounting would make explicit.<br><br>
+          <span class="tag tag-con">Constrains</span> Medical device and supply chain companies with poor environmental footprints currently invisible in NHS procurement criteria.
+        </div>
+      </div>
+      <div class="legal-row" role="row">
+        <div class="legal-cell" role="cell">
+          <strong>Patient capital and evergreen investing structures</strong>
+          Reforming pension fund fiduciary rules and NHS capital allocation to enable long-horizon impact investment — including evergreen direct investing structures that pay investors a perpetual income share rather than a profit-based exit.
+        </div>
+        <div class="legal-cell" role="cell">
+          <span class="tag tag-acc">Accelerates</span> Pension funds whose long-term obligations align structurally with regenerative health investment timescales.<br><br>
+          <span class="tag tag-acc">Accelerates</span> NHS trusts seeking stable, long-term capital for community infrastructure rather than PFI-style debt.
+        </div>
+        <div class="legal-cell" role="cell">
+          <span class="tag tag-con">Constrains</span> Financial intermediaries — investment banks, advisory firms — whose fees depend on transactional capital cycles rather than patient investment.<br><br>
+          <span class="tag tag-mix">Mixed</span> NHS providers: access to patient capital is an accelerator; accountability for long-term population health outcomes is a constraint on current operating models.
+        </div>
+      </div>
+      <div class="legal-row" role="row">
+        <div class="legal-cell" role="cell">
+          <strong>Community asset protection and right to buy</strong>
+          Legal mechanisms preventing the acquisition of community health assets — GP practices, pharmacies, community hospitals — by private equity, and giving communities the right to take assets into collective stewardship. The Scottish Community Empowerment Act (2015) and Welsh development are the closest existing UK models.
+        </div>
+        <div class="legal-cell" role="cell">
+          <span class="tag tag-acc">Accelerates</span> Communities, patient groups, and local authorities seeking to maintain place-rooted health infrastructure.<br><br>
+          <span class="tag tag-acc">Accelerates</span> Integrated Care Systems attempting to build long-term community partnerships without the constant threat of asset acquisition by external investors.
+        </div>
+        <div class="legal-cell" role="cell">
+          <span class="tag tag-con">Constrains</span> Private equity healthcare funds that have acquired significant primary and community care infrastructure specifically for asset appreciation and margin extraction.<br><br>
+          <span class="tag tag-con">Constrains</span> Large hospital groups expanding community care through acquisition rather than partnership.
+        </div>
+      </div>
+      <div class="legal-row" role="row">
+        <div class="legal-cell" role="cell">
+          <strong>Complementary currency and time-banking law</strong>
+          Legal recognition of care-time credits — on the model of Switzerland's Zeitvorsorge, where citizens earn credits for caregiving tasks redeemable for their own future healthcare — and community currencies rewarding health-positive behaviours. Requires e-money regulatory reform, tax treatment clarity, and anti-money-laundering safe harbours.
+        </div>
+        <div class="legal-cell" role="cell">
+          <span class="tag tag-acc">Accelerates</span> Communities — particularly in areas of low formal employment — whose care labour becomes economically recognised and exchangeable.<br><br>
+          <span class="tag tag-acc">Accelerates</span> Social prescribing networks that currently rely on volunteer goodwill without economic recognition.
+        </div>
+        <div class="legal-cell" role="cell">
+          <span class="tag tag-con">Constrains</span> Financial regulators who would face a significant compliance and monitoring burden from hundreds of local currency schemes.<br><br>
+          <span class="tag tag-mix">Mixed</span> NHS commissioners — gains a cost-effective mechanism for community health activation, but loses the simplicity of conventional procurement accountability.
+        </div>
+      </div>
+    </div>
+
+    <p>The pattern in the table above is not subtle. The same four actors — private equity healthcare investors, pharmaceutical companies on their current business model, financial intermediaries dependent on transactional capital, and large acute providers that have grown by absorbing community services — are constrained by every significant legal shift that regenerative economics requires. This is not an argument against those changes. It is an argument for clarity about where the political resistance will come from, and for designing transition frameworks that acknowledge legitimate interests rather than simply overriding them.</p>
+
+    <p>The Wales Wellbeing of Future Generations Act (2015) is the most sophisticated legal framework currently in operation anywhere in the world for this kind of shift. It places a statutory duty on all public bodies — including health boards — to act in accordance with sustainable development principles, appoints a Future Generations Commissioner with powers of review and intervention, and requires public bodies to demonstrate how their decisions serve the needs of people who are not yet born. It does not specify regenerative economics. But it creates the constitutional architecture within which regenerative health investment can be funded, evaluated, and defended against the short-term efficiency arguments that otherwise always win.</p>
+
+    <hr class="section-sep">
+
+    <!-- §07 WEAK SIGNALS AND PIONEERS -->
+    <span class="section-eyebrow">§07 — Weak signals</span>
+    <h2 class="section-title">Who is already moving — and what <em>pioneer</em> actually means</h2>
+
+    <p>In complexity theory, a weak signal is a small, early, often counterintuitive indicator of emergent system change. Weak signals do not look like the future when they appear. They look like anomalies — underfunded pilots, eccentric local authorities, legislative experiments that seem disproportionate to the problem they address. Their significance is only legible in retrospect, once the system has shifted around them.</p>
+
+    <p>There are weak signals in healthcare that point toward the regenerative transition. They are fragile. They are unevenly distributed. And they are disproportionately concentrated in the United Kingdom — specifically in its devolved nations.</p>
+
+    <ul class="signals-list">
+      <li>
+        <span class="signal-tag uk">Wales</span>
+        <div class="signal-body">
+          <strong>Wellbeing of Future Generations Act (2015)</strong>
+          <p>The only legislation in the world that gives a statutory commissioner — Derek Walker, the Future Generations Commissioner for Wales — legal power over public bodies' long-term planning. Health boards in Wales must demonstrate how their decisions serve people not yet born. This is regenerative governance encoded in law. It is not yet transforming Welsh health outcomes at population scale; but the constitutional architecture for doing so exists, and nothing equivalent exists in England, the US, China, Japan, or Germany.</p>
+        </div>
+      </li>
+      <li>
+        <span class="signal-tag uk">England</span>
+        <div class="signal-body">
+          <strong>The Preston Model and community wealth building</strong>
+          <p>Preston City Council's anchor institution strategy — redirecting procurement spending through local cooperatives and community businesses — increased the proportion of council spending retained in the local economy from 5% to 28% over a decade, without additional central government funding. More than sixty UK councils have adopted variants of the model. The Evergreen Cooperatives in Cleveland, Ohio and the Oberlin hospital-to-farm supply chain are its American analogues. None of these are health programmes. All of them demonstrate that the economic infrastructure for regenerative health investment can be built within existing legal structures, before the legal structures change.</p>
+        </div>
+      </li>
+      <li>
+        <span class="signal-tag uk">England</span>
+        <div class="signal-body">
+          <strong>Integrated Care Systems as legally constituted bioregional units</strong>
+          <p>The Health and Care Act (2022) created ICBs as statutory bodies with population health responsibility across defined geographies. This is, in structural terms, the bioregional governance unit that regenerative economics requires. The gap between the design intent and the operating reality is significant — ICS spending plans still tilt heavily toward acute care, and VCSE partners remain on short fragile contracts. But the legal entity exists. No other G7 country has created an equivalent statutory bioregional health body across its entire territory.</p>
+        </div>
+      </li>
+      <li>
+        <span class="signal-tag uk">Scotland</span>
+        <div class="signal-body">
+          <strong>Wellbeing Economy Government and community asset transfer</strong>
+          <p>Scotland has explicitly adopted the "wellbeing economy" framing as a government position — one of only four national governments in the Wellbeing Economy Governments partnership (alongside Iceland, New Zealand, and Finland). The Community Empowerment Act (2015) gives communities a right to request asset transfer from public bodies, and requires those bodies to demonstrate why transfer would not be in the public interest. These are structural protections for the community stewardship layer that regenerative health depends on.</p>
+        </div>
+      </li>
+      <li>
+        <span class="signal-tag intl">New Zealand</span>
+        <div class="signal-body">
+          <strong>Living Standards Framework and Wellbeing Budget</strong>
+          <p>New Zealand's Treasury uses a multi-capital Living Standards Framework as the basis for the national budget — the nearest existing example of multi-capital accounting applied at government level. The 2019 Wellbeing Budget directed spending explicitly toward mental health, child poverty, and Māori and Pasifika wellbeing rather than GDP growth. It is partial, contested, and politically vulnerable. It is also the most advanced implementation of multi-capital public accounting in a developed economy.</p>
+        </div>
+      </li>
+      <li>
+        <span class="signal-tag intl">Nordic countries</span>
+        <div class="signal-body">
+          <strong>Welfare state traditions compatible with regenerative framing</strong>
+          <p>Finland, Iceland, and Denmark carry long-horizon social investment traditions that pre-date regenerative economics but are structurally compatible with it. Finland's baby box programme — universal material support for newborns since 1938 — demonstrates that the political will for intergenerational stewardship investment can persist across eighty-year timescales. Iceland's gender equality framework and Denmark's cooperative social service sector both embody the distributive design principle. These are not experiments; they are mature systems demonstrating that long-horizon, multi-stakeholder health investment is politically sustainable.</p>
+        </div>
+      </li>
+    </ul>
+
+    <p>What does it mean to be a pioneer in a complex system? Pioneers absorb the early costs of system transition — the political resistance, the measurement uncertainty, the mis-steps of learning — and generate the template that others adopt when conditions have shifted. They rarely benefit fully from what they establish. The first country to demonstrate that a regenerative health system can outperform a conventional one on population health outcomes, at comparable cost, will have produced something worth far more than any single health improvement. They will have provided the evidence that changes the argument globally.</p>
+
+    <p>The UK — specifically Wales, Scotland, and the embryonic ICS structures in England — is better positioned for that role than any other country we have examined. It has a universal public health system that functions as a single legal entity, a data holder, and a population-level social contract simultaneously. It has the devolved legislative experiments. It has a strong VCSE sector and a community wealth building movement that have already demonstrated regenerative economics in practice. It has Partha Dasgupta's natural capital framework, produced for the UK Treasury, providing intellectual legitimacy at the highest level.</p>
+
+    <p>What it lacks is time. The fragility of the NHS's political settlement, the pace of private equity acquisition of community health infrastructure, and the short cycles of government mean that the window for this kind of structural experiment is narrower than the timescales regenerative investment requires. Pioneer status is not guaranteed. It has to be chosen — deliberately, with resources, and with the institutional will to measure failure as rigorously as success.</p>
+
+    <hr class="section-sep">
+
+    <!-- §08 EVIDENCE -->
+    <span class="section-eyebrow">§08 — What we don't know</span>
+    <h2 class="section-title">The evidence question. <em>Honest.</em></h2>
+
+    <p>We should be direct about the limits of the current evidence base, even after examining four national healthcare systems and a range of legal frameworks.</p>
+
+    <p>The regenerative case draws heavily on landscape restoration, agricultural economics, and community development. The Loess Plateau project is compelling evidence that regenerative investment at scale produces multi-capital returns — but the transfer to healthcare is an analogy, not a proof. The Torekes complementary currency in Ghent is suggestive; it is not a controlled study. Oregon's CCOs are the nearest equivalent to a population-level bioregional health experiment, and after fifteen years the evidence on population health outcomes is promising but not yet definitive. New Zealand's Wellbeing Budget is two parliamentary terms old.</p>
+
+    <div class="callout">
+      <span class="callout-label">What the evidence gap looks like</span>
+      <p>We do not yet have a convincing body of population-level, longitudinal evidence that regenerative health financing produces better health outcomes than conventional investment at comparable cost and over comparable time horizons. That is not an argument against the approach. It is an argument for building the infrastructure to generate that evidence rigorously — and for being honest with commissioners, patients, and politicians about the current strength of the case while doing so.</p>
+      <p><strong>The structural reason for the gap is the mismatch.</strong> Regenerative approaches require long time horizons; most research funding cycles are five years or fewer. They generate value across multiple capitals simultaneously; most outcome measures are single-domain. They are place-specific; most trials are designed to produce generalisable findings. The evaluation system is calibrated for a different kind of intervention.</p>
+    </div>
+
+    <p>The honest position for commissioners is this: there is sufficient theoretical grounding and case-study evidence to justify structured, well-evaluated pilots with genuine process funding and long time horizons. There is not yet enough to justify wholesale reallocation of finite NHS resources away from conventional care. That second step requires the evidence that only a first step can generate. The pioneers in §07 above are generating it. The question is whether the UK's institutional structures can hold long enough to collect it.</p>
+
+    <hr class="section-sep">
+
+    <!-- §09 AI AND MEASUREMENT -->
+    <span class="section-eyebrow">§09 — The technology question</span>
+    <h2 class="section-title">Where AI changes the equation — and where it <em>doesn't</em></h2>
+
+    <p>The most substantive connection between regenerative economics and the current moment in technology is measurement. Regenerative approaches have always suffered from a data problem: the value they create is multi-dimensional, long-horizon, and difficult to attribute. Financial returns can be calculated at quarter end. The social return on a community health worker who has maintained a network of isolated older adults for fifteen years is real — but it lives in the unquantified space between prevented hospital admissions and things that never happened.</p>
+
+    <p>AI changes this in a specific and limited way. What AI can do — at scale, in near real time — is pattern recognition across heterogeneous data streams. Population health surveillance, social care records, primary care contacts, community network data, environmental indicators, housing and deprivation indices: these data sources exist within the NHS. They are fragmented, poorly linked, and largely unused for anything beyond operational reporting. A digital measurement, reporting, and verification infrastructure — of the kind that regenerative finance (ReFi) has been developing for ecosystem services through platforms like Regen Network — could make multi-capital value visible and attributable in ways that have not previously been tractable. This is AI as the accounting infrastructure for a different kind of value, one that the current system is structurally unable to see.</p>
+
+    <p>The harder version of the argument is more important. The concept of "heuristic man" from complexity research — the finding that fast-and-frugal decision heuristics outperform data-heavy algorithms in genuinely uncertain environments — suggests that AI's role in regenerative healthcare should be to support human judgement rather than replace it. The GP reading a room, the community nurse who knows which doors to knock on after a bereavement: these are expressions of accumulated local knowledge that no population-level model can replicate. The role of AI is to provide the systemic view that individual clinicians cannot hold, while leaving the situated, relational intelligence where it belongs.</p>
+
+    <div class="callout">
+      <span class="callout-label">What this would require</span>
+      <p><strong>Federated data infrastructure</strong> across ICS partners — acute, primary, community, social care — linked at the population level without centralising raw records. <strong>Multi-capital outcome frameworks</strong> defined in advance with clinical and community input, specifying what dimensions of wellbeing the system is committed to tracking. <strong>Long-run data retention</strong> — ten to twenty year analysis windows, not the operational reporting cycles that currently shape NHS data architecture. And <strong>genuine transparency to communities</strong> about what is being measured and why — a prerequisite for the social contract that makes bioregional governance function. Without that transparency, digital MRV becomes surveillance, not stewardship.</p>
+    </div>
+
+    <p>None of this is technically intractable. The Integrated Care Record programmes being built across England are, structurally, the beginning of this infrastructure. Whether the analytical and governance frameworks sitting on top of them are designed to answer regenerative questions — or only the extractive accounting questions the current system already knows how to ask — is a design choice being made right now, largely without awareness that it is being made.</p>
+
+    <hr class="section-sep">
+
+    <!-- §10 CONCLUSION -->
+    <span class="section-eyebrow">§10 — Where this leaves us</span>
+    <h2 class="section-title">Holding the tension. Not <em>resolving</em> it.</h2>
+
+    <p>The case for regenerative economics in healthcare is strongest as a critique of the current system's time horizons and its structural inability to value what it cannot measure. The NHS's efficiency crisis is not a management failure. It is a consequence of applying economic logic designed for complicated systems to a domain that is fundamentally complex, relational, and ecological. The US, China, Japan, and Germany each illuminate a different angle of the same problem — and each demonstrates that the binding constraint is legislative, not clinical or technological.</p>
+
+    <p>The case against is strongest as a caution about abandoning accountability and comparability. Regenerative systems without rigorous measurement become opaque, susceptible to the best-organised advocates, and less legible to the communities they are meant to serve. The table of legal changes in §06 is also a table of political opposition. Private equity, pharmaceutical companies on their current model, and financial intermediaries dependent on transactional capital will resist each of those changes. That resistance is rational, well-resourced, and will need to be met with evidence rather than conviction.</p>
+
+    <p>The position worth holding is neither pole. Complicated mechanisms — evidence hierarchies, cost-effectiveness thresholds, clinical guidelines — are right for the complicated problems healthcare contains. Regenerative mechanisms — process funding, multi-capital accounting, long-horizon patient capital, bioregional governance — are right for the complex ones. The work is to build the institutional capacity to tell the difference: to know whether the problem in front of you is the pharmacokinetics of a drug or the health of a community, and to reach for the appropriate instrument.</p>
+
+    <p>The UK, particularly Wales and Scotland, is better positioned to pioneer that capacity than any other country we examined. The legal infrastructure is further advanced. The ICS structure provides the bioregional governance unit. The VCSE sector and community wealth building movement have demonstrated the economic model in practice. What is required now is not another theoretical framework but the sustained, well-resourced, honestly evaluated experiment that generates the population health evidence the argument needs.</p>
+
+    <div class="pull-quote">
+      <p>The healthcare system doesn't need to be simpler. <em>It needs to be better understood.</em> Regenerative economics is one instrument for that understanding — incomplete, emerging, worth taking seriously. What it requires is not faith but evidence. And evidence requires infrastructure, long time horizons, and the institutional will to ask questions whose answers might be inconvenient for everyone currently in the room.</p>
+    </div>
+
+    <p>Pioneers absorb costs that others later avoid. We think healthcare — and the communities it is meant to serve — is worth that cost. We think the UK might be willing to pay it. We think the experiment is worth designing carefully enough that the rest of the world will be able to read the results.</p>
+
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="wc-footer">
+  <div class="footer-inner">
+    <a href="/" class="footer-logo" aria-label="Working Complexity home">
+      <span>workingcomplexity</span>
+      <span class="footer-sub">— .health</span>
+    </a>
+    <div class="footer-meta">
+      <div>WC-007 / REGENERATIVE ECONOMICS / REV.B</div>
+      <div>hello@workingcomplexity.health</div>
+      <div>workingcomplexity.health</div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

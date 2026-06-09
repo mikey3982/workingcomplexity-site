@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Advisory Board — Working Complexity</title>
+<meta name="description" content="The cast of citizen personas and healthcare system professionals developed through AI to stress-test complexity frameworks in healthcare. Meet the people who appear across the Working Complexity blog." />
+<link rel="canonical" href="https://workingcomplexity.health/blog/ai-advisory-board.html" />
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='100' height='100' fill='%23060D1B'/%3E%3Cpolygon points='50,2 91.57,26 91.57,74 50,98 8.43,74 8.43,26' stroke='%235B9BD5' stroke-width='0.8' fill='none'/%3E%3Cpolygon points='50,26 70.78,38 70.78,62 50,74 29.22,62 29.22,38' stroke='%23C4A46B' stroke-width='0.8' fill='none'/%3E%3Cpolygon points='50,38 60.39,44 60.39,56 50,62 39.61,56 39.61,44' stroke='%235B9BD5' stroke-width='0.8' fill='none'/%3E%3Ccircle cx='50' cy='50' r='2.5' fill='%23C4A46B'/%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:         #060D1B;
+    --bg-mid:     #0B1629;
+    --bg-card:    #0F1E36;
+    --border:     rgba(74,144,226,0.14);
+    --border-str: rgba(74,144,226,0.28);
+    --gold:       #C4A46B;
+    --gold-dim:   rgba(196,164,107,0.18);
+    --blue:       #5B9BD5;
+    --blue-dim:   rgba(91,155,213,0.12);
+    --text:       #E0E8F4;
+    --muted:      #7A9ABF;
+    --dim:        #3E5870;
+    --ff-sans:    'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --ff-mono:    'Space Mono', monospace;
+    --max-w:      1100px;
+    --gutter:     clamp(1.25rem, 5vw, 3rem);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--ff-sans);
+    font-size: 16px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* ── HEX GRID ─────────────────────────────────────────── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='h' width='69.28' height='120' patternUnits='userSpaceOnUse'%3E%3Cpolygon points='34.64,0 69.28,20 69.28,60 34.64,80 0,60 0,20' stroke='rgba(74,144,226,0.045)' stroke-width='0.6' fill='none'/%3E%3Cpolygon points='34.64,80 69.28,100 69.28,140 34.64,160 0,140 0,100' stroke='rgba(74,144,226,0.045)' stroke-width='0.6' fill='none'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='url(%23h)'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 0;
+  }
+  body > * { position: relative; z-index: 1; }
+
+  /* ── NAV ──────────────────────────────────────────────── */
+  .wc-nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(6,13,27,0.96);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.1rem 3rem;
+    backdrop-filter: blur(16px);
+  }
+  .wc-nav-logo {
+    font-family: var(--ff-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    color: var(--text);
+    text-decoration: none;
+    display: flex; flex-direction: column; gap: 2px;
+  }
+  .wc-nav-logo-main { font-weight: 700; }
+  .wc-nav-logo-sub  { color: var(--gold); font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; }
+  .wc-nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .wc-nav-links a {
+    font-family: var(--ff-mono); font-size: 0.7rem;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--muted); text-decoration: none; transition: color 0.2s;
+  }
+  .wc-nav-links a:hover, .wc-nav-links a.active { color: var(--gold); }
+  .wc-nav-cta {
+    font-family: var(--ff-mono); font-size: 0.68rem;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--bg); background: var(--gold);
+    padding: 0.55rem 1.2rem; text-decoration: none; transition: opacity 0.2s;
+  }
+  .wc-nav-cta:hover { opacity: 0.85; }
+  @media (max-width: 720px) {
+    .wc-nav-links, .wc-nav-cta { display: none; }
+    .wc-nav { padding: 1rem 1.25rem; }
+  }
+
+  /* ── HERO ─────────────────────────────────────────────── */
+  .hero {
+    padding: clamp(5rem,12vw,9rem) var(--gutter) clamp(3rem,6vw,5rem);
+    max-width: var(--max-w); margin: 0 auto;
+  }
+  .hero-eyebrow {
+    font-family: var(--ff-mono);
+    font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 2rem;
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .hero-eyebrow span { display: inline-block; width: 40px; height: 1px; background: var(--gold); opacity: 0.6; }
+  .hero h1 {
+    font-size: clamp(2.5rem,6vw,4.5rem);
+    font-weight: 800; line-height: 1.05;
+    letter-spacing: -0.03em; color: var(--text);
+    margin-bottom: 1.5rem;
+  }
+  .hero h1 em { font-style: italic; font-weight: 300; color: var(--gold); }
+  .hero-body {
+    font-size: 1.05rem; color: var(--muted);
+    max-width: 640px; line-height: 1.75; font-weight: 300;
+    margin-bottom: 2rem;
+  }
+  .hero-note {
+    font-family: var(--ff-mono); font-size: 0.68rem;
+    letter-spacing: 0.08em; color: var(--dim);
+    max-width: 600px; line-height: 1.7;
+    padding-top: 1.5rem; border-top: 1px solid var(--border);
+  }
+  .hero-note strong { color: var(--muted); font-weight: 400; }
+
+  /* ── SECTION HEADER ───────────────────────────────────── */
+  .section-wrap {
+    max-width: var(--max-w); margin: 0 auto;
+    padding: 0 var(--gutter) clamp(3rem,7vw,5rem);
+  }
+  .section-header {
+    padding: clamp(2rem,5vw,3.5rem) 0 2rem;
+    border-top: 1px solid var(--border);
+    margin-bottom: 2rem;
+    display: flex; align-items: baseline; gap: 1.5rem; flex-wrap: wrap;
+  }
+  .section-label {
+    font-family: var(--ff-mono); font-size: 0.6rem;
+    letter-spacing: 0.28em; text-transform: uppercase;
+    color: var(--gold); white-space: nowrap;
+    display: flex; align-items: center; gap: 0.8rem;
+  }
+  .section-label::before {
+    content: ''; display: inline-block;
+    width: 32px; height: 1px; background: var(--gold); opacity: 0.6;
+  }
+  .section-title {
+    font-size: clamp(1.4rem,3.5vw,2.2rem);
+    font-weight: 700; color: var(--text);
+    letter-spacing: -0.02em; line-height: 1.15;
+  }
+  .section-title em { font-style: italic; font-weight: 300; color: var(--gold); }
+  .section-desc {
+    font-size: 0.92rem; color: var(--muted);
+    max-width: 700px; line-height: 1.7; font-weight: 300;
+    margin-top: 0.75rem; margin-bottom: 0;
+  }
+
+  /* ── CITIZEN PERSONA CARDS ────────────────────────────── */
+  .citizens-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(460px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin-top: 2rem;
+  }
+  @media (max-width: 520px) { .citizens-grid { grid-template-columns: 1fr; } }
+
+  .citizen-card {
+    background: var(--bg-card);
+    padding: 2.5rem 2.5rem;
+    display: flex; flex-direction: column;
+    transition: background 0.2s;
+  }
+  .citizen-card:hover { background: #0f2040; }
+
+  .citizen-monogram {
+    width: 56px; height: 56px;
+    border: 1px solid var(--border-str);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 1.75rem;
+    position: relative;
+    flex-shrink: 0;
+  }
+  .citizen-monogram::before {
+    content: '';
+    position: absolute; inset: 3px;
+    border: 1px solid var(--gold-dim);
+  }
+  .citizen-monogram span {
+    font-family: var(--ff-sans);
+    font-size: 1.4rem; font-weight: 700;
+    color: var(--gold); line-height: 1;
+  }
+
+  .citizen-archetype {
+    font-family: var(--ff-mono); font-size: 0.6rem;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--dim); margin-bottom: 0.4rem;
+  }
+  .citizen-name {
+    font-size: 1.6rem; font-weight: 700;
+    color: var(--text); letter-spacing: -0.02em;
+    margin-bottom: 0.25rem; line-height: 1.1;
+  }
+  .citizen-role {
+    font-size: 0.88rem; font-style: italic;
+    color: var(--gold); margin-bottom: 1.5rem; font-weight: 300;
+  }
+  .citizen-bio {
+    font-size: 0.9rem; color: var(--muted);
+    line-height: 1.7; font-weight: 300;
+    margin-bottom: 1.75rem; flex: 1;
+  }
+  .citizen-bio strong { color: var(--text); font-weight: 500; }
+
+  .citizen-traits {
+    display: flex; flex-wrap: wrap; gap: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+  .trait {
+    font-family: var(--ff-mono); font-size: 0.6rem;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--muted);
+    border: 1px solid var(--border);
+    padding: 0.3rem 0.7rem;
+    background: rgba(91,155,213,0.05);
+  }
+
+  .citizen-appears {
+    font-family: var(--ff-mono); font-size: 0.6rem;
+    letter-spacing: 0.08em; color: var(--dim);
+    padding-top: 1.25rem; border-top: 1px solid var(--border);
+    line-height: 1.6;
+  }
+  .citizen-appears strong { color: var(--gold); font-weight: 400; }
+  .citizen-appears a { color: var(--blue); text-decoration: none; }
+  .citizen-appears a:hover { color: var(--gold); }
+
+  /* ── UNCERTAINTY TYPE STRIP ───────────────────────────── */
+  .uncertainty-strip {
+    background: var(--bg-mid);
+    border: 1px solid var(--border);
+    border-top: 2px solid var(--gold);
+    padding: 2rem 2.5rem;
+    margin-top: 2rem;
+    margin-bottom: 0;
+  }
+  .uncertainty-strip-label {
+    font-family: var(--ff-mono); font-size: 0.58rem;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 1.25rem; display: block;
+  }
+  .uncertainty-types {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1px; background: var(--border);
+  }
+  .uncertainty-type {
+    background: var(--bg-card);
+    padding: 1rem 1.25rem;
+  }
+  .uncertainty-type-name {
+    font-family: var(--ff-mono); font-size: 0.62rem;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--gold); display: block; margin-bottom: 0.4rem;
+  }
+  .uncertainty-type p {
+    font-size: 0.8rem; color: var(--muted);
+    line-height: 1.55; font-weight: 300; margin: 0;
+  }
+
+  /* ── BOARD MEMBER CARDS ───────────────────────────────── */
+  .board-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin-top: 2rem;
+  }
+  @media (max-width: 380px) { .board-grid { grid-template-columns: 1fr; } }
+
+  .board-card {
+    background: var(--bg-card);
+    padding: 2rem 2.25rem;
+    display: flex; flex-direction: column;
+    transition: background 0.2s;
+  }
+  .board-card:hover { background: #0f2040; }
+
+  .board-number {
+    font-family: var(--ff-mono); font-size: 0.62rem;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--dim); margin-bottom: 1rem;
+    display: flex; align-items: center; gap: 0.6rem;
+  }
+  .board-number::after {
+    content: ''; display: inline-block; flex: 1;
+    height: 1px; background: var(--border);
+  }
+
+  .board-name {
+    font-size: 1.15rem; font-weight: 700;
+    color: var(--text); letter-spacing: -0.01em;
+    margin-bottom: 0.2rem; line-height: 1.2;
+  }
+  .board-title {
+    font-size: 0.82rem; color: var(--gold);
+    font-weight: 300; margin-bottom: 0.2rem;
+    font-style: italic;
+  }
+  .board-org {
+    font-family: var(--ff-mono); font-size: 0.62rem;
+    letter-spacing: 0.06em; color: var(--dim);
+    margin-bottom: 1.5rem;
+  }
+
+  .board-bio {
+    font-size: 0.88rem; color: var(--muted);
+    line-height: 1.7; font-weight: 300; flex: 1;
+    margin-bottom: 1.5rem;
+  }
+  .board-bio strong { color: var(--text); font-weight: 500; }
+
+  .board-position {
+    background: rgba(196,164,107,0.07);
+    border-left: 2px solid var(--gold);
+    padding: 0.85rem 1.1rem;
+    margin-bottom: 1.25rem;
+  }
+  .board-position-label {
+    font-family: var(--ff-mono); font-size: 0.56rem;
+    letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--gold); display: block; margin-bottom: 0.35rem;
+  }
+  .board-position p {
+    font-size: 0.82rem; color: rgba(224,232,244,0.7);
+    margin: 0; line-height: 1.6; font-style: italic; font-weight: 300;
+  }
+
+  .board-appears {
+    font-family: var(--ff-mono); font-size: 0.6rem;
+    letter-spacing: 0.08em; color: var(--dim);
+    padding-top: 1.1rem; border-top: 1px solid var(--border);
+    line-height: 1.6;
+  }
+  .board-appears strong { color: var(--gold); font-weight: 400; }
+  .board-appears a { color: var(--blue); text-decoration: none; }
+  .board-appears a:hover { color: var(--gold); }
+
+  /* ── PROVENANCE NOTE ──────────────────────────────────── */
+  .provenance {
+    background: var(--bg-mid);
+    border: 1px solid var(--border);
+    padding: 2rem 2.5rem;
+    margin-top: 3rem;
+    max-width: var(--max-w);
+    margin-left: auto; margin-right: auto;
+  }
+  .provenance-label {
+    font-family: var(--ff-mono); font-size: 0.6rem;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--gold); display: block; margin-bottom: 1rem;
+  }
+  .provenance p {
+    font-size: 0.88rem; color: var(--muted);
+    line-height: 1.75; font-weight: 300; margin-bottom: 0.75rem;
+  }
+  .provenance p:last-child { margin-bottom: 0; }
+  .provenance p strong { color: var(--text); font-weight: 500; }
+  .provenance a { color: var(--blue); text-decoration: none; }
+  .provenance a:hover { color: var(--gold); }
+
+  /* ── FOOTER ───────────────────────────────────────────── */
+  footer {
+    background: var(--bg-mid);
+    border-top: 1px solid var(--border);
+    padding: 2.5rem 3rem;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 1rem;
+    margin-top: 5rem;
+  }
+  .footer-logo {
+    font-family: var(--ff-mono); font-size: 0.78rem;
+    letter-spacing: 0.06em; color: var(--text);
+    display: flex; flex-direction: column; gap: 2px;
+  }
+  .footer-logo strong { font-weight: 700; }
+  .footer-logo span { color: var(--gold); font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; }
+  .footer-links { display: flex; gap: 2rem; list-style: none; }
+  .footer-links a {
+    font-family: var(--ff-mono); font-size: 0.68rem;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--dim); text-decoration: none; transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--gold); }
+  .footer-copy { font-family: var(--ff-mono); font-size: 0.65rem; color: var(--dim); }
+  @media (max-width: 640px) {
+    footer { padding: 2rem 1.25rem; }
+    .footer-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="wc-nav" aria-label="Site navigation">
+  <a href="https://workingcomplexity.health" class="wc-nav-logo">
+    <span class="wc-nav-logo-main">workingcomplexity</span>
+    <span class="wc-nav-logo-sub">— .health</span>
+  </a>
+  <ul class="wc-nav-links">
+    <li><a href="https://workingcomplexity.health/#services">Services</a></li>
+    <li><a href="https://workingcomplexity.health/#about">About</a></li>
+    <li><a href="/blog/">Writing</a></li>
+    <li><a href="/blog/ai-advisory-board.html" class="active">Cast</a></li>
+  </ul>
+  <a href="https://workingcomplexity.health/#contact" class="wc-nav-cta">Get in touch</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <p class="hero-eyebrow"><span></span>workingcomplexity — AI Advisory Board</p>
+  <h1>The cast.<br><em>Citizens and professionals.</em></h1>
+  <p class="hero-body">Ten people appear across the Working Complexity blog. Four are patients living with progressive lung disease. Six are healthcare system decision-makers who have stress-tested our frameworks in structured dialogue. None are real. All are true.</p>
+  <p class="hero-note">
+    <strong>On their provenance:</strong> these personas were developed in close collaboration with Claude. Each was constructed from a synthesis of clinical literature, patient narratives, and health system archetypes — built to be internally consistent, behaviourally distinct, and analytically productive. They are not composites of real individuals. They are designed instruments: precise enough to reveal structural failures in the healthcare system that aggregate data smooths over. We use them in that spirit, and name them honestly as AI-developed constructs.
+  </p>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- SECTION 1: CITIZENS                                -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="section-wrap">
+  <div class="section-header">
+    <span class="section-label">01 — The citizens</span>
+    <div>
+      <h2 class="section-title">Four people with <em>progressive lung disease</em></h2>
+      <p class="section-desc">Harold, George, Francis, and Victor share a diagnosis — progressive fibrotic lung disease — and an age (early-to-mid seventies). Everything else about their lives is different. They appear across the blog to show how the same system failure lands differently on different people.</p>
+    </div>
+  </div>
+
+  <div class="citizens-grid">
+
+    <!-- HAROLD -->
+    <div class="citizen-card">
+      <div class="citizen-monogram"><span>H</span></div>
+      <span class="citizen-archetype">Citizen 01</span>
+      <div class="citizen-name">Harold</div>
+      <div class="citizen-role">The Farmer — Reactive, Legacy-Focused</div>
+      <p class="citizen-bio">
+        Harold is 74. He has built and expanded a family farm with his own hands, managing rheumatoid arthritis since his fifties with the same pragmatism he brings to everything. When breathlessness and a persistent cough arrived in his late sixties, he attributed it to age, dust, and the RA. He is fundamentally reactive: he does not seek medical attention until compelled, but when he does, he follows instructions.
+        <br><br>
+        His wife is well. His daughter is about to have her first child — Harold's first grandchild. His deepest value is <strong>legacy</strong>: the farm, the family, something that will outlast him. He left his first GP appointment with a COPD diagnosis that was wrong. He carried it for two years.
+      </p>
+      <div class="citizen-traits">
+        <span class="trait">Stoic</span>
+        <span class="trait">Legacy-focused</span>
+        <span class="trait">Reactive</span>
+        <span class="trait">RA comorbidity</span>
+        <span class="trait">Occupational exposure</span>
+        <span class="trait">Wife as care node</span>
+      </div>
+      <div class="citizen-appears">
+        <strong>Primary uncertainty type:</strong> Existential — "Will I see my grandchild start school?"<br>
+        <strong>Appears in:</strong>
+        <a href="/blog/experiments-with-uncertainty.html">Experiments with Uncertainty</a> ·
+        <a href="/blog/the-certainty-complex.html">The Certainty Complex</a> ·
+        <a href="/blog/what-the-west-forgot-to-carry.html">What the West Forgot to Carry</a> ·
+        <a href="/blog/three-arguments-one-problem.html">Three Arguments, One Problem</a> ·
+        <a href="/blog/value-of-perfect-information.html">The Price of Not Knowing</a> ·
+        <a href="/blog/after-the-drift.html">After the Drift</a>
+      </div>
+    </div>
+
+    <!-- GEORGE -->
+    <div class="citizen-card">
+      <div class="citizen-monogram"><span>G</span></div>
+      <span class="citizen-archetype">Citizen 02</span>
+      <div class="citizen-name">George</div>
+      <div class="citizen-role">The Engineer — Systematic, Evidence-Seeking</div>
+      <p class="citizen-bio">
+        George is 70. He entered the factory floor as an apprentice at sixteen and rose to plant manager through application and competence. He has three adult children and a generation of grandchildren he adores. His philosophy is direct: work hard, play hard, teach those who come after you.
+        <br><br>
+        When his breathing began to limit his gardening, he pursued answers with the diligence he had brought to production problems. He brings a <strong>notebook to every appointment</strong> and asks about measurement variability. George is a man who believes that problems have solutions — and his disease is teaching him, slowly and painfully, that not all of them do.
+      </p>
+      <div class="citizen-traits">
+        <span class="trait">Systematic</span>
+        <span class="trait">Evidence-seeking</span>
+        <span class="trait">Notebook keeper</span>
+        <span class="trait">Smoking history</span>
+        <span class="trait">Challenges prognosis</span>
+        <span class="trait">High epistemic agency</span>
+      </div>
+      <div class="citizen-appears">
+        <strong>Primary uncertainty type:</strong> Aleatory — the irreducible randomness his data cannot resolve<br>
+        <strong>Appears in:</strong>
+        <a href="/blog/experiments-with-uncertainty.html">Experiments with Uncertainty</a> ·
+        <a href="/blog/the-certainty-complex.html">The Certainty Complex</a> ·
+        <a href="/blog/what-the-west-forgot-to-carry.html">What the West Forgot to Carry</a> ·
+        <a href="/blog/three-arguments-one-problem.html">Three Arguments, One Problem</a> ·
+        <a href="/blog/after-the-drift.html">After the Drift</a>
+      </div>
+    </div>
+
+    <!-- FRANCIS -->
+    <div class="citizen-card">
+      <div class="citizen-monogram"><span>F</span></div>
+      <span class="citizen-archetype">Citizen 03</span>
+      <div class="citizen-name">Francis</div>
+      <div class="citizen-role">The Civil Servant — Procedural, Alone</div>
+      <p class="citizen-bio">
+        Francis is 74. He spent forty years in government service and approached his career with the quiet pride of a man who believed that institutions matter. He has no children. His wife died three years ago, from a cancer that moved faster than any of them expected. He had planned a retirement of travel.
+        <br><br>
+        His breathlessness arrived like an unwelcome bureaucratic complication. Francis processes experience through documentation and procedure. He <strong>wants to know what the pathway is</strong>. His monthly call with his specialist nurse has become, quietly, his closest relationship — and the most clinically valuable interaction in his entire care pathway. The system does not record it.
+      </p>
+      <div class="citizen-traits">
+        <span class="trait">Procedural</span>
+        <span class="trait">Administratively literate</span>
+        <span class="trait">Widowed — alone</span>
+        <span class="trait">Existential uncertainty</span>
+        <span class="trait">Relational care node</span>
+        <span class="trait">Prepares folder</span>
+      </div>
+      <div class="citizen-appears">
+        <strong>Primary uncertainty type:</strong> Existential — not what is in his lungs, but what his life now means<br>
+        <strong>Appears in:</strong>
+        <a href="/blog/experiments-with-uncertainty.html">Experiments with Uncertainty</a> ·
+        <a href="/blog/the-certainty-complex.html">The Certainty Complex</a> ·
+        <a href="/blog/what-the-west-forgot-to-carry.html">What the West Forgot to Carry</a> ·
+        <a href="/blog/soft-drift-series.html">Managing the Soft Drift</a> ·
+        <a href="/blog/after-the-drift.html">After the Drift</a>
+      </div>
+    </div>
+
+    <!-- VICTOR -->
+    <div class="citizen-card">
+      <div class="citizen-monogram"><span>V</span></div>
+      <span class="citizen-archetype">Citizen 04</span>
+      <div class="citizen-name">Victor</div>
+      <div class="citizen-role">The Entrepreneur — Flamboyant, Velocity-Driven</div>
+      <p class="citizen-bio">
+        Victor is 74 and lives expansively. He came from nothing and has spent five decades making up for it. His PPF diagnosis is, in his framing, the latest setback in a life that has had several. He is not frightened of mortality in the abstract — he has thought about it — but he resists any framing that asks him to slow down.
+        <br><br>
+        Victor <strong>rejects his prognostic estimate</strong> as applying to other people. The healthcare system reads this as non-compliance. It is, in fact, a philosophically coherent act of adaptive self-management: a deliberate choice about what information to hold and what to set aside, calibrated to his own values. He lavishes gifts on the people he loves. He goes private. He finds a restaurant table near the door.
+      </p>
+      <div class="citizen-traits">
+        <span class="trait">Velocity-driven</span>
+        <span class="trait">High autonomy</span>
+        <span class="trait">Rejects prognosis</span>
+        <span class="trait">Private care user</span>
+        <span class="trait">Adaptive agency</span>
+        <span class="trait">Lifestyle comorbidities</span>
+      </div>
+      <div class="citizen-appears">
+        <strong>Primary uncertainty type:</strong> Aleatory — chose to hold it rather than be held by it<br>
+        <strong>Appears in:</strong>
+        <a href="/blog/experiments-with-uncertainty.html">Experiments with Uncertainty</a> ·
+        <a href="/blog/the-certainty-complex.html">The Certainty Complex</a> ·
+        <a href="/blog/what-the-west-forgot-to-carry.html">What the West Forgot to Carry</a> ·
+        <a href="/blog/three-arguments-one-problem.html">Three Arguments, One Problem</a> ·
+        <a href="/blog/after-the-drift.html">After the Drift</a>
+      </div>
+    </div>
+
+  </div><!-- /citizens-grid -->
+
+  <!-- Uncertainty types reference -->
+  <div class="uncertainty-strip">
+    <span class="uncertainty-strip-label">The five uncertainty types — WorkingComplexity framework</span>
+    <div class="uncertainty-types">
+      <div class="uncertainty-type">
+        <span class="uncertainty-type-name">Aleatory</span>
+        <p>Irreducible randomness in disease progression. Cannot be resolved by more data. Must be held, not solved.</p>
+      </div>
+      <div class="uncertainty-type">
+        <span class="uncertainty-type-name">Epistemic</span>
+        <p>What we do not yet know but could learn. Two-year diagnostic delays in ILD are largely epistemic.</p>
+      </div>
+      <div class="uncertainty-type">
+        <span class="uncertainty-type-name">Ontological</span>
+        <p>Uncertainty embedded in the classification system itself. "Unclassifiable ILD" is not a disease — it is a framework failure.</p>
+      </div>
+      <div class="uncertainty-type">
+        <span class="uncertainty-type-name">Systemic</span>
+        <p>Arising from institutional design — delays, incentive structures, referral patterns. A design problem, not a biological one.</p>
+      </div>
+      <div class="uncertainty-type">
+        <span class="uncertainty-type-name">Existential</span>
+        <p>The lived experience of not knowing the future. The uncertainty that matters most — and the one healthcare is least equipped to address.</p>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /section-wrap citizens -->
+
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- SECTION 2: ADVISORY BOARD                          -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="section-wrap">
+  <div class="section-header">
+    <span class="section-label">02 — The advisory board</span>
+    <div>
+      <h2 class="section-title">Six healthcare professionals who <em>stress-tested the frameworks</em></h2>
+      <p class="section-desc">The paper <em>Living with Not Knowing</em> was circulated to six ILD system decision-makers 72 hours before a structured roundtable. They came prepared with written reactions. What followed was three rounds of structured dialogue — and fifteen concrete commitments. Their positions, including where they changed their minds, are recorded in full in the <a href="/blog/experiments-with-uncertainty.html" style="color: var(--blue);">Experiments with Uncertainty</a> series.</p>
+    </div>
+  </div>
+
+  <div class="board-grid">
+
+    <!-- SANDRA KOWALSKI -->
+    <div class="board-card">
+      <div class="board-number">Board member 01</div>
+      <div class="board-name">Dr. Sandra Kowalski</div>
+      <div class="board-title">System Chief Pharmacy Officer · Chair, P&amp;T Committee</div>
+      <div class="board-org">MidWest Health Alliance — Chicago, IL</div>
+      <p class="board-bio">
+        Methodical and operationally precise. Sandra runs the P&amp;T committee for a large Midwestern health alliance and has spent twenty years building evidence requirements that now, she acknowledges, conflate five distinct types of uncertainty into one. She is the voice of <strong>system architecture</strong> in the room — resistant to frameworks that don't translate to a decision.
+        <br><br>
+        Her reframe of Victor — from utilisation management problem to adaptive agent with a philosophically coherent response to aleatory uncertainty — was the session's most telling moment of honest revision.
+      </p>
+      <div class="board-position">
+        <span class="board-position-label">Her committed position</span>
+        <p>"My P&amp;T committee has been treating five distinct problems as one for twenty years. I'm taking the domain distinction back and asking what signals we are currently discarding — specifically for ontological uncertainty, where the discount may be wrong."</p>
+      </div>
+      <div class="board-appears">
+        <strong>Appears in:</strong>
+        <a href="/blog/experiments-with-uncertainty.html">Experiments with Uncertainty (Part Two)</a>
+      </div>
+    </div>
+
+    <!-- MARCUS WEBB -->
+    <div class="board-card">
+      <div class="board-number">Board member 02</div>
+      <div class="board-name">Marcus Webb</div>
+      <div class="board-title">President &amp; CEO — Academic-affiliated nonprofit system</div>
+      <div class="board-org">Elevance Regional Health — Raleigh–Richmond corridor</div>
+      <p class="board-bio">
+        System thinker. Marcus runs an academic-affiliated nonprofit across the Raleigh–Richmond corridor and is used to holding complexity at a strategic level. What he was not prepared for was the observation about Harold's wife: a clinical information node that his workforce plan accounts for nowhere. That gap — between the formal care system and the informal sensing network that actually holds patients through their illness — became his working problem.
+        <br><br>
+        His system is designed for <strong>Francis</strong>: the administratively literate, procedurally capable patient. He knows it. That was his honest answer.
+      </p>
+      <div class="board-position">
+        <span class="board-position-label">His committed position</span>
+        <p>"Harold's wife is not present in my system at all. She doesn't appear in the EHR. If she died — like Francis's wife died — Harold's care quality would deteriorate and my system would have no sensor to detect that until it showed up as a hospitalisation."</p>
+      </div>
+      <div class="board-appears">
+        <strong>Appears in:</strong>
+        <a href="/blog/experiments-with-uncertainty.html">Experiments with Uncertainty (Part Two)</a>
+      </div>
+    </div>
+
+    <!-- JANET FLORES -->
+    <div class="board-card">
+      <div class="board-number">Board member 03</div>
+      <div class="board-name">Janet Flores</div>
+      <div class="board-title">SVP, Employer &amp; Commercial Market Solutions</div>
+      <div class="board-org">Centurion Health Plans — 6-state regional MCO</div>
+      <p class="board-bio">
+        Payer perspective, actuarial instincts, twelve-month renewal cycles. Janet's world is the gap between the right framing and the feasible framing — and that gap, she noted, is where good ideas go to die. The aleatory versus epistemic distinction was, in her words, the single most operationally useful thing she'd read all year: her actuarial team prices uncertainty as a single variable. They're mispricing risk.
+        <br><br>
+        She committed to funding a <strong>12-minute uncertainty communication tool</strong> — because anxiety-driven over-utilisation has a return in her model within eighteen months of intervention.
+      </p>
+      <div class="board-position">
+        <span class="board-position-label">Her committed position</span>
+        <p>"I designed my system for the actuarial population mean, which doesn't exist. I want to test whether informal care network status is a meaningful predictor of claims trajectory — and if it is, I need to price that risk differently."</p>
+      </div>
+      <div class="board-appears">
+        <strong>Appears in:</strong>
+        <a href="/blog/experiments-with-uncertainty.html">Experiments with Uncertainty (Part Two)</a>
+      </div>
+    </div>
+
+    <!-- PROF. DAVID OSEI -->
+    <div class="board-card">
+      <div class="board-number">Board member 04</div>
+      <div class="board-name">Prof. David Osei</div>
+      <div class="board-title">Professor of Medicine · Director, ILD Program · PI</div>
+      <div class="board-org">UCSF — Division of Pulmonary, Critical Care &amp; Sleep</div>
+      <p class="board-bio">
+        Academic trialist. David is one of the most scientifically rigorous voices in the room — and the one most willing to challenge the frameworks, including ours. His response to the ontological uncertainty section was precise: "unclassifiable ILD" is not a disease category, it is a framework failure, and the clinical literature does not discuss it honestly because the guidelines depend on categories everyone knows are leaky.
+        <br><br>
+        His system is designed for <strong>George</strong>. He finds it satisfying. Harold — the farmer with the seventeen-point intake checklist that asks nothing about the farm — is the person his system fails hardest. He admitted this without prompting.
+      </p>
+      <div class="board-position">
+        <span class="board-position-label">His committed position</span>
+        <p>"The patients most likely to develop ILA-to-IPF progression in occupational exposure contexts are least likely to be in my study. They're not just missing from my data. They're missing from my concept of what the disease is."</p>
+      </div>
+      <div class="board-appears">
+        <strong>Appears in:</strong>
+        <a href="/blog/experiments-with-uncertainty.html">Experiments with Uncertainty (Part Two)</a>
+      </div>
+    </div>
+
+    <!-- DR. PRIYA NAIR -->
+    <div class="board-card">
+      <div class="board-number">Board member 05</div>
+      <div class="board-name">Dr. Priya Nair</div>
+      <div class="board-title">Pulmonologist — ILD Clinic + General Respiratory</div>
+      <div class="board-org">Desert Southwest Pulmonary Associates — Phoenix, AZ</div>
+      <p class="board-bio">
+        Community practitioner. Priya's contribution landed with the force of clinical reality: <em>"All four of those patient personas were in my clinic last week."</em> Harold came because his wife made him. George brought printed research he had highlighted. Francis was alone and shook her hand at the end in a way that made her want to ask if he was alright. She didn't. She had to see the next patient.
+        <br><br>
+        Her critique was precise: the paper describes her clinical reality with more precision than anything she'd read — and then gives her principles with <strong>no 12-minute-visit translation</strong>. She committed to developing one, on two conditions.
+      </p>
+      <div class="board-position">
+        <span class="board-position-label">Her committed position</span>
+        <p>"I will develop the uncertainty communication script on two conditions: it must be tested in community practice, not academic centres, and it must be co-developed with patients — not reviewed at the end, but co-developed from the first draft."</p>
+      </div>
+      <div class="board-appears">
+        <strong>Appears in:</strong>
+        <a href="/blog/experiments-with-uncertainty.html">Experiments with Uncertainty (Part Two)</a>
+      </div>
+    </div>
+
+    <!-- CARMEN REYES -->
+    <div class="board-card">
+      <div class="board-number">Board member 06</div>
+      <div class="board-name">Carmen Reyes</div>
+      <div class="board-title">Executive Director — IPF patient (dx. 2019)</div>
+      <div class="board-org">Breathe Forward Alliance — Austin, TX · 12,000 members</div>
+      <p class="board-bio">
+        Patient advocate and the sharpest voice in the room. Carmen opened by naming the dynamic she had seen before: a framework paper everyone finds themselves in, nods at, and uses to justify inaction. She was naming it in advance so the room couldn't let it happen.
+        <br><br>
+        Her equity challenge cut every other board member: the five types of uncertainty are not equally distributed. Harold has a wife. Francis does not. Victor can pay for a private CT scan. Her members in rural Texas cannot. She asked one direct question and waited for the room to answer: <strong>which of the four personas is your system actually designed to serve well?</strong>
+      </p>
+      <div class="board-position">
+        <span class="board-position-label">Her committed position</span>
+        <p>"The existential uncertainty section is the truest part of this paper. It is also the part every person in this room is most likely to treat as a nice paragraph that supports the clinical argument without generating any concrete commitment. I'm naming that in advance."</p>
+      </div>
+      <div class="board-appears">
+        <strong>Appears in:</strong>
+        <a href="/blog/experiments-with-uncertainty.html">Experiments with Uncertainty (Part Two)</a>
+      </div>
+    </div>
+
+  </div><!-- /board-grid -->
+</div><!-- /section-wrap board -->
+
+
+<!-- PROVENANCE NOTE -->
+<div class="section-wrap">
+  <div class="provenance">
+    <span class="provenance-label">On the use of AI personas in health research</span>
+    <p>These ten characters were developed with Claude as part of a working practice in which AI is used not to generate conclusions but to inhabit positions — to speak from inside an archetype with enough consistency and specificity to reveal structural failures that aggregate research cannot. Harold is not a real farmer. But Harold's two-year misdiagnosis is a documented pattern. George is not a real engineer. But George's inability to get an honest answer about prognosis from a system optimised to project confidence is a described and widespread experience.</p>
+    <p>The advisory board session was not a real meeting. But the positions its members hold — on evidence standards, actuarial models, informal care networks, and what it actually means to be in a twelve-minute clinic appointment with all four of these patients — are positions that real people in those roles hold. The fiction is in the names. The substance is in the system.</p>
+    <p><strong>We use AI-developed personas as analytical instruments, not as substitutes for lived experience.</strong> They sit alongside — and are informed by — the real patient and professional voices in the research literature and in Working Complexity's own engagements. The distinction matters. We state it plainly.</p>
+    <p>Read the full research: <a href="/blog/experiments-with-uncertainty.html">Experiments with Uncertainty</a> · <a href="/blog/the-certainty-complex.html">The Certainty Complex</a> · <a href="/blog/after-the-drift.html">After the Drift: a Wayfinding</a></p>
+  </div>
+</div>
+
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">
+    <strong>workingcomplexity</strong>
+    <span>— .health</span>
+  </div>
+  <ul class="footer-links">
+    <li><a href="https://workingcomplexity.health">Home</a></li>
+    <li><a href="/blog/">Blog</a></li>
+    <li><a href="/blog/experiments-with-uncertainty.html">Uncertainty</a></li>
+    <li><a href="https://workingcomplexity.health/#contact">Contact</a></li>
+  </ul>
+  <div class="footer-copy">© 2026 Working Complexity Ltd</div>
+</footer>
+
+</body>
+</html>
