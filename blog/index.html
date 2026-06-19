@@ -124,12 +124,17 @@
     }
     .blog-hero h1 em { font-style: normal; font-weight: 300; color: var(--gold); }
     .blog-hero-sub {
-      font-size: 1.05rem;
-      color: var(--text-muted);
-      max-width: 580px;
-      line-height: 1.7;
+      font-size: clamp(1.2rem, 1.7vw, 1.45rem);
+      color: var(--text);
+      max-width: 700px;
+      line-height: 1.65;
       font-weight: 300;
+      margin-top: 0.5rem;
+      padding: 0.25rem 0 0.25rem 1.75rem;
+      border-left: 2px solid var(--gold);
     }
+    .blog-hero-sub strong { font-weight: 500; color: var(--text); }
+    .blog-hero-sub em { font-style: italic; }
 
     /* ── Post grid ───────────────────────────────────────── */
     .posts-section {
@@ -426,7 +431,7 @@
 <div class="blog-hero">
   <p class="blog-eyebrow"><span></span>Working Complexity</p>
   <h1>Long-form <em>thinking</em><br/>on complex systems</h1>
-  <p class="blog-hero-sub">These pieces are mine to own. The ideas, the positions, the arguments. The writing is a genuine collaboration with Claude — not assistance, not generation, but a working practice I find worth naming. In a field that values honesty about how knowledge is made, that seems the right place to start.</p>
+  <p class="blog-hero-sub"><strong>These pieces are mine to own.</strong> The ideas, the positions, the arguments. The writing is a <em>genuine collaboration with Claude</em> — not assistance, not generation, but a working practice I find worth naming. In a field that values honesty about how knowledge is made, that seems the right place to start.</p>
 </div>
 
 
