@@ -42,7 +42,7 @@ This document is the brand system for Working Complexity. When producing any art
 
 **Name.** Working Complexity. Always one word when set as the logotype: `workingcomplexity`. Two words in running prose and in legal/formal contexts: "Working Complexity". Domain is `workingcomplexity.health`.
 
-**What WC is.** A healthcare design agency that works *with* complexity rather than reducing it. We serve NHS, charities, pharma, and commissioners in the UK and globally.
+**What WC is.** An open working practice — a space for thinking about complex healthcare in public, working *with* complexity rather than reducing it. Not an agency taking briefs. Our readers are the people a practice like this might one day serve — NHS, charities, pharma, commissioners — but the relationship today is a reader's, not a client's. What Working Complexity becomes commercially is still being worked out, and we say so.
 
 **The thesis (the sentence under everything we produce).**
 
@@ -51,7 +51,7 @@ This document is the brand system for Working Complexity. When producing any art
 **The three dimensions (the working model).** Every engagement draws on three inseparable capacities:
 
 1. **Understand** — deep thinking, sense-making, systems and complexity theory.
-2. **Deliver** — prototype, pilot, make it work in the messy reality of care.
+2. **Make** — move from insight to things that can be tried and tested in real conditions, not left as abstraction.
 3. **Feel** — empathy, lived experience, human depth.
 
 **The manifesto line.**
