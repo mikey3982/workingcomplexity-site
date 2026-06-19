@@ -426,6 +426,81 @@
   .post-nav a { font-family: 'Space Mono', monospace; font-size: 0.66rem; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; color: #7A9ABF; transition: color 0.2s; }
   .post-nav a:hover { color: #C4A46B; }
   .post-nav .post-nav-next { margin-left: auto; text-align: right; }
+
+  /* ── METHOD SECTION ───────────────────────────────────── */
+  .method-prose {
+    background: var(--bg-mid);
+    border: 1px solid var(--border);
+    border-top: 2px solid var(--gold);
+    padding: 2rem 2.5rem;
+    margin-top: 2rem;
+  }
+  .method-prose-label {
+    font-family: var(--ff-mono); font-size: 0.6rem;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--gold); display: block; margin-bottom: 1.25rem;
+  }
+  .method-prose p {
+    font-size: 0.92rem; color: var(--muted);
+    line-height: 1.8; font-weight: 300; margin-bottom: 1rem;
+    max-width: 760px;
+  }
+  .method-prose p:last-child { margin-bottom: 0; }
+  .method-prose strong { color: var(--text); font-weight: 500; }
+  .method-stat {
+    display: flex; align-items: baseline; gap: 1.5rem;
+    margin: 1.75rem 0; padding: 1.5rem 0;
+    border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+    flex-wrap: wrap;
+  }
+  .method-stat .figure {
+    font-family: var(--ff-sans); font-weight: 800;
+    font-size: clamp(2.75rem, 7vw, 4rem); line-height: 1;
+    color: var(--gold); letter-spacing: -0.03em; flex-shrink: 0;
+  }
+  .method-stat .figure-cap {
+    font-size: 0.88rem; color: var(--muted);
+    line-height: 1.65; font-weight: 300; max-width: 520px;
+  }
+  .method-pull {
+    font-size: clamp(1.15rem, 2.6vw, 1.5rem);
+    font-weight: 300; color: var(--text);
+    line-height: 1.45; letter-spacing: -0.01em;
+    margin: 2rem 0 0; max-width: 760px;
+  }
+  .method-pull em { font-style: normal; color: var(--gold); }
+  .method-lead {
+    font-size: 0.92rem; color: var(--muted);
+    line-height: 1.75; font-weight: 300; max-width: 760px;
+    margin-top: 2.5rem;
+  }
+  .protocol-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1px; background: var(--border);
+    border: 1px solid var(--border);
+    margin-top: 1.5rem;
+  }
+  .protocol-step {
+    background: var(--bg-card); padding: 1.6rem 1.6rem;
+    display: flex; flex-direction: column;
+  }
+  .protocol-step-no {
+    font-family: var(--ff-mono); font-size: 0.6rem;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--dim); margin-bottom: 0.9rem;
+    display: flex; align-items: center; gap: 0.6rem;
+  }
+  .protocol-step-no::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+  .protocol-step-name {
+    font-family: var(--ff-sans); font-size: 1rem; font-weight: 700;
+    color: var(--text); letter-spacing: -0.01em;
+    margin-bottom: 0.5rem; line-height: 1.25;
+  }
+  .protocol-step p {
+    font-size: 0.82rem; color: var(--muted);
+    line-height: 1.65; font-weight: 300; margin: 0;
+  }
 </style>
 </head>
 <body>
@@ -452,7 +527,7 @@
 <div class="hero">
   <p class="hero-eyebrow"><span></span>workingcomplexity — AI Advisory Board</p>
   <h1>The cast.<br><em>Citizens and professionals.</em></h1>
-  <p class="hero-body">Ten people appear across the Working Complexity blog. Four are patients living with progressive lung disease. Six are healthcare system decision-makers who have stress-tested our frameworks in structured dialogue. None are real. All are true.</p>
+  <p class="hero-body">Ten people appear across the Working Complexity blog. Four are patients living with progressive lung disease. Six are healthcare system decision-makers who have stress-tested our frameworks in structured dialogue. None are real. All are true. How we convene them — and why a structured board surfaces what a quick round-table loses — is set out below.</p>
   <p class="hero-note">
     <strong>On their provenance:</strong> these personas were developed in close collaboration with Claude. Each was constructed from a synthesis of clinical literature, patient narratives, and health system archetypes — built to be internally consistent, behaviourally distinct, and analytically productive. They are not composites of real individuals. They are designed instruments: precise enough to reveal structural failures in the healthcare system that aggregate data smooths over. We use them in that spirit, and name them honestly as AI-developed constructs.
   </p>
@@ -767,6 +842,68 @@
 
   </div><!-- /board-grid -->
 </div><!-- /section-wrap board -->
+
+
+<!-- ═══════════════════════════════════════════════════ -->
+<!-- SECTION 3: HOW WE CONVENE                          -->
+<!-- ═══════════════════════════════════════════════════ -->
+<div class="section-wrap">
+  <div class="section-header">
+    <span class="section-label">03 — How we convene</span>
+    <div>
+      <h2 class="section-title">We do not run this board for consensus. <em>We run it for the idea consensus loses.</em></h2>
+      <p class="section-desc">A board assembled well holds more of the picture than any single member — that is the whole reason to convene one. But deliberation has a failure mode that hides inside what looks like success: the room converges, smooths, and quietly discards the one signal only one person could see. So we convene against that tendency, in a structured sequence built with Claude.</p>
+    </div>
+  </div>
+
+  <div class="method-prose">
+    <span class="method-prose-label">The failure we design against</span>
+    <p>None of this is new. In the 1980s, Stasser and Titus described the biased sampling of shared information: groups spend their time discussing what several members already know, and rarely surface the fact that sits with only one. From this comes the hidden profile — a room that misses the right answer because the decisive evidence is scattered across people and never pooled. A panel of models, run without ceremony, reproduces the pathology at speed.</p>
+    <div class="method-stat">
+      <span class="figure">~25%</span>
+      <span class="figure-cap">Roughly the share of genuinely valuable single-source ideas that survive into a group's final synthesis. The other three-quarters — the spiky, lived insight we convened the room to capture — fall away unrecorded.</span>
+    </div>
+    <p>The cruelty of the failure is that it improves the writing. The blended answer reads calmer, more complete, less jagged — and that polish is the residue of what was removed. So the more authoritative the briefing, the more carefully we read it. A board that resolves every tension has usually not resolved them. <strong>It has declined to record them.</strong></p>
+    <p class="method-pull">Diversity goes in. Consensus comes out — <em>unless we build the room to prevent it.</em></p>
+  </div>
+
+  <p class="method-lead">Building the room means a few specific commitments, and we hold to them every time the board sits:</p>
+
+  <div class="protocol-grid">
+    <div class="protocol-step">
+      <div class="protocol-step-no">Move 01</div>
+      <div class="protocol-step-name">Gather before the room converges</div>
+      <p>Each advisor states a position in isolation, in their own voice, before anyone sees another's. The particular idea goes on the record before group pressure can smooth it away.</p>
+    </div>
+    <div class="protocol-step">
+      <div class="protocol-step-no">Move 02</div>
+      <div class="protocol-step-name">Make every idea countable</div>
+      <p>We break each position into discrete ideas — a mechanism, a risk, a metric, a failure mode — every one tagged to its source. An idea you can count is one you cannot lose by accident.</p>
+    </div>
+    <div class="protocol-step">
+      <div class="protocol-step-no">Move 03</div>
+      <div class="protocol-step-name">Protect the singletons</div>
+      <p>Every idea is marked shared or single-source. The single-source ones — the ideas the research says die three times in four — are flagged, and from there can only be dropped with a recorded reason.</p>
+    </div>
+    <div class="protocol-step">
+      <div class="protocol-step-no">Move 04</div>
+      <div class="protocol-step-name">Rate value blind to popularity</div>
+      <p>We judge each idea on whether it is useful, non-obvious and worth keeping — before counting how many voices held it. A lone good idea has to be able to outrank a popular ordinary one.</p>
+    </div>
+    <div class="protocol-step">
+      <div class="protocol-step-no">Move 05</div>
+      <div class="protocol-step-name">Engage the outliers</div>
+      <p>Any high-value single-source idea must draw an explicit response from the people it most affects — the access insight goes to the payer, the reach problem to the administrator. Death by non-discussion is the failure mode; this blocks it.</p>
+    </div>
+    <div class="protocol-step">
+      <div class="protocol-step-no">Move 06</div>
+      <div class="protocol-step-name">Preserve the minority, audit the drop</div>
+      <p>The synthesis carries a section for the high-value minority ideas — named and kept even where the room never agreed — and a record of what was cut, and why. An empty minority section is not a clean result. It is a warning.</p>
+    </div>
+  </div>
+
+  <p class="method-lead">This is slower and heavier than a quick round-table. That is the point. The cost buys back the variety the deliberation would otherwise spend — and it keeps the instrument honest about the one thing it is least able to keep on its own. The cast above is who sits in the room. This is why the room is worth convening.</p>
+</div><!-- /section-wrap method -->
 
 
 <!-- PROVENANCE NOTE -->
