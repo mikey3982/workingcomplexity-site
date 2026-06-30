@@ -1,5 +1,7 @@
-# Private AI memory and project files
-.claude/
+# Private AI memory and project files — skills are versioned, everything else stays local
+/.claude/*
+!/.claude/skills/
+blog/.claude/
 
 # Office documents — keep out of public repo
 *.docx
