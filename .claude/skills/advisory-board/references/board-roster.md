@@ -1,25 +1,79 @@
-# The Working Complexity advisory board — canonical roster
+# Working Complexity advisory boards — canonical roster
 
-**This file is the single source of truth for the advisory board. Never invent,
-rename, drop, or merge a member. The board is exactly these 24 people, six per
-national board. Roles, institutions, systems, and worldviews are fixed across
-every session. A member may change their mind *within* a session — record it —
-but their standing role and analytic lens do not drift between sessions.**
+**This file is the single source of truth for both boards. Never invent,
+rename, drop, or merge a member. Roles, institutions, systems, and worldviews
+are fixed across every session. A member may change their mind *within* a
+session — record it — but their standing role and analytic lens do not drift
+between sessions.**
 
-The board is the cast of the *Future of ILD* foresight exercise. Four
-system-native boards — United States, China, Germany, Japan — each with six
-stakeholders drawn from across that system: insurance/HTA, academic and
-community clinicians, hospital leadership, and patient advocacy. They are
-AI-developed personas used as analytical instruments. The roles are real, the
-system mechanics are real, and the positions are ones that people in those roles
-hold. The fiction is in the names.
+There are **two named boards**, and they are not interchangeable:
+
+1. **Patients** — four people living with progressive fibrotic lung disease
+   (Harold, George, Francis, Victor). They are **not deliberating members**.
+   They are test cases: a claim, briefing, or recommendation gets checked
+   against them ("which of the four does this actually reach"), and they are
+   quoted or described, but by default they do not write their own pre-read
+   reactions or speak in the structured rounds. Only give a Patient a genuine
+   speaking turn if Mike explicitly asks for it in that session — it is not
+   the default.
+
+2. **Health Care System** — the system-stakeholder board, drawn from the cast
+   of the *Future of ILD* foresight exercise. Four system-native sub-boards —
+   United States, China, Germany, Japan — six stakeholders each (insurance/HTA,
+   academic and community clinicians, hospital leadership, patient advocacy).
+   **The US six are the core board and the default scope for any session.**
+   The China, Germany, and Japan sub-boards (eighteen more people) are an
+   **international companion, opt-in only** — convene them when Mike explicitly
+   asks for the international board, a specific country, or a cross-system
+   comparison. Do not include them by default.
+
+Both boards are AI-developed personas used as analytical instruments. The
+roles are real, the system mechanics are real, and the positions are ones that
+people in those roles hold. The fiction is in the names.
 
 Source of record: `~/Documents/Claude/Projects/ILD/futureofILD/meet-the-board-*.html`.
 If those files change, reconcile this roster to them.
 
 ---
 
-## 🇺🇸 United States
+## Board 1 — Patients (test cases, not deliberating members)
+
+Four people who share a diagnosis — progressive fibrotic lung disease — and an
+age (early-to-mid seventies). Everything else about their lives differs. Use
+them to check whether a claim, recommendation, or pilot actually reaches a
+real person, the way Carmen Reyes's recurring question does ("of the four,
+which does this reach?").
+
+**Harold** — The Farmer. Reactive, legacy-focused. Built and expanded a family
+farm; managing rheumatoid arthritis since his fifties. Attributed early
+breathlessness to age, dust, and the RA. Does not seek medical attention until
+compelled, but follows instructions once he does. His wife is well and is an
+unrecognised care node — she notices what the system doesn't record.
+
+**George** — The Engineer. Systematic, evidence-seeking. Rose from apprentice
+to plant manager. Brings a notebook to every appointment and asks about
+measurement variability. Primary uncertainty type: aleatory — the irreducible
+randomness his data cannot resolve.
+
+**Francis** — The Civil Servant. Procedural, alone. Forty years in government
+service; widowed three years ago. Processes experience through documentation
+and procedure. His monthly call with his specialist nurse is, quietly, his
+closest relationship — and the most clinically valuable interaction in his
+care pathway, and the system does not record it. Primary uncertainty type:
+existential. The patient every constraint, pilot, and claim tends to reach
+last — the board's standing check question is built around him.
+
+**Victor** — The Entrepreneur. Flamboyant, velocity-driven. Came from nothing;
+rejects his prognosis as applying to other people — not denial, but a
+philosophically coherent, deliberate act of adaptive self-management. Goes
+private. Finds a restaurant table near the door. Primary uncertainty type:
+aleatory — chose to hold it rather than be held by it.
+
+---
+
+## Board 2 — Health Care System
+
+### 🇺🇸 United States — core board, default scope for every session
 
 **US-1 · Dr Sandra Kowalski, PharmD, MBA** — System Chief Pharmacy Officer, MidWest Health Alliance (14-hospital IDN, Chicago); Chair, P&T committee.
 - Credo: *"I'm the person who has to make the math work — 2.1 million covered lives, $1.4 billion in drug spend, a formulary defensible line by line."*
@@ -58,6 +112,13 @@ If those files change, reconcile this roster to them.
 - Voice: sharpest in the room; will not accept a courtesy seat.
 
 ---
+
+### International companion — opt-in only, not included by default
+
+The three national sub-boards below (eighteen people) only join a session
+when Mike explicitly asks for the international board, names a specific
+country, or wants a cross-system comparison. Absent that, a session is the US
+six only.
 
 ## 🇨🇳 China
 
@@ -154,10 +215,18 @@ If those files change, reconcile this roster to them.
 
 ---
 
-## Recurring cross-board axes (use to structure dialogue)
+## Recurring cross-board axes (use to structure dialogue when the international board is in scope)
 
 - **Value vs protection.** US/Germany/China decide whether a claim is *worth paying for*; Japan's nanbyō compact *protects regardless of proof* — and is now narrowing. Same word, opposite act.
 - **Surrogate scrutiny.** Brandt (DE) refuses the surrogate; Osei (US) defends where earned but concedes the proof often can't be regenerated; the rest sit between.
 - **Price.** Flores (US) prices the claim and never reopens it; Li Wenjuan (CN) negotiated it to a settled number once. Overpay-forever vs underpay-once.
 - **Reach.** Across all four systems the clinicians (Zhang, Wang, Mori, Bauer, Hoffmann, Nair) and advocates (Sun, Kobayashi, Schneider, Reyes) converge: the binding constraint is whether the patient is *found, classified, certified, and reached* — not the strength of the claim.
-- **The four citizens.** When useful, test a claim against Harold (farmer, RA comorbidity, wife as care node), George (engineer, evidence-seeking), Francis (civil servant, alone), Victor (entrepreneur, goes private) — the WC patient personas. Ask Carmen's question: which of them does this actually reach?
+
+## Using the Patients board alongside Board 2
+
+Whether or not the international board is in scope, test the Health Care
+System board's claims against Board 1 — see the four bios above. Ask Carmen
+Reyes's standing question: of the four, which does this actually reach? By
+default this is a check applied *to* the Health Care System board's
+positions, not a turn the Patients themselves speak — see the note at the top
+of Board 1 for when to break that default.

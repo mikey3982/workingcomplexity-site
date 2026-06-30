@@ -1,4 +1,11 @@
-# Advisory board — commitments ledger
+# Health Care System board — commitments ledger
+
+Covers the **Health Care System** board only (currently its US core six — see
+`board-roster.md`). The **Patients** board (Harold, George, Francis, Victor)
+does not hold commitments — it is a test-case board, not a deliberating one —
+so it has no entries here. If a future Mode 3 session convenes the
+international companion (China/Germany/Japan), start logging its commitments
+below too; none exist yet, because every session to date has run core-only.
 
 **Read this file in full before writing a Mode 3 (full continuity) session. Update it after every Mode 3 session. Mode 1 and Mode 2 sessions do not read or write this file.**
 
