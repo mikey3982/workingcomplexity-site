@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Weekly Intelligence Briefing — 13 August 2026 — Working Complexity</title>
+<meta name="description" content="Internal competitive intelligence briefing for workingcomplexity, 15 July – 13 August 2026. Signals mapped to the Complexity Transition Framework." />
+<meta name="robots" content="noindex, nofollow" />
+<link rel="canonical" href="https://workingcomplexity.health/briefings/2026-08-13" />
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='100' height='100' fill='%23060D1B'/%3E%3Cpolygon points='50,2 91.57,26 91.57,74 50,98 8.43,74 8.43,26' stroke='%235B9BD5' stroke-width='0.8' fill='none'/%3E%3Cpolygon points='50,26 70.78,38 70.78,62 50,74 29.22,62 29.22,38' stroke='%23C4A46B' stroke-width='0.8' fill='none'/%3E%3Cpolygon points='50,38 60.39,44 60.39,56 50,62 39.61,56 39.61,44' stroke='%235B9BD5' stroke-width='0.8' fill='none'/%3E%3Ccircle cx='50' cy='50' r='2.5' fill='%23C4A46B'/%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --nearblack:  #060D1B;
+    --offwhite:   #f4f6fa;
+    --paper:      #eaeff7;
+    --gold:       #C4A46B;
+    --gold-dim:   rgba(196,164,107,0.4);
+    --blue:       #5B9BD5;
+    --blue-dim:   rgba(91,155,213,0.18);
+    --border:     rgba(91,155,213,0.18);
+    --muted:      #7A9ABF;
+    --ink:        #0F1E36;
+    --ink-mid:    #3E5870;
+    --ff-display: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --ff-mono:    'Space Mono', 'ui-monospace', 'SFMono-Regular', Menlo, monospace;
+    --max-w: 920px;
+    --gutter: clamp(1.25rem, 5vw, 3rem);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--offwhite);
+    color: var(--ink);
+    font-family: var(--ff-display);
+    font-size: 17px;
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── NAV ──────────────────────────────────────────────── */
+  .wc-nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(6,13,27,0.96);
+    border-bottom: 1px solid rgba(74,144,226,0.18);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.1rem 3rem;
+    backdrop-filter: blur(16px);
+  }
+  .wc-nav-logo {
+    font-family: var(--ff-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    color: #E0E8F4;
+    text-decoration: none;
+    display: flex; flex-direction: column; gap: 2px;
+  }
+  .wc-nav-logo-main { color: #E0E8F4; font-weight: 700; }
+  .wc-nav-logo-sub  { color: var(--gold); font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; }
+  .wc-nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .wc-nav-links a {
+    font-family: var(--ff-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #7A9ABF;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .wc-nav-links a:hover, .wc-nav-links a.active { color: var(--gold); }
+  .wc-nav-cta {
+    font-family: var(--ff-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #060D1B;
+    background: var(--gold);
+    padding: 0.55rem 1.2rem;
+    text-decoration: none;
+    transition: opacity 0.2s;
+  }
+  .wc-nav-cta:hover { opacity: 0.85; }
+  @media (max-width: 720px) {
+    .wc-nav-links, .wc-nav-cta { display: none; }
+    .wc-nav { padding: 1rem 1.25rem; }
+  }
+  /* ── Mobile nav (hamburger) ─────────────────────────── */
+  .nav-toggle {
+    display: none; background: none; cursor: pointer;
+    border: 1px solid rgba(122,154,191,0.4);
+    padding: 0.45rem 0.55rem; margin-left: 0.9rem;
+  }
+  .nav-toggle span { display: block; width: 18px; height: 2px; background: #7A9ABF; margin: 3.5px 0; }
+  @media (max-width: 760px) {
+    .nav-toggle { display: block; }
+    nav .wc-nav-links {
+      display: none; position: absolute; top: 100%; left: 0; right: 0;
+      flex-direction: column; gap: 0; padding: 0.5rem 1.5rem 1.1rem;
+      background: rgba(6,13,27,0.97); border-bottom: 1px solid rgba(74,144,226,0.18);
+      backdrop-filter: blur(16px);
+    }
+    nav.nav-open .wc-nav-links { display: flex; }
+    nav .wc-nav-links li { padding: 0.55rem 0; }
+    .wc-nav-cta { padding: 0.4rem 0.7rem; font-size: 0.55rem; letter-spacing: 0.06em; white-space: nowrap; }
+  }
+
+  /* ── ARTICLE COVER ────────────────────────────────────── */
+  .article-cover {
+    padding: clamp(4rem,10vw,7rem) var(--gutter) clamp(2.5rem,5vw,4rem);
+    max-width: calc(var(--max-w) + 2 * var(--gutter));
+    margin: 0 auto;
+  }
+  .doc-code {
+    font-family: var(--ff-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-mid);
+    margin-bottom: 2.2rem;
+    display: block;
+  }
+  .kicker {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    font-family: var(--ff-mono);
+    font-size: 0.72rem;
+    font-weight: 400;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.75rem;
+  }
+  .kicker::before {
+    content: '';
+    display: block; width: 2.5rem; height: 1px;
+    background: var(--gold);
+  }
+  .article-title {
+    font-family: var(--ff-display);
+    font-size: clamp(2.4rem,7vw,4.4rem);
+    font-weight: 800;
+    line-height: 1.05;
+    color: var(--nearblack);
+    letter-spacing: -0.025em;
+    margin-bottom: 0.5rem;
+  }
+  .article-subtitle {
+    font-size: clamp(1rem,2.5vw,1.35rem);
+    font-style: italic;
+    font-weight: 300;
+    color: var(--ink-mid);
+    max-width: 700px;
+    line-height: 1.5;
+    margin-bottom: 2.75rem;
+  }
+  .article-meta {
+    display: flex; align-items: center; gap: 2rem; flex-wrap: wrap;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+  }
+  .meta-item {
+    font-family: var(--ff-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+  }
+  .meta-item strong { color: var(--ink-mid); font-weight: 700; }
+
+  /* ── ARTICLE BODY ─────────────────────────────────────── */
+  .article {
+    max-width: calc(var(--max-w) + 2 * var(--gutter));
+    margin: 0 auto;
+    padding: 0 var(--gutter) clamp(4rem,8vw,6rem);
+  }
+
+  h3.section-heading {
+    font-family: var(--ff-mono);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin: 3.5rem 0 1.75rem;
+    padding-top: 2.5rem;
+    border-top: 1px solid var(--border);
+  }
+  .article > .section-heading:first-of-type { margin-top: 0; padding-top: 0; border-top: none; }
+
+  .article p {
+    margin-bottom: 1.1rem;
+    color: var(--ink);
+    font-weight: 300;
+  }
+  .article p strong { font-weight: 600; color: var(--nearblack); }
+  .article p em { font-style: italic; }
+
+  /* ── Signals ──────────────────────────────────────────── */
+  .signal { margin-bottom: 2.75rem; padding-bottom: 2.25rem; border-bottom: 1px solid var(--border); }
+  .signal:last-child { border-bottom: none; padding-bottom: 0; }
+  .signal-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--nearblack);
+    line-height: 1.4;
+    margin-bottom: 0.85rem;
+  }
+  .tag-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.25rem; }
+  .tag {
+    font-family: var(--ff-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.32rem 0.65rem;
+    border: 1px solid;
+    border-radius: 2px;
+    white-space: nowrap;
+    color: var(--muted);
+    border-color: rgba(122,154,191,0.4);
+  }
+  .tag-handle { color: var(--gold); border-color: var(--gold-dim); }
+  .tag-build  { color: var(--blue); border-color: var(--blue-dim); }
+  .tag-transition {
+    color: var(--gold);
+    border-color: var(--gold-dim);
+    background: linear-gradient(90deg, transparent 50%, rgba(91,155,213,0.10) 50%);
+  }
+
+  .signal-why {
+    margin-top: 1.25rem;
+    padding: 1.1rem 1.4rem;
+    background: var(--paper);
+    border-left: 3px solid var(--gold);
+  }
+  .signal-why .label {
+    display: block;
+    font-family: var(--ff-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.6rem;
+  }
+  .signal-why p { font-size: 0.95rem; margin-bottom: 0; }
+
+  /* ── Framework Signal Map table ──────────────────────────── */
+  .table-wrap {
+    overflow-x: auto;
+    margin: 0 0 1.5rem;
+    border: 1px solid var(--border);
+  }
+  .framework-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.82rem;
+    min-width: 820px;
+  }
+  .framework-table th,
+  .framework-table td {
+    padding: 0.85rem 1.1rem;
+    border-bottom: 1px solid var(--border);
+    border-right: 1px solid var(--border);
+    text-align: left;
+    vertical-align: top;
+    line-height: 1.55;
+  }
+  .framework-table th:last-child, .framework-table td:last-child { border-right: none; }
+  .framework-table tr:last-child td { border-bottom: none; }
+  .framework-table th {
+    font-family: var(--ff-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    background: var(--nearblack);
+    color: #E0E8F4;
+  }
+  .framework-table td:first-child {
+    font-weight: 600;
+    color: var(--nearblack);
+    width: 16%;
+    white-space: nowrap;
+  }
+  .framework-table td.empty { color: var(--muted); }
+
+  .reading-table {
+    margin: 0 0 2.75rem;
+    padding: 1.1rem 1.4rem;
+    background: var(--paper);
+    border-left: 3px solid var(--blue);
+  }
+  .reading-table .label {
+    display: block;
+    font-family: var(--ff-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin-bottom: 0.6rem;
+  }
+  .reading-table p { font-size: 0.95rem; margin-bottom: 0; }
+
+  /* ── Recommended actions ──────────────────────────────────── */
+  .actions-list { list-style: none; counter-reset: action; }
+  .actions-list li {
+    position: relative;
+    padding: 0.1rem 0 1.75rem 3rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .actions-list li:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .actions-list li::before {
+    counter-increment: action;
+    content: counter(action);
+    position: absolute;
+    left: 0; top: 0.1rem;
+    font-family: var(--ff-mono);
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--gold);
+    border: 1px solid var(--gold-dim);
+    width: 1.9rem; height: 1.9rem;
+    border-radius: 2px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .action-title { font-weight: 700; color: var(--nearblack); margin-bottom: 0.5rem; font-size: 1.05rem; }
+  .actions-list .tag-row { margin-bottom: 0.85rem; }
+
+  /* ── Sources ──────────────────────────────────────────────── */
+  .sources-list {
+    font-family: var(--ff-mono);
+    font-size: 0.8rem;
+    color: var(--ink-mid);
+    line-height: 1.9;
+    padding-left: 1.25rem;
+  }
+  .sources-list li { margin-bottom: 0.4rem; }
+  .coverage-note {
+    margin-top: 1.5rem;
+    font-family: var(--ff-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* ── CLOSING ──────────────────────────────────────────── */
+  .article-close {
+    background: var(--nearblack);
+    padding: clamp(3rem,7vw,5rem) var(--gutter);
+    margin-top: 4rem;
+  }
+  .close-inner {
+    max-width: var(--max-w);
+    margin: 0 auto;
+  }
+  .close-kicker {
+    font-family: var(--ff-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+    display: block;
+  }
+  .close-statement {
+    font-size: clamp(1.4rem,3vw,2rem);
+    font-weight: 700;
+    color: #E0E8F4;
+    line-height: 1.25;
+    margin-bottom: 1.75rem;
+    letter-spacing: -0.015em;
+  }
+  .close-statement em { font-style: italic; font-weight: 300; color: var(--gold); }
+  .close-logo {
+    margin-top: 2.5rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(74,144,226,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .close-logo-wordmark {
+    font-family: var(--ff-mono);
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    color: #E0E8F4;
+    text-decoration: none;
+  }
+  .close-logo-sub {
+    font-family: var(--ff-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-top: 3px;
+  }
+  .close-scale {
+    font-family: var(--ff-mono);
+    font-size: 0.58rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #3E5870;
+  }
+  .close-back {
+    font-family: var(--ff-mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #7A9ABF;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .close-back:hover { color: var(--gold); }
+</style>
+</head>
+<body>
+
+<!-- ── NAV ────────────────────────────────────────────────────── -->
+<nav class="wc-nav" aria-label="Site navigation">
+  <a href="https://workingcomplexity.health" class="wc-nav-logo">
+    <span class="wc-nav-logo-main">workingcomplexity</span>
+    <span class="wc-nav-logo-sub">— .health</span>
+  </a>
+  <ul class="wc-nav-links">
+    <li><a href="/#pillars">Philosophy</a></li>
+    <li><a href="/#approach">Approach</a></li>
+    <li><a href="/#services">Services</a></li>
+    <li><a href="/#about">About</a></li>
+    <li><a href="/blog/">Blog</a></li>
+    <li><a href="/#contact">Contact</a></li>
+  </ul>
+  <a href="/#contact" class="wc-nav-cta">Start a Conversation</a>
+  <button class="nav-toggle" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+</nav>
+
+<!-- ── ARTICLE COVER ─────────────────────────────────────────── -->
+<header class="article-cover">
+  <span class="doc-code">WC-BRIEFING / WEEKLY INTELLIGENCE / 2026-08-13</span>
+  <span class="kicker">Competitive intelligence · weekly scan</span>
+  <h1 class="article-title">Weekly Intelligence Briefing</h1>
+  <p class="article-subtitle">15 July – 13 August 2026 — signals mapped to the Complexity Transition Framework.</p>
+  <div class="article-meta">
+    <span class="meta-item"><strong>13 August 2026</strong></span>
+    <span class="meta-item">Internal — workingcomplexity</span>
+    <span class="meta-item"><strong>Reading time</strong> 17 min</span>
+  </div>
+</header>
+
+<!-- ── ARTICLE BODY ───────────────────────────────────────────── -->
+<main class="article">
+
+  <h3 class="section-heading">This week's signals</h3>
+
+  <h3 class="section-heading" style="margin-top:0; padding-top:0; border-top:none;">Methodological landscape</h3>
+
+  <div class="signal">
+    <h4 class="signal-title">1. NICE pauses both donanemab and lecanemab appraisals — company and NHS England have entered commercial negotiations</h4>
+    <div class="tag-row">
+      <span class="tag tag-handle">Domain 4: Coverage &amp; Reimbursement · Handle With Care</span>
+      <span class="tag tag-handle">Domain 2: Approval &amp; Licensing · Handle With Care</span>
+    </div>
+    <p>A direct check of NICE's own project pages confirms both long-running Alzheimer's appraisals have been paused. Donanemab's timeline (GID-TA11221) records, verbatim: "30 July 2026 — NICE has paused the evaluation of Donanemab... because the company and NHSE have commenced commercial discussions." Lecanemab's page (GID-TA11220) carries the identical note one day earlier, 29 July 2026. Both appraisals remain formally "in progress" with publication date "TBC" — no guidance has been published, and none now will be, until the commercial discussion concludes. This follows committee meeting 4 for both technologies (8 July, confirmed on both timelines) and four years of process: two committee rounds, an upheld appeal each, a Decision Support Unit report on carer utility, and a third draft guidance consultation.</p>
+    <div class="signal-why">
+      <span class="label">Why it matters to workingcomplexity</span>
+      <p>This is not a resolution of the "recalibration vs redesign" question this series has tracked for two months — it is the appraisal machinery declining to answer it. When a single-technology, binary-outcome process meets a case it cannot resolve on its own methodology, the system's actual pressure valve is not a more adaptive appraisal — it is an off-ramp into a bilateral, non-public commercial negotiation. That is arguably worse for methodological transparency than either an outright rejection or an approval: whatever price and access terms emerge will set a precedent with no public reasoning attached. Retire the "recalibration vs redesign" framing and replace it with a sharper one — reductionist HTA infrastructure, when it hits genuine complexity, does not evolve, it exits the frame it was designed to reason within.</p>
+    </div>
+  </div>
+
+  <div class="signal">
+    <h4 class="signal-title">2. Nerandomilast's NICE appraisal proceeds on its original timetable — committee met as scheduled, no EAG report public yet</h4>
+    <div class="tag-row">
+      <span class="tag tag-handle">Domain 1: Evidence Standards · Handle With Care</span>
+      <span class="tag tag-handle">Domain 2: Approval &amp; Licensing · Handle With Care</span>
+    </div>
+    <p>Direct checks of NICE's GID-TA11552 pages confirm the appraisal committee met on 15 July as previously scheduled, with a declaration of interests published the same day. No EAG report, consultation document, or draft guidance has been published yet — only the committee-meeting entry and a routine register-of-interests update (9 August) appear on the project's document list. Expected publication remains unchanged at 9 September. Separately, the European Commission granted Jascayd (nerandomilast) full EU marketing authorisation on 15 July — its first EU approval, and the first new IPF treatment authorised in the EU in over a decade — while the UK appraisal remains open.</p>
+    <div class="signal-why">
+      <span class="label">Why it matters to workingcomplexity</span>
+      <p>Unlike the Alzheimer's pair, this appraisal is behaving exactly as the conventional single-technology model expects — committee met, guidance due on the original date. Worth holding as the "normal case" comparator against Signal 1: the same NICE process handling a high-uncertainty extrapolation problem (30-year FIBRONEER survival modelling) in the ordinary way, while the higher-stakes Alzheimer's cases got routed around the process entirely.</p>
+    </div>
+  </div>
+
+  <div class="signal">
+    <h4 class="signal-title">3. ISPOR publishes the IMPACT framework — a flexible implementation toolkit, explicitly not a single scorecard</h4>
+    <div class="tag-row">
+      <span class="tag tag-build">Domain 1: Evidence Standards · Build</span>
+    </div>
+    <p>ISPOR's Special Task Force published "Applying Health Economics and Outcomes Research Methods in Value-Based Healthcare Implementation" in <em>Value in Health</em> on 13 July, introducing a six-pillar IMPACT framework (Incentives, Modeling, Patient-Centered outcomes, Assessment methods, Costing, Transparency). The report states that value-based healthcare implementation "remains challenging and subject to heterogeneous experimentation" because outcomes, costs, and value are defined differently across contexts, and offers the six pillars as a flexible toolkit rather than a fixed reporting standard.</p>
+    <div class="signal-why">
+      <span class="label">Why it matters to workingcomplexity</span>
+      <p>A second ISPOR output in as many months (after June's Value-in-Context Framing report) explicitly naming heterogeneity as the central implementation problem rather than a nuisance to be standardised away. Worth adding to the methods-library citation base alongside Greenhalgh, Hernán, and the Frontiers in Health Services paper flagged previously — this one carries more institutional weight, coming from HEOR's own professional body.</p>
+    </div>
+  </div>
+
+  <div class="signal">
+    <h4 class="signal-title">4. Australian AI-in-healthcare alliance publishes a distributed-governance policy roadmap</h4>
+    <div class="tag-row">
+      <span class="tag tag-build">Domain 8: Stakeholder Engagement · Build</span>
+    </div>
+    <p>The Australian Alliance for AI in Healthcare, chaired by Enrico Coiera, launched its third National Policy Roadmap ("Don't Walk. Run.") on 22 July, synthesising input from over 90 member organisations and 20-plus focus groups into 28 recommendations spanning governance, sovereign AI capability, workforce, and safety. The roadmap explicitly frames AI governance as a distributed, shared responsibility across the healthcare system rather than a matter for centralised regulatory control alone.</p>
+    <div class="signal-why">
+      <span class="label">Why it matters to workingcomplexity</span>
+      <p>A concrete, dated example of a Domain 8 build-zone move — participatory, multi-organisation governance design applied to a genuinely complex, fast-moving technology — from a named thinker on the watchlist. Worth reading in full to check whether the governance-distribution logic maps onto the framework's Domain 8 "community-embedded sensing" and "participatory governance" build-zone examples, which would make it directly citable as an AI-specific parallel case.</p>
+    </div>
+  </div>
+
+  <p style="font-size:0.9rem; color:var(--ink-mid); font-style:italic;">Searches of the Cynefin Company, Nesta Health Lab, Health Foundation/Q Community, International Bateson Institute, Oxford CEBM, UCL PRIMENT, HDR UK, Cambridge MRC Epidemiology, IQVIA, Evidera, Costello Medical, Mtech Access, and of Greenhalgh, Snowden, Bateson, Sturmberg, Johar, Dixon-Woods, Craig, Grimshaw, Berwick, Marmot, and Chalkidou individually, found no dated, verifiable new output in this window beyond routine or general-interest content — a genuinely thin window for new methodological signal outside the two items above, noted rather than padded.</p>
+
+  <h3 class="section-heading">Competitive landscape</h3>
+
+  <div class="signal">
+    <h4 class="signal-title">5. NHS Modernisation Bill: Committee report lands on schedule, Bill advances toward Third Reading</h4>
+    <div class="tag-row">
+      <span class="tag tag-handle">Domain 7: Commissioning &amp; Contracting · Handle With Care</span>
+      <span class="tag tag-handle">Domain 8: Stakeholder Engagement · Handle With Care</span>
+    </div>
+    <p>Last briefing flagged an unverified single-source claim that the Public Bill Committee's report — due 16 July — would be delayed until after summer recess. That claim does not hold up: a Committee Stage Decisions document titled "Committee Stage: Thursday 16 July 2026, Health Bill" was published by the Commons on that date, corroborated by Hansard's committee-sitting record and by secondary reporting confirming the Committee agreed the Healthwatch and NHS England abolition clauses should remain in the Bill and proceed to the next stage. A Healthwatch North Yorkshire update (10 August) states the Bill is now at Report Stage with Third Reading scheduled for 7 September, ahead of House of Lords stages — <strong>this specific date is single-sourced and could not be independently confirmed</strong>, as bills.parliament.uk and commonslibrary.parliament.uk both continued to return access errors this week. Treat the 7 September date as provisional.</p>
+    <div class="signal-why">
+      <span class="label">Why it matters to workingcomplexity</span>
+      <p>The claim that needed correcting last briefing is resolved the straightforward way — the report was not delayed; it landed on time with the abolition clauses intact, and the Bill is moving, not stalling. That is itself the more consequential fact: sustained cross-party and sector objection did not slow the Bill's structural consolidation of NHS England and Healthwatch by even a fortnight.</p>
+    </div>
+  </div>
+
+  <div class="signal">
+    <h4 class="signal-title">6. The King's Fund names the contradiction between NHS centralisation and the government's own devolution agenda</h4>
+    <div class="tag-row">
+      <span class="tag tag-handle">Domain 7: Commissioning &amp; Contracting · Handle With Care</span>
+    </div>
+    <p>The King's Fund published a piece (dated approximately 12 August) examining what Prime Minister Andy Burnham's "rewire the state" devolution agenda could mean for the NHS, arguing that the government's own rhetoric on prevention, neighbourhood services, and local power sits in direct tension with the Health Bill's centralising provisions — NHS England's abolition, new Secretary of State powers, and Healthwatch's abolition.</p>
+    <div class="signal-why">
+      <span class="label">Why it matters to workingcomplexity</span>
+      <p>The sharpest available articulation yet of the pattern flagged across four consecutive briefings — that structural consolidation is proceeding on a schedule independent of the accountability and local-capability arguments against it. Having a leading think tank name this as a government-vs-government contradiction, rather than an external critique of a single policy, strengthens the case for using it in any written response to the Bill.</p>
+    </div>
+  </div>
+
+  <div class="signal">
+    <h4 class="signal-title">7. HSSIB–CQC merger objection: unresolved, no movement this window</h4>
+    <div class="tag-row">
+      <span class="tag tag-handle">Domain 5: Safety &amp; Surveillance · Handle With Care</span>
+    </div>
+    <p>No new development was found on the Jeremy Hunt-chaired patient safety group's "unanimously opposed" position, which went through Committee stage unaddressed. The merger rides the same Bill timetable as Signal 5.</p>
+    <div class="signal-why">
+      <span class="label">Why it matters to workingcomplexity</span>
+      <p>A second consecutive briefing with no movement on a specific, credible safety objection is itself worth recording plainly — the objection has now survived Committee stage and is heading into Report Stage equally unaddressed.</p>
+    </div>
+  </div>
+
+  <h3 class="section-heading">Policy &amp; regulatory</h3>
+
+  <div class="signal">
+    <h4 class="signal-title">8. SMC's August decisions include one adaptive reappraisal — zilucoplan accepted on resubmission behind a Patient Access Scheme</h4>
+    <div class="tag-row">
+      <span class="tag tag-handle">Domain 4: Coverage &amp; Reimbursement · Handle With Care</span>
+    </div>
+    <p>The Scottish Medicines Consortium's August 2026 release (10 August) accepted seven medicines. Most notable: zilucoplan (Zilbrysq) for refractory generalised myasthenia gravis, which SMC rejected outright in March 2026, is now accepted on resubmission — but only within a Patient Access Scheme with mandated pre-treatment immunisation and monitoring conditions attached. The other six acceptances followed SMC's standard binary process.</p>
+    <div class="signal-why">
+      <span class="label">Why it matters to workingcomplexity</span>
+      <p>The zilucoplan resubmission is a small-scale, ad hoc version of exactly the adaptive reappraisal Domain 4's "Handle With Care" zone describes — new evidence and a managed-access condition changing a prior binary verdict rather than the verdict standing permanently. Still framed by SMC as an exception process rather than a systemic feature, but a cleaner, more current UK example of conditional reappraisal working in practice than most of what this series has been able to cite.</p>
+    </div>
+  </div>
+
+  <h3 class="section-heading">Therapeutic areas</h3>
+
+  <div class="signal">
+    <h4 class="signal-title">9. IPF/PPF: nerandomilast gains EU authorisation while its NICE appraisal remains open</h4>
+    <div class="tag-row">
+      <span class="tag tag-handle">Domain 2: Approval &amp; Licensing · Handle With Care</span>
+    </div>
+    <p>The European Commission approved Jascayd (nerandomilast) on 15 July for IPF and progressive pulmonary fibrosis across the EU, following the UK's MHRA approval on 8 July. Full FIBRONEER trial data, published in the <em>European Respiratory Journal</em> ahead of this window, models nerandomilast 18mg monotherapy more than doubling median IPF survival (3.7 to 9.1 years), with a hazard ratio for death of 0.51 (95% CI 0.34–0.78) in the PPF cohort at both doses tested. See Signal 2 for the parallel NICE appraisal, still awaiting its EAG report ahead of a 9 September decision.</p>
+    <div class="signal-why">
+      <span class="label">Why it matters to workingcomplexity</span>
+      <p>Two regulators have now licensed the drug within a week of each other on strong trial-period mortality data, while the single UK HTA decision that will actually govern NHS access continues to wait on scrutiny of the 30-year survival extrapolation underpinning the modelled long-term benefit — Domain 1's live tension between what a trial period shows and what a funding decision needs to assume.</p>
+    </div>
+  </div>
+
+  <div class="signal">
+    <h4 class="signal-title">10. Alzheimer's: subcutaneous lecanemab heads to US commercial launch while both UK appraisals are paused on price</h4>
+    <div class="tag-row">
+      <span class="tag tag-build">Domain 2: Approval &amp; Licensing · Build</span>
+      <span class="tag tag-handle">Domain 4: Coverage &amp; Reimbursement · Handle With Care</span>
+    </div>
+    <p>Leqembi Iqlik, the subcutaneous autoinjector formulation of lecanemab approved by the FDA on 13 July, is on track for US commercial launch in late August via specialty pharmacy distribution, with an acceptability study reporting 94% of patients and carers found the autoinjector easy to use. In the UK, meanwhile, see Signal 1: both donanemab and lecanemab NICE appraisals are now paused for commercial negotiation, with no guidance timeline at all.</p>
+    <div class="signal-why">
+      <span class="label">Why it matters to workingcomplexity</span>
+      <p>The same drug class is simultaneously accelerating on the delivery side — removing the infusion-centre burden that disproportionately excludes frail or geographically isolated patients — and stalling completely on the UK access side. Build-zone progress in one domain does not travel automatically to another, even within the same technology and the same month.</p>
+    </div>
+  </div>
+
+  <div class="signal">
+    <h4 class="signal-title">11. Treatment-resistant depression: Compass Pathways reiterates a Q4 2026 NDA completion target</h4>
+    <div class="tag-row">
+      <span class="tag tag-handle">Domain 1: Evidence Standards · Handle With Care</span>
+    </div>
+    <p>At Canaccord Genuity's Growth Conference (12 August), Compass Pathways management confirmed its rolling FDA NDA submission for COMP360 (psilocybin therapy) remains on track for completion in Q4 2026, and reiterated that the FDA's Commissioner's National Priority Voucher could compress review to as little as one to two months. DEA rescheduling and FDA approval both remain outstanding.</p>
+    <div class="signal-why">
+      <span class="label">Why it matters to workingcomplexity</span>
+      <p>No new evidence of broadened comorbidity or severity inclusion criteria was disclosed at this update — the regulatory pathway continues to run through a standard single-indication registration process, unlike the adaptive- or heterogeneity-aware pathways flagged elsewhere this briefing. Worth a methodological check once the full NDA package is public.</p>
+    </div>
+  </div>
+
+  <div class="signal">
+    <h4 class="signal-title">12. Severe asthma: the three-dataset RWE fragmentation story remains unresolved</h4>
+    <div class="tag-row">
+      <span class="tag tag-handle">Domain 1: Evidence Standards · Handle With Care</span>
+    </div>
+    <p>ELBRUS (NCT06566885) remains active/not recruiting with primary completion still projected for September 2026; no results have been reported. PASSAGE and the ERJ Open Research cohort produced no new readouts this window, and no pooling or shared-protocol effort across the three datasets has emerged.</p>
+    <div class="signal-why">
+      <span class="label">Why it matters to workingcomplexity</span>
+      <p>Unchanged from the last two briefings — three independent real-world datasets on biologic-treated severe asthma, no shared protocol, no integration into coverage review. Worth revisiting once ELBRUS reaches its September completion date, which now falls before the next likely briefing window.</p>
+    </div>
+  </div>
+
+  <div class="signal">
+    <h4 class="signal-title">13. Multimorbidity: the SPIRIT trial-design extension gap remains unactioned</h4>
+    <div class="tag-row">
+      <span class="tag tag-handle">Domain 6: Guideline Development · Handle With Care</span>
+    </div>
+    <p>A further direct check of the EQUATOR Network's in-development guideline list found no registered SPIRIT-multimorbidity reporting extension or working group. The two 2026 SPIRIT extensions that do exist this year — SPIRIT-Children and Adolescents and SPIRIT-Acupuncture — are unrelated to multimorbidity.</p>
+    <div class="signal-why">
+      <span class="label">Why it matters to workingcomplexity</span>
+      <p>This closes another cycle on a pattern now confirmed directly, not inferred, across three consecutive checks: the diagnosis is published and uncontested, but nothing has moved toward the bounded, achievable build-zone artefact that would make it operational. Safe to continue stating this as a confirmed absence in any external material using multimorbidity as the canonical "diagnosis outpaces intervention" example.</p>
+    </div>
+  </div>
+
+  <h3 class="section-heading">Framework signal map</h3>
+
+  <div class="table-wrap">
+    <table class="framework-table">
+      <thead>
+        <tr>
+          <th>Domain</th>
+          <th>Keep (stable)</th>
+          <th>Handle with care (adapting)</th>
+          <th>Build (pioneering or absent)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1. Evidence Standards</td>
+          <td>RCT safety standards; GRADE as default framework</td>
+          <td>Nerandomilast NICE appraisal on its original timetable; Compass Pathways NDA on standard eligibility criteria; severe asthma RWE fragmentation unchanged; multimorbidity SPIRIT extension confirmed unactioned again</td>
+          <td>ISPOR's IMPACT framework — flexible six-pillar toolkit, explicitly not a scorecard</td>
+        </tr>
+        <tr>
+          <td>2. Approval &amp; Licensing</td>
+          <td>Benefit-risk frameworks; orphan/expedited pathways</td>
+          <td>Nerandomilast: EU and UK licensing now both ahead of the NICE decision they feed into</td>
+          <td>Subcutaneous lecanemab (Leqembi Iqlik) commercial launch proceeds in the US</td>
+        </tr>
+        <tr>
+          <td>3. Performance Measurement</td>
+          <td class="empty">—</td>
+          <td class="empty">—</td>
+          <td class="empty">—</td>
+        </tr>
+        <tr>
+          <td>4. Coverage &amp; Reimbursement</td>
+          <td>Most of SMC's August decision list — standard binary accept/reject</td>
+          <td>SMC's zilucoplan resubmission accepted behind a Patient Access Scheme; NICE has paused both Alzheimer's appraisals for bilateral commercial negotiation rather than resolving them on the public record</td>
+          <td class="empty">—</td>
+        </tr>
+        <tr>
+          <td>5. Safety &amp; Surveillance</td>
+          <td>Yellow card reporting; PSURs</td>
+          <td>HSSIB–CQC merger objection unresolved through Report Stage</td>
+          <td class="empty">—</td>
+        </tr>
+        <tr>
+          <td>6. Guideline Development</td>
+          <td>GRADE methodology</td>
+          <td>Multimorbidity SPIRIT extension gap confirmed unactioned for a third consecutive check</td>
+          <td class="empty">—</td>
+        </tr>
+        <tr>
+          <td>7. Commissioning &amp; Contracting</td>
+          <td class="empty">—</td>
+          <td>NHS Modernisation Bill Committee report lands on schedule; Bill advances toward Report Stage/Third Reading with NHS England abolition intact</td>
+          <td class="empty">—</td>
+        </tr>
+        <tr>
+          <td>8. Stakeholder Engagement</td>
+          <td>Statutory consultation</td>
+          <td>King's Fund names the centralisation-vs-devolution contradiction; Healthwatch abolition tension continues unresolved</td>
+          <td>AAAiH's distributed AI-governance roadmap — 90+ organisations embedded in policy design</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="reading-table">
+    <span class="label">Reading the table</span>
+    <p>This window's most important finding sits outside the three-zone taxonomy itself. NICE pausing both Alzheimer's appraisals for a bilateral commercial negotiation is not a Keep, Handle-With-Care, or Build move — it is the appraisal process declining to resolve the case on any public methodological basis at all, which may be a more consequential failure mode than an outright rejection would have been. Set against that, Domain 4 also shows its usual small adaptive exception (SMC's zilucoplan resubmission) inside an otherwise binary system. Domain 7's structural consolidation continues on schedule despite Domain 5 and Domain 8 objections that remain unresolved into Report Stage. Domain 2 shows licensing continuing to outpace HTA in two separate technologies in the same window. Domain 3 remains empty again this window.</p>
+  </div>
+
+  <h3 class="section-heading">Recommended actions</h3>
+
+  <ol class="actions-list">
+    <li>
+      <div class="tag-row">
+        <span class="tag tag-handle">Domain 4</span>
+        <span class="tag tag-handle">Domain 1</span>
+      </div>
+      <div class="action-title">Replace the "recalibration vs redesign" framing for NICE's Alzheimer's appraisals with a sharper one: the process paused rather than resolved</div>
+      <p>Both appraisals are now paused for commercial negotiation between the manufacturer and NHS England, confirmed directly on NICE's own timelines (30 July donanemab, 29 July lecanemab). This is a materially different and more citable finding than "still pending" — the appraisal machinery, faced with a case it cannot resolve on its own terms, exited into a non-public bilateral process. Likely the strongest single example this series has produced of the "system routes around genuine complexity rather than adapting to it" argument. Prioritise using this in the next external-facing piece.</p>
+    </li>
+    <li>
+      <div class="tag-row">
+        <span class="tag tag-handle">Domain 7</span>
+        <span class="tag tag-handle">Domain 8</span>
+      </div>
+      <div class="action-title">Verify the Health Bill's 7 September Third Reading date directly before citing it anywhere external</div>
+      <p>This date currently rests on a single Healthwatch-affiliate source; bills.parliament.uk and commonslibrary.parliament.uk continued to block direct verification this week. The underlying pattern — Committee report landed on schedule, abolition clauses retained, Bill advancing — is independently corroborated and safe to use regardless of the exact Third Reading date.</p>
+    </li>
+    <li>
+      <div class="tag-row">
+        <span class="tag tag-handle">Domain 4</span>
+      </div>
+      <div class="action-title">Use the SMC zilucoplan resubmission as the current live example of Domain 4 adaptive reappraisal working, but keep it clearly framed as the exception</div>
+      <p>Pair it explicitly with the six other, purely binary SMC decisions in the same release to avoid overstating how systemic this pattern is.</p>
+    </li>
+    <li>
+      <div class="tag-row">
+        <span class="tag tag-build">Domain 1 · Build</span>
+      </div>
+      <div class="action-title">Cite the ISPOR IMPACT framework alongside June's Value-in-Context report as a two-part 2026 institutional case</div>
+      <p>Two dated ISPOR outputs in two months, both moving toward flexible, context-sensitive methods, is a stronger citation base than either alone.</p>
+    </li>
+    <li>
+      <div class="tag-row">
+        <span class="tag tag-handle">Domain 1</span>
+        <span class="tag tag-handle">Domain 2</span>
+      </div>
+      <div class="action-title">Track the nerandomilast NICE decision (due 9 September) as a near-term live case study</div>
+      <p>Given Signal 1, this appraisal's continuation on the original timetable is itself informative — worth a short comparison note once nerandomilast's guidance publishes, regardless of outcome.</p>
+    </li>
+    <li>
+      <div class="tag-row">
+        <span class="tag tag-handle">Domain 4 · Watch</span>
+      </div>
+      <div class="action-title">Watch G-BA's tovorafenib benefit assessment, scheduled for publication 17 August 2026</div>
+      <p>This lands just after this briefing's window closes — pick it up as the lead Policy &amp; Regulatory item next cycle if the next scan runs on a normal weekly cadence.</p>
+    </li>
+  </ol>
+
+  <h3 class="section-heading">Sources &amp; coverage</h3>
+
+  <ul class="sources-list">
+    <li>NICE: GID-TA11221 (donanemab), GID-TA11220 (lecanemab), GID-TA11552 (nerandomilast) — project information and full timeline pages fetched and verified directly via browser on 13 August 2026 (WebFetch returned 403 on all three; browser navigation succeeded)</li>
+    <li>European Commission / EMA: Jascayd (nerandomilast) EPAR and approval announcement; Boehringer Ingelheim press releases (17 July 2026)</li>
+    <li>MHRA / gov.uk: nerandomilast (Jascayd) approval confirmation (8 July 2026, cross-checked)</li>
+    <li>FDA: Leqembi Iqlik (subcutaneous lecanemab) approval and launch timeline (Eisai, Biogen investor releases)</li>
+    <li>Boehringer Ingelheim: FIBRONEER-IPF/PPF full trial data (European Respiratory Journal)</li>
+    <li>ISPOR / Value in Health: IMPACT framework task-force report (13 July 2026)</li>
+    <li>Australian Alliance for AI in Healthcare: 3rd National Policy Roadmap ("Don't Walk. Run.", 22 July 2026)</li>
+    <li>UK Parliament: Committee Stage Decisions document (16 July 2026, title confirmed via search — direct fetch blocked); Hansard Health Bill committee-sitting listings; bills.parliament.uk and commonslibrary.parliament.uk again returned access errors this week</li>
+    <li>Healthwatch North Yorkshire: Health Bill update (10 August 2026) — single-source Report Stage/Third Reading date, flagged unverified</li>
+    <li>The King's Fund: Burnham/devolution piece (~12 August 2026); Nuffield Trust, NHS Confederation, ABPI checked, no new dated developments found</li>
+    <li>Scottish Medicines Consortium / Healthcare Improvement Scotland: August 2026 decisions release (10 August 2026)</li>
+    <li>ICER: checked directly — the COVID-19 vaccine CEPAC vote actually occurred 25 June 2026 (outside this window, already covered previously); a secondary "29 July" date could not be corroborated and was excluded per the standing verification instruction</li>
+    <li>G-BA: tovorafenib benefit assessment confirmed scheduled for 17 August 2026 — just after this window closes</li>
+    <li>HTAi 2026 Congress (Istanbul): confirmed held; no complexity-relevant session content dated within window found</li>
+    <li>EMA Adaptive Pathways/RWE, FDA RWE guidance, FDA Complex Innovative Trial Designs: no new documents dated in this window found</li>
+    <li>NHS England Transformation Directorate: no updates since 31 March 2026; DHSC Life Sciences Sector Plan published 9 July 2026 (just before window, excluded)</li>
+    <li>Compass Pathways: Canaccord Genuity Growth Conference update (12 August 2026)</li>
+    <li>ClinicalTrials.gov: ELBRUS (NCT06566885), NINTOC-TU (NCT06297096, SSc-ILD) status checks</li>
+    <li>EQUATOR Network: in-development guideline list checked directly — no SPIRIT-multimorbidity extension registered</li>
+    <li>Cynefin Company, Nesta Health Lab, Health Foundation/Q Community, International Bateson Institute, Oxford CEBM, UCL PRIMENT, HDR UK, Cambridge MRC Epidemiology, IQVIA, Evidera, Costello Medical, Mtech Access: searched, no verifiable new dated activity this window</li>
+    <li>Greenhalgh, Snowden, Bateson, Sturmberg, Johar, Dixon-Woods, Craig, Grimshaw, Berwick, Marmot, Chalkidou: searched individually, no confirmed new output dated in-window</li>
+    <li>Long COVID (NG188), rare oncology/basket trials, lysosomal storage disorders, precision oncology diagnostics: searched, no dated activity found this window</li>
+  </ul>
+  <p class="coverage-note">Coverage period: 15 July – 13 August 2026</p>
+
+</main>
+
+<!-- ── CLOSING ─────────────────────────────────────────────────── -->
+<footer class="article-close">
+  <div class="close-inner">
+    <span class="close-kicker">Working Complexity — weekly intelligence briefing</span>
+    <p class="close-statement">When the reductionist appraisal process finally meets a case it cannot resolve, it doesn't redesign itself — it <em>quietly exits the room</em> and settles the question somewhere no one can see the reasoning.</p>
+    <div class="close-logo">
+      <div>
+        <a href="https://workingcomplexity.health" class="close-logo-wordmark">workingcomplexity</a>
+        <div class="close-logo-sub">— .health</div>
+      </div>
+      <a href="/briefings/" class="close-back">&larr; All weekly briefings</a>
+      <span class="close-scale">WC-BRIEFING / 2026-08-13</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    var nav = document.querySelector('nav');
+    var btn = document.querySelector('.nav-toggle');
+    if (!nav || !btn) return;
+    btn.addEventListener('click', function () {
+      var open = nav.classList.toggle('nav-open');
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    nav.querySelectorAll('ul a').forEach(function (a) {
+      a.addEventListener('click', function () {
+        nav.classList.remove('nav-open');
+        btn.setAttribute('aria-expanded', 'false');
+      });
+    });
+  })();
+</script>
+</body>
+</html>
