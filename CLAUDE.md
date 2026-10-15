@@ -27,3 +27,9 @@ This is a Working Complexity project. Every artefact — document, deck, PDF, re
 - `WC-Brand-REV-C.html` — the designed HTML brand book (visual reference, printable to PDF)
 - `logo.svg` — standalone logo mark SVG
 - `title-page-preview.html` — live title page preview
+
+## WC thinking canon
+
+When Mike asks for "workingcomplexity thinking", or for a WC view of a situation, apply these lenses as well as the brand:
+
+- **S3: salience, sapience, sentience.** Dave Snowden's 3Ss, adopted 15 October 2026. Ask what matters that the data will not show (salience), where the rules run out and who judges (sapience), and who carries the consequences and whether their stake is present (sentience). Reference: `WC-Reference-S3-Salience-Sapience-Sentience.html`. Credit Snowden. Ask Mike before using "S3" as a label in client-facing prose.
