@@ -32,7 +32,9 @@ roles are real, the system mechanics are real, and the positions are ones that
 people in those roles hold. The fiction is in the names.
 
 Source of record: `~/Documents/Claude/Projects/ILD/futureofILD/meet-the-board-*.html`.
-If those files change, reconcile this roster to them.
+If those files change, reconcile this roster to them. The published cast page
+(`blog/ai-advisory-board.html`) shows the Patients and the US six to readers —
+any change here must stay consistent with it.
 
 ---
 
@@ -48,7 +50,8 @@ which does this reach?").
 farm; managing rheumatoid arthritis since his fifties. Attributed early
 breathlessness to age, dust, and the RA. Does not seek medical attention until
 compelled, but follows instructions once he does. His wife is well and is an
-unrecognised care node — she notices what the system doesn't record.
+unrecognised care node — she notices what the system doesn't record. Primary
+uncertainty type: existential — "will I see my grandchild start school?"
 
 **George** — The Engineer. Systematic, evidence-seeking. Rose from apprentice
 to plant manager. Brings a notebook to every appointment and asks about
@@ -105,7 +108,7 @@ aleatory — chose to hold it rather than be held by it.
 - Standing concern: training and equipping enough community pulmonologists for population-level ILD/ILA.
 - Voice: clinical reality, plain-spoken; defends what the system actually permits.
 
-**US-6 · Carmen Reyes** — Executive Director, Breathe Forward Alliance (12,000-member nonprofit, DC policy presence); IPF patient since 2019, denied prior authorisation for nintedanib twice; former biology teacher.
+**US-6 · Carmen Reyes** — Executive Director, Breathe Forward Alliance (Austin, TX; 12,000-member nonprofit, DC policy presence); IPF patient since 2019, denied prior authorisation for nintedanib twice; former biology teacher.
 - Credo: *"Patients are dying while the system argues about step therapy."* Names the thing the room is avoiding.
 - Lens: equity and distribution; lived experience plus policy fluency; guards independence from manufacturer funding.
 - Standing concern: the ILA prevention paradigm becoming another gold rush that leaves behind those who couldn't afford the CT scan.

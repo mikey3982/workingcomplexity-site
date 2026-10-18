@@ -7,7 +7,7 @@ so it has no entries here. If a future Mode 3 session convenes the
 international companion (China/Germany/Japan), start logging its commitments
 below too; none exist yet, because every session to date has run core-only.
 
-**Read this file in full before writing a Mode 3 (full continuity) session. Update it after every Mode 3 session. Mode 1 and Mode 2 sessions do not read or write this file.**
+**Read this file in full before writing a full-continuity session (formerly "Mode 3") and update it afterwards. Standing-cast sessions read it only to verify a callback; fresh convenings do not touch it. Only full-continuity sessions write to it.**
 
 Purpose: prior sessions have, on occasion, had a member re-pledge a commitment that was already logged in an earlier session, presented as if new (see Kowalski, 29→30 June below). This file exists so that doesn't keep happening — a callback to "what I committed before" must be checked against an actual entry here, not reconstructed from memory of the transcript.
 
@@ -67,4 +67,6 @@ If you are running a new Mode 3 session, it is session 5 (or later — check for
 
 - The session-count claim in `WC-Coming-Loose-Board-Session.md` ("the third time this board has convened") is off by one against the log above. Correct it if that document is revised, or note the discrepancy if quoting it.
 - The founding session ("Living with Not Knowing") itself references "positions held at previous meetings" that predate it and were never published. There is no way to verify or include those in this ledger — note them as acknowledged-but-unrecoverable history if a future session calls back to them.
+- The published cast page (`blog/ai-advisory-board.html`) says the founding session produced "fifteen concrete commitments" and quotes each member's committed position. Only Webb's session 1 entry is logged above. If a future session calls back to a founding-session commitment, check the cast page and *Experiments with Uncertainty (Part Two)*, then add the entry here.
+- The session documents named in the session log are not in the website repo. If they cannot be found from the current session, rely on this ledger and say so.
 - This ledger was first assembled retrospectively on 30 June 2026 from the three existing full session transcripts. It is only as complete as those transcripts — if any session was run without being saved as a markdown file, its commitments are not here.
