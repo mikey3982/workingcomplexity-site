@@ -9,17 +9,25 @@ script (`scripts/check_site.py`) enforces the testable ones.
 
 - Repo root **is** the deployed site. `index.html` is the home page.
 - Posts live in `blog/`, the heuristics essay series in `blog/heuristics/`.
+- Weekly briefings live in `briefings/` (with their own index). They carry the
+  full site nav but no prev/next post chain.
+- Standalone pages at the repo root (`brand-book.html`, `blog-manifesto.html`,
+  `WC-Brand-REV-C.html`, `title-page-preview.html`, unlisted papers such as
+  `WC-010-…`) sit outside the site nav. The checker scans their links only.
 - Each page is fully self-contained: its own inline `<style>`, no build step,
   no shared CSS file. Consistency is by convention, not by tooling — which is
   why new pages are cloned from existing ones, never written from scratch.
 - Netlify deploys automatically on push to `main` (GitHub
-  `mikey3982/workingcomplexity-site`). Netlify serves clean URLs (`/blog/foo`
+  `mikey3982/workingcomplexity-site`), and builds a deploy preview for every
+  pull request at `https://deploy-preview-<PR number>--fastidious-gnome-957024.netlify.app`. Netlify serves clean URLs (`/blog/foo`
   for `blog/foo.html`) and strips `data-netlify` from the live form HTML —
   that is normal, not a bug.
 
 ## Navigation (identical on all pages)
 
-Six links in this exact order, then the CTA. The `<ul>` class is
+Six links in this exact order, then the CTA. The checker enforces these
+exact labels — if they ever change, update this table and `NAV_LABELS` /
+`NAV_CTA` in `scripts/check_site.py` together. The `<ul>` class is
 `nav-links` on the home page and blog index, `wc-nav-links` on article pages —
 keep whichever the cloned page already uses; the CSS depends on it.
 
@@ -27,12 +35,12 @@ keep whichever the cloned page already uses; the CSS depends on it.
 |------------|------------------|-------------------------|
 | Philosophy | `#pillars`       | `/#pillars`             |
 | Approach   | `#approach`      | `/#approach`            |
-| Services   | `#services`      | `/#services`            |
+| Themes     | `#services`      | `/#services`            |
 | About      | `#about`         | `/#about`               |
 | Blog       | `/blog/`         | `/blog/` (+ `class="active"`) |
 | Contact    | `#contact`       | `/#contact`             |
 
-CTA: `Start a Conversation`, href `#contact` (home) or `/#contact` (elsewhere),
+CTA: `Get in touch`, href `#contact` (home) or `/#contact` (elsewhere),
 class `nav-cta` / `wc-nav-cta` to match the page.
 
 ## Mobile menu

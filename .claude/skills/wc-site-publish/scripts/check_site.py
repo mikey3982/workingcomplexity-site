@@ -17,6 +17,10 @@ Exits non-zero if any check fails. Checks:
      and every #fragment resolves to an id in the target page.
   5. Post navigation — every post carries a .post-nav block, and prev/next
      links are reciprocal (if A says next is B, B must say prev is A).
+
+Site pages are index.html, blog/ and briefings/ (checks 1-4; check 5 for
+blog posts only). Standalone pages at the repo root (brand book, papers,
+previews) have no site nav, so they get the link check (4) only.
 """
 import glob
 import os
@@ -33,9 +37,16 @@ NON_POSTS = {"index.html", "blog/index.html", "blog/heuristics/index.html"}
 
 def site_files(root):
     files = ["index.html"]
-    found = glob.glob(os.path.join(root, "blog", "**", "*.html"), recursive=True)
-    files += sorted(os.path.relpath(f, root) for f in found)
+    for d in ("blog", "briefings"):
+        found = glob.glob(os.path.join(root, d, "**", "*.html"), recursive=True)
+        files += sorted(os.path.relpath(f, root) for f in found)
     return [f for f in files if os.path.isfile(os.path.join(root, f))]
+
+
+def standalone_files(root):
+    """Root-level pages outside the site nav: link-checked only."""
+    found = glob.glob(os.path.join(root, "*.html"))
+    return sorted(os.path.basename(f) for f in found if os.path.basename(f) != "index.html")
 
 
 def read(root, f):
@@ -54,8 +65,15 @@ def expected_canonical(f):
 def check(root):
     errors = []
     files = site_files(root)
+    extra = standalone_files(root)
     srcs = {f: read(root, f) for f in files}
-    ids = {f: set(re.findall(r'id="([^"]+)"', s)) for f, s in srcs.items()}
+    all_srcs = dict(srcs, **{f: read(root, f) for f in extra})
+    ids = {f: set(re.findall(r'id="([^"]+)"', s)) for f, s in all_srcs.items()}
+
+    def ids_of(target):
+        if target not in ids:
+            ids[target] = set(re.findall(r'id="([^"]+)"', read(root, target)))
+        return ids[target]
 
     # 1 + 2: nav and mobile menu
     for f, src in srcs.items():
@@ -83,8 +101,8 @@ def check(root):
         elif canons[0] != expected_canonical(f):
             errors.append(f"{f}: canonical {canons[0]} != expected {expected_canonical(f)}")
 
-    # 4: internal links and anchors
-    for f, src in srcs.items():
+    # 4: internal links and anchors (site pages and standalone pages)
+    for f, src in all_srcs.items():
         base = os.path.dirname(f)
         for href in re.findall(r'href="([^"]+)"', src):
             if href.startswith(("mailto:", "data:", "javascript:")):
@@ -117,14 +135,14 @@ def check(root):
                 target = p if os.path.exists(os.path.join(root, p)) else p + ".html"
             if not os.path.exists(os.path.join(root, target)):
                 errors.append(f"{f}: broken link {href} -> {target}")
-            elif frag and "${" not in frag and frag not in ids.get(target, set()):
+            elif frag and "${" not in frag and frag not in ids_of(target):
                 errors.append(f'{f}: dead anchor {href} (no id="{frag}" in {target})')
 
     # 5: post-nav presence and reciprocity
     def url_of(f):
         return "/" + f[: -len(".html")]
 
-    posts = [f for f in files if f not in NON_POSTS]
+    posts = [f for f in files if f.startswith("blog/") and f not in NON_POSTS]
     nav_of = {}
     for f in posts:
         src = srcs[f]
@@ -140,7 +158,7 @@ def check(root):
         if prev and prev in nav_of and nav_of[prev][1] != url:
             errors.append(f"{url}: prev points to {prev}, but its next is {nav_of[prev][1]}")
 
-    return errors, len(files)
+    return errors, len(files) + len(extra)
 
 
 def main():
