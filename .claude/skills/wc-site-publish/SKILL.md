@@ -1,6 +1,6 @@
 ---
 name: wc-site-publish
-description: Publishes new material to the workingcomplexity.health website with guaranteed structural consistency — nav, mobile menu, canonical URLs, blog index card, and the prev/next post chain. Use this skill whenever Mike wants to add, upload, publish, or post anything to the site — a new essay, blog post, series, or page — or asks to update, fix, or check the website, even if he just says "put this on the site", "add this to the blog", or shares a draft and mentions the site. Also use it before any commit that touches index.html or blog/, to run the consistency check.
+description: Publishes new material to the workingcomplexity.health website with guaranteed structural consistency — nav, mobile menu, canonical URLs, blog index card, and the prev/next post chain. Use this skill whenever Mike wants to add, upload, publish, or post anything to the site — a new essay, blog post, series, or page — or asks to update, fix, or check the website, even if he just says "put this on the site", "add this to the blog", or shares a draft and mentions the site. Also use it before any commit that touches index.html, blog/ or briefings/, to run the consistency check.
 ---
 
 # Publishing to workingcomplexity.health
@@ -52,18 +52,27 @@ python3 .claude/skills/wc-site-publish/scripts/check_site.py
 ```
 
 It must report OK. It checks unified nav, mobile menu presence, canonical
-correctness, every internal link and anchor, and prev/next reciprocity — a
-missed neighbour edit or a stale canonical fails loudly. Fix and re-run; never
-hand-wave a failure.
+correctness, every internal link and anchor, and prev/next reciprocity across
+the home page, `blog/` and `briefings/`, plus the links on standalone root
+pages — a missed neighbour edit or a stale canonical fails loudly. Fix and
+re-run; never hand-wave a failure.
 
-Then preview in a real browser: the `wc-blog` server in `.claude/launch.json`
-(plain `python3 -m http.server`, so use the `.html` path locally — clean URLs
-only work on Netlify). Check the new page at mobile width too: hamburger
-opens, nothing overflows horizontally.
+Then preview in a real browser. Serve the repo root with
+`python3 -m http.server 8000` and open the `.html` path (clean URLs only work
+on Netlify). Check the new page at desktop width and at 390px: the hamburger
+opens, nothing overflows horizontally. In a cloud session, Chromium and
+Playwright are pre-installed — take screenshots at both widths and look at
+them rather than assuming the layout holds.
 
-**5. Ship only when asked.** Commit with a `WC-SITE:` prefixed message. Push
-to `main` deploys to production via Netlify automatically — so don't push
-until Mike says to publish. After pushing, confirm the new URL is live.
+**5. Ship through a preview.** Commit with a `WC-SITE:` prefixed message on
+a branch, not `main` — a push to `main` deploys to production straight away.
+Push the branch and open a pull request when Mike asks; Netlify posts a deploy
+preview link on the PR (see `references/conventions.md`). Send Mike that link
+so he can check the page as it will look live. Merge only when he says to
+publish, then confirm the clean URL is live on workingcomplexity.health.
+
+If Mike explicitly asks to push straight to `main`, do that — but run the
+checker first.
 
 ## Editing existing pages
 
@@ -74,5 +83,5 @@ scan will surface every page that pointed at it.
 ## Just checking the site
 
 If Mike asks whether the site is consistent (or before any commit touching
-`index.html` or `blog/`), run the checker and report what it says — it is
-cheap and exact.
+`index.html`, `blog/` or `briefings/`), run the checker and report what it
+says — it is cheap and exact.
