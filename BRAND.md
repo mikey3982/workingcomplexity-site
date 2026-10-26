@@ -1,6 +1,6 @@
 # Working Complexity — Brand Book
 
-**Document code:** WC-BRAND / REV.C
+**Document code:** WC-BRAND / REV.D
 **Owner:** Michael Baldwin · workingcomplexity.health
 **Purpose:** the single source of truth for how Working Complexity looks, sounds, and reads across every client-facing artefact.
 
@@ -27,7 +27,8 @@ This document is the brand system for Working Complexity. When producing any art
 | Producing a PowerPoint deck | 2, 3, 5, 6, 7, 8, 11 |
 | Designing a logo lockup, icon, or diagram | 4, 5, 7 |
 | Editing the website | 2, 3, 5, 6, 7, 12 |
-| In doubt | 13 |
+| Producing a video | 2, 3, 4, 5, 6, 7, 8, 13 |
+| In doubt | 14 |
 
 **Hard rules, always:**
 
@@ -611,7 +612,7 @@ Hero numbers (single-metric slides) are set in Inter 128pt 800 Brass Gold, left-
 
 ### 11.5 Animation and transitions
 
-None. Content cuts between slides. No builds, no fades, no motion paths. A slide is a page.
+None. Content cuts between slides. No builds, no fades, no motion paths. A slide is a page. (Video has its own motion rules — see §13.7.)
 
 ### 11.6 Slide count and cadence
 
@@ -653,7 +654,152 @@ Use the `wc-update-site` skill. It reads this file, reads `index.html`, makes th
 
 ---
 
-## 13. Quick reference — do / don't
+## 13. Application: Video
+
+Video is the one WC artefact that runs in time. It uses the same palette, type and graphic language as the deck, but motion is allowed here because, in time, motion carries meaning. A deck is a page; a video is a drawing being made. All sizes below are given as a percentage of frame height (**H**); pixel values are for 1920×1080.
+
+### 13.1 Canvas, formats and frame rate
+
+| Format | Size | Use | Safe margin |
+|---|---|---|---|
+| 16:9 (default) | 1920×1080 | Web, LinkedIn, YouTube, presentations | 72px all sides (6.7% H) |
+| 9:16 | 1080×1920 | Shorts, Reels, stories | 72px sides; top 10% H and bottom 20% H kept clear of text (platform UI) |
+| 1:1 (optional) | 1080×1080 | Feed posts only | 72px all sides |
+
+- Frame rate: **25 fps** by default; **30 fps** when the source footage or a screen recording is 30. Never mix rates in one timeline.
+- Export: H.264 MP4, Rec.709, 1080p, at least 12 Mbps so the faint hex grid does not band.
+- Title, section and end cards sit on Blueprint Navy `#060D1B`. Deep Navy `#0B1629` may be used for quote cards.
+- Each video carries a document code in the standard form: `WC-### / [SUBJECT] / REV.A`.
+- Minimum on-screen text size: 1.6% H (≈17px). Nothing smaller, including annotations.
+
+### 13.2 Captions
+
+Captions are verbatim subtitles of what is said — not summaries, not highlights.
+
+- **Type:** Inter 500, **4.4% H** (≈48px) on 16:9 and 1:1; **3.0% H** (≈58px) on 9:16. Line height 1.3. Sentence case as spoken — never all caps.
+- **Colour:** Paper Light `#E0E8F4` on a Blueprint Navy band at **72% opacity** — `rgba(6, 13, 27, 0.72)`. Band padding 0.8% H vertical, 1.2% H horizontal; square corners.
+- **Length:** 1–2 lines; maximum **42 characters per line** on 16:9 (32 on 9:16 and 1:1). Break at natural phrase boundaries, never between article and noun.
+- **Position:** centred, bottom-anchored; bottom of the band **8% H** above the frame edge on 16:9 and 1:1, **22% H** on 9:16.
+- **Timing:** on screen for at least 1.2 s and no more than 7 s; reading rate no faster than 17 characters per second. Captions cut on and off with the speech — no fades, no word-by-word pop-on, no karaoke highlighting.
+- **Text:** UK spelling in captions even when the speaker's accent is American (*organisation, programme*). No emoji. Clean filler words (*um, er*) only where they carry no meaning; never change what was said.
+- Always also deliver a sidecar `.srt` so platforms can show their own captions.
+
+### 13.3 Lower-thirds
+
+One per speaker, on their first appearance only.
+
+- **Eyebrow (role):** Space Mono 400, UPPERCASE, **1.8% H** (≈19px), letter-spacing `0.25em`, Brass Gold `#C4A46B`. E.g. `CONSULTANT RESPIRATORY PHYSICIAN`.
+- **Name:** Inter 700, **4.0% H** (≈43px), Paper Light, tracking `-0.02em`, sentence case. Optional third line for the organisation: Inter 400, 2.6% H, Muted Blue `#7A9ABF`.
+- **Rule (optional):** a 1px (0.1% H) Blueprint Blue `#5B9BD5` hairline under the name, the width of the name. It draws on from left to right.
+- **Position:** left-aligned to the 72px safe margin; bottom of the block at **76% H** from the top, so it never collides with captions. On busy footage, back it with the same 72% navy band as captions.
+- **Timing:** enters over 400 ms, holds **4 s** (100 frames at 25 fps, 120 at 30 fps), exits over 300 ms.
+
+### 13.4 Title, section and end cards
+
+**Title card (opens the video)** — the deck's Master A, in time.
+- Document code top-left: Space Mono 700, 1.6% H, `0.22em`, Dim Blue `#3E5870`.
+- Eyebrow: 32px gold rule + Space Mono UPPERCASE label, 1.8% H, Brass Gold.
+- Title: Inter 800, **6.5% H** (≈70px), `-0.03em`, sentence case, max two lines. One word may be Inter 300 gold.
+- Logo mark (§4.2) bottom-right at 11% H (≈120px), with crosshair. Hex grid at the §7.1 opacity. Four corner marks.
+- Hold 3–4 s after the last element settles.
+
+**Section card** — Master B, in time. Section code `§0#` in Space Mono 2.4% H Brass Gold; title Inter 800 5.2% H; precis one sentence Inter 300 2.6% H Muted Blue; `PART 02 / 05` top-right in Space Mono 1.6% H. One large background hex (120–200px, Blueprint Blue at 12%, §7.5). Corner marks. Hold 2.5–3 s.
+
+**End card** — Master F, in time.
+- Wordmark + subline centred at 40% frame width; logo mark (§4.2) bottom-centre at 7.4% H (≈80px).
+- The thesis line above the wordmark: *"The healthcare system doesn't need to be simpler. It needs to be better understood."* Inter 400, 3.0% H, Paper Light; *"better understood"* may be Inter 300 gold.
+- `workingcomplexity.health` in Space Mono 1.8% H below the wordmark. `SCALE 1:1 · ALL DIMENSIONS IN EXPERIENCE` bottom-right, Space Mono 1.6% H Dim Blue — once per video, here only.
+- Corner marks. Hold **5 s** minimum.
+
+Corner marks on video cards: 20px legs, 1px stroke, Dim Blue at 40% (§7.2), placed at the safe margin. Never on footage.
+
+### 13.5 Logo bug
+
+None by default. The title and end cards carry the brand. For videos over three minutes that will be clipped and re-shared off-site, an optional bug may be used:
+- The logo mark only — never the wordmark — without crosshair, top-right inside the safe margin, **4.4% H** (≈48px), **35% opacity**.
+- Hidden on title, section and end cards, and while a lower-third is on screen. Never animated.
+
+### 13.6 Hero numbers and data callouts
+
+Adapted from §11.4. One number per card, on Blueprint Navy.
+- Number: Inter 800, **22% H** (≈240px), Brass Gold, left-aligned on the safe margin.
+- Label above: Space Mono 400 UPPERCASE, 2.4% H, `0.25em`, Muted Blue.
+- Caption below: Inter 400, 3.7% H, Paper Light, one line.
+- Source: Space Mono 1.6% H, Dim Blue, bottom-left.
+- Motion: a Diagram Blue `#4A90E2` dimension tick draws on beneath the number (400 ms), then the number fades up with a 2% H rise (400 ms). Whole numbers may count up over 600 ms; never count up decimals, percentages with intervals or anything where the intermediate values would imply false precision.
+- Charts follow §11.3. Bars grow from the baseline over 400 ms, staggered 3 frames; the gold datum bar arrives last. Hold the finished chart for at least 3 s.
+
+### 13.7 Motion principles
+
+Motion is quiet, precise and purposeful — a blueprint being drawn, not a brand being performed. Every movement must show the viewer where to look next or how two things relate. If it does neither, cut it.
+
+**The vocabulary (use only these):**
+1. **Stroke draw-on** — hex lines, rules, dimension ticks, diagram connectors and the logo mark draw along their path.
+2. **Opacity fade** — text and solid elements fade from 0 to 100%.
+3. **Small translate** — paired with a fade, a rise of at most **2% H** (≈22px), or a slide from the left of at most 2% of frame width for lower-thirds. Never scale graphics.
+
+**Timings:**
+
+| Use | Duration | 25 fps | 30 fps |
+|---|---|---|---|
+| Small text, rules, exits | 200 ms | 5 f | 6 f |
+| Lower-third and caption-band exits | 300 ms | 8 f | 9 f |
+| Standard text entrance | 400 ms | 10 f | 12 f |
+| Stroke draw-on, hero number, mark build | 600 ms | 15 f | 18 f |
+
+- **Easing:** one family only. Entrances `cubic-bezier(0.22, 1, 0.36, 1)` (ease-out quint); exits its mirror `cubic-bezier(0.64, 0, 0.78, 0)` (ease-in quint). No linear motion except stroke draw-on, which may run linear.
+- **Stagger:** 3 frames between related elements (eyebrow → title → subtitle).
+- **One thing moves at a time.** A related group (eyebrow, name, rule) counts as one element and may stagger; two unrelated elements never move together.
+- **Settle, then hold.** Everything is still for at least 1.5 s before anything exits. No ambient or looping motion — the hex grid does not drift.
+- **The mark build** (title and end cards only): outer hex draws 600 ms → middle hex starts +200 ms → inner hex +200 ms → centre dot fades in 200 ms. About one second in all.
+- **Stills:** a documentary still may push in by no more than 3% over the length of the shot, linear. No Ken Burns pans.
+
+**Banned:** bounce, elastic or overshoot easing; spin; zoom-punch; glitch; shake; light leaks; lens flares; whoosh transitions; 3D flips; motion blur trails; typewriter text; and every stock transition — page curl, star wipe, cube spin, iris, clock wipe, push, slide.
+
+**Edits between shots:** **hard cuts** by default. A **dip to Blueprint Navy** is allowed only at a section change: 300 ms out, no more than 12 frames held on navy (the section card may sit here), 300 ms in. No cross-dissolves between shots. J- and L-cuts on audio are encouraged; add a 2-frame audio crossfade at every cut to avoid clicks.
+
+**Why this differs from decks (§11.5).** A deck is read at the reader's pace, with a presenter in the room; motion there competes with the speaker. A video carries its own pace, and the viewer cannot turn back a page. So in video, motion does work a presenter would otherwise do — it orders attention and draws relationships. It is permitted because it carries meaning, and only when it does.
+
+### 13.8 Sound
+
+- **Speech first.** Dialogue normalised to **−16 LUFS** integrated, true peak no higher than −1 dBTP.
+- **Music bed (optional):** understated, instrumental, no lyrics, no build-and-drop structure. Ducked to about 18 dB under speech; may rise to −22 LUFS only where nobody is speaking. Fade in over 1 s, out over 2 s.
+- **No sound effects** — no whooshes, risers, stingers, clicks or typing sounds under graphics.
+- The one exception: an optional single soft tone on the end card, under 1 s, peaking no higher than −20 dBFS.
+
+### 13.9 Colour grading
+
+- Natural, Rec.709. Neutral white balance, true skin tones, highlights and shadows kept rather than clipped or crushed.
+- No heavy LUT looks: no teal-and-orange, no bleach bypass, no film-emulation grain, no vignettes.
+- Footage must not compete with the palette. Do not push footage towards navy or gold; a slight desaturation (up to −10%) is permitted when footage sits between navy cards.
+- The §7.6 duotone (shadows to Blueprint Navy, highlights to Paper Light) is for stills and archive material only — never for live-action interview footage.
+
+### 13.10 Imagery and B-roll
+
+§7.6 applies in full to B-roll.
+- Documentary, available-light, unstaged. Hospitals and clinical spaces without actors.
+- No stethoscopes, gloved hands, pill bottles, drips in close-up, smiling stock clinicians, doctors pointing at tablets, or people in business attire around a laptop.
+- People filmed with dignity — from behind or in their environment, never as "the patient" persona. Patients and carers appear only with consent.
+- If suitable B-roll is not available, **do not** use stock. Cut to a hex-language graphic or a diagram (§7.7) instead.
+
+### 13.11 Do / don't
+
+| Do | Don't |
+|---|---|
+| Hard cuts between shots | Cross-dissolves, wipes or any stock transition |
+| Dip to navy at section changes only | Dip to black, or a dip at every cut |
+| Draw lines on; fade text up | Scale, spin, bounce or punch graphics in |
+| One element moving at a time | Several things animating at once |
+| Verbatim captions on a navy band | Summarised, karaoke or all-caps captions |
+| Lower-third once per speaker | Repeating a lower-third each time someone speaks |
+| Natural grade, Rec.709 | Teal-and-orange, heavy LUTs, vignettes |
+| Speech at −16 LUFS, music ducked under it | Music that competes with the voice; whooshes and stingers |
+| Documentary B-roll, or a diagram | Stock healthcare footage |
+| Title card and end card carry the brand | A permanent logo bug on every second of footage |
+
+---
+
+## 14. Quick reference — do / don't
 
 | Do | Don't |
 |---|---|
@@ -677,7 +823,11 @@ Use the `wc-update-site` skill. It reads this file, reads `index.html`, makes th
 | Hex orientation pointy-top, vertically aligned | Rotated hexagons or flat-top orientation |
 | Hex node markers in diagrams (12px, stroke only) | Solid-filled large hexagons |
 | Crosshair on logo mark above 48px only | Crosshair on the mark at small sizes or on content slides |
+| Video: hard cuts; dip to navy only at section changes | Stock transitions, cross-dissolves, whooshes |
+| Video: lines draw on, text fades up — 200–600 ms, ease-out | Bounce, spin, zoom-punch, glitch, shake |
+| Video: verbatim captions, Inter on a 72% navy band | Summarised, karaoke or all-caps captions |
+| Video: natural grade, documentary B-roll | Heavy LUT looks, stock healthcare footage |
 
 ---
 
-**WC-BRAND / REV.C · SCALE 1:1 · ALL DIMENSIONS IN EXPERIENCE**
+**WC-BRAND / REV.D · SCALE 1:1 · ALL DIMENSIONS IN EXPERIENCE**
